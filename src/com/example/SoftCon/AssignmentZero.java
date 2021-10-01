@@ -2,103 +2,54 @@ package com.example.SoftCon;
 
 public class AssignmentZero {
     public static void main(String[] args) {
-        String Day1 = "On the first day of Christmas, my true love sent to me\n A partridge in a pear tree";
-        String Day2 = "On the second day of Christmas, my true love sent to me\n" + "Two turtledoves\n" + "And a partridge in a pear tree";
-        String Day3 = "On the third day of Christmas, my true love sent to me\n" + "Three French hens\n" + "Two turtledoves\n" + "And a partridge in a pear tree";
-        String Day4to12 = "On the fourth day of Christmas, my true love sent to me\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "\n" +
-                "On the fifth day of Christmas, my true love sent to me\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the sixth day of Christmas, my true love sent to me\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the seventh day of Christmas, my true love sent to me\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the eighth day of Christmas, my true love sent to me\n" +
-                "Eight maids a-milking\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the ninth day of Christmas, my true love sent to me\n" +
-                "Nine ladies dancing\n" +
-                "Eight maids a-milking\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the tenth day of Christmas, my true love sent to me\n" +
-                "Ten lords a-leaping\n" +
-                "Nine ladies dancing\n" +
-                "Eight maids a-milking\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the eleventh day of Christmas, my true love sent to me\n" +
-                "I sent eleven pipers piping\n" +
-                "Ten lords a-leaping\n" +
-                "Nine ladies dancing\n" +
-                "Eight maids a-milking\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "\n" +
-                "On the twelfth day of Christmas, my true love sent to me\n" +
-                "Twelve drummers drumming\n" +
-                "Eleven pipers piping\n" +
-                "Ten lords a-leaping\n" +
-                "Nine ladies dancing\n" +
-                "Eight maids a-milking\n" +
-                "Seven swans a-swimming\n" +
-                "Six geese a-laying\n" +
-                "Five gold rings (five golden rings)\n" +
-                "Four calling birds\n" +
-                "Three French hens\n" +
-                "Two turtledoves\n" +
-                "And a partridge in a pear tree\n" +
-                "And a partridge in a pear tree";
-        System.out.println(Day1 + "\n\n" +
-                            Day2 + "\n\n" +
-                            Day3+ "\n\n" +
-                            Day4to12);
+
+        for (int day = 1; day <=12; day++){
+            System.out.print("On the " + day);
+
+            switch (day){
+                case 1:
+                    System.out.print("st");
+                    break;
+                case 2:
+                    System.out.print("nd");
+                    break;
+                case 3:
+                    System.out.print("rd");
+                    break;
+                default:
+                    System.out.print("th");
+            }
+
+            System.out.print(" day of Christmas my true love gave to me");
+
+            switch (day){
+                case 12:
+                    System.out.println("Twelve drummers drumming,");
+                case 11:
+                    System.out.println("Eleven pipers piping,");
+                case 10:
+                    System.out.println("Ten lords a leaping,");
+                case 9:
+                    System.out.println("Nine ladies dancing,");
+                case 8:
+                    System.out.println("Eight maidds a milking,");
+                case 7:
+                    System.out.println("Seven swans a swimming,");
+                case 6:
+                    System.out.println("Six geese a laying,");
+                case 5:
+                    System.out.println("Five golden rings,");
+                case 4:
+                    System.out.println("Four calling birds,");
+                case 3:
+                    System.out.println("Trhee French hens,");
+                case 2:
+                    System.out.println("Two turtle doves, and");
+                default:
+                    System.out.println("A partridge in a pear tree.");
+            }
+            System.out.println();
+        }
+
     }
 }
