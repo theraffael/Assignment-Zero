@@ -1,10 +1,10 @@
 package model;
 
 public class Board {
-    String  letterCoordinates = "a b c d e f g h";
+    String  letterCoordinates = "abcd";
     String  horizontalBoarder = "+-------------------------------------------------+";
 
-    public void display()
+    public void main()
     {
         System.out.println(horizontalBoarder);
     }
