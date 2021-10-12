@@ -22,6 +22,7 @@ public class CheckerGame {
         }
 
         setBoard();
+        board.display();
     }
 
     public static void setBoard()
@@ -29,12 +30,11 @@ public class CheckerGame {
         int k = 0;
         //this for loop is to set the red piece on top of the board in the arrangement of classic checkers
 
-
         for(int j = 0; j < 3; j++)
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece((Checker) redCheckers.get(k), i +j%2, j);
+                board.addPiece(redCheckers.get(k), i +j%2, j);
                 k++;
             }
         }
@@ -44,7 +44,7 @@ public class CheckerGame {
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece((Checker) blackCheckers.get(k), i +j%2, j);
+                board.addPiece(blackCheckers.get(k), i +j%2, j);
                 k++;
             }
         }

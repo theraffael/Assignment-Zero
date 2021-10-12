@@ -16,5 +16,12 @@ public class Checker {
     {
         king = true;
     }
+    public String toString(){
+        return getColor();
+    }
+
+    public String getColor() {
+        return color;
+    }
 
 }
