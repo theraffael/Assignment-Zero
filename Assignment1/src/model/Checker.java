@@ -21,7 +21,13 @@ public class Checker {
     }
 
     public String getColor() {
-        return color;
+        if (king){
+            return color + "_K";
+        }
+        else{
+            return color + "_P";
+        }
+
     }
 
 }

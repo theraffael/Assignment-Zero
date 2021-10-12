@@ -4,8 +4,8 @@ public class Board {
     private Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
     public void display(){
-        System.out.println("   a     b     c     d     e     f     g     h"+
-                "\n ___________________________________________________\n");
+        System.out.println("       a      b      c      d      e      f      g      h"+
+                "\n  +_______________________________________________________+\n");
         for(int j = 0; j < 8; j++)
         {
 
@@ -14,13 +14,13 @@ public class Board {
             {
                 if(board[i][j] == null)
                 {
-                    System.out.print(" "+ "   |   ");
+                    System.out.print("[   ]  ");
                 }
                 else {
-                    System.out.print(board[i][j].toString()+ "   |   ");
+                    System.out.print("[" + board[i][j].toString()+ "]  ");
                 }
             }
-            System.out.println("\n _________________________________________________________________\n");
+            System.out.println("\n");
         }
         System.out.println("\n");
     }
