@@ -2,20 +2,24 @@ package model;
 
 public class Checker {
     private String color;
-    private boolean king = false;
 
+    private boolean king = false;
+    public void crown()
+    {
+        king = true;
+    }
     public boolean isKing() {
         return king;
     }
+
+    private boolean captured = false;
+    public void capture() {captured = true;}
+    public boolean isCaptured() {return captured;}
 
     public Checker(String c){
         color = c;
     }
 
-    public void crown()
-    {
-        king = true;
-    }
     public String toString(){
         return getColor();
     }

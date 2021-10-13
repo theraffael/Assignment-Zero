@@ -7,22 +7,26 @@ import java.util.Scanner;
 public class CheckerGame {
 
     public static Board board = new Board();
-    public static ArrayList redCheckers = new ArrayList();
-    public static ArrayList whiteCheckers = new ArrayList();
+
+    public static Player redPlayer = new Player("R");
+    public static Player whitePlayer = new Player("W");
     public static Scanner keyBoard = new Scanner(System.in);
 
-
     public static void main(String[] args) {
-
-        //fills the red and black lists with checker objects.
-        for(int i = 0; i < 12; i++)
-        {
-            redCheckers.add(new Checker("r"));
-            whiteCheckers.add(new Checker("w"));
-        }
-
         setBoard();
-        board.display();
+        runGame();
+    }
+
+    public static void runGame(){
+        Game game = new Game(board, redPlayer, whitePlayer);
+        while (!game.isFinished()){
+            board.display();
+            System.out.println("Player Turn: "+ game.playersTurn().getColor());
+            String move = keyBoard.nextLine();
+
+            // move red pawn at D3 to E4, no logic implemented yet
+            game.newMove(3,2,4,3);
+        }
     }
 
     public static void setBoard()
@@ -34,17 +38,17 @@ public class CheckerGame {
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece(redCheckers.get(k), i + (j+1)%2, j);
+                board.addPiece(redPlayer.getCheckers().get(k), i + (j+1)%2, j);
                 k++;
             }
         }
         k=0;
-        //this for loop sets the black pieces on the bottom of the board in the arrangement of classic checkers
+        //this for loop sets the white pieces on the bottom of the board in the arrangement of classic checkers
         for(int j = 5; j < 8; j++)
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece(whiteCheckers.get(k), i + (j+1)%2, j);
+                board.addPiece(whitePlayer.getCheckers().get(k), i + (j+1)%2, j);
                 k++;
             }
         }
