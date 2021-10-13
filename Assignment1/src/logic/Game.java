@@ -3,6 +3,8 @@ import model.Board;
 import model.Player;
 import model.Checker;
 
+import java.util.ArrayList;
+
 public class Game {
     private int turnCounter = 0;
     private Board board;
@@ -36,8 +38,16 @@ public class Game {
 
     //checks whether the game is finished
     public boolean isFinished(){
-
-        return false;
+        ArrayList checkers = playersTurn().getCheckers();
+        for (int i = 0; i < checkers.size(); i++ ) {
+            Checker c = (Checker)checkers.get(i);
+            // if at least one checker is not captured, the game is not over yet
+            // todo: at least one checker has to be able to move
+            if (!c.isCaptured()){
+                return false;
+            }
+        }
+        return true;
     }
 
     //returns the Player whose turn it is

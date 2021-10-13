@@ -12,7 +12,6 @@ public class Player {
         for(int i = 0; i < 12; i++)
         {
             checkers.add(new Checker(color));
-            checkers.add(new Checker(color));
         }
     }
 
