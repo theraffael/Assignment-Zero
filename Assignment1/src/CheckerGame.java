@@ -8,7 +8,7 @@ public class CheckerGame {
 
     public static Board board = new Board();
     public static ArrayList redCheckers = new ArrayList();
-    public static ArrayList blackCheckers = new ArrayList();
+    public static ArrayList whiteCheckers = new ArrayList();
     public static Scanner keyBoard = new Scanner(System.in);
 
 
@@ -18,7 +18,7 @@ public class CheckerGame {
         for(int i = 0; i < 12; i++)
         {
             redCheckers.add(new Checker("r"));
-            blackCheckers.add(new Checker("b"));
+            whiteCheckers.add(new Checker("w"));
         }
 
         setBoard();
@@ -34,7 +34,7 @@ public class CheckerGame {
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece(redCheckers.get(k), i +j%2, j);
+                board.addPiece(redCheckers.get(k), i + (j+1)%2, j);
                 k++;
             }
         }
@@ -44,7 +44,7 @@ public class CheckerGame {
         {
             for(int i = 0; i < 8; i+=2)
             {
-                board.addPiece(blackCheckers.get(k), i +j%2, j);
+                board.addPiece(whiteCheckers.get(k), i + (j+1)%2, j);
                 k++;
             }
         }
