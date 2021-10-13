@@ -1,7 +1,6 @@
 import logic.*;
 import model.*;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CheckerGame {
@@ -21,7 +20,7 @@ public class CheckerGame {
         Game game = new Game(board, redPlayer, whitePlayer);
         while (!game.isFinished()){
             board.display();
-            System.out.println("Player Turn: "+ game.playersTurn().getColor());
+            System.out.println("Player Turn: "+ game.getActivePlayer().getColor());
             String move = keyBoard.nextLine();
 
             // move red pawn at D3 to E4, no logic implemented yet

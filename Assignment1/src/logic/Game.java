@@ -38,12 +38,12 @@ public class Game {
 
     //checks whether the game is finished
     public boolean isFinished(){
-        ArrayList checkers = playersTurn().getCheckers();
+        ArrayList checkers = getActivePlayer().getCheckers();
         for (int i = 0; i < checkers.size(); i++ ) {
             Checker c = (Checker)checkers.get(i);
             // if at least one checker is not captured, the game is not over yet
             // todo: at least one checker has to be able to move
-            if (!c.isCaptured()){
+            if (!c.isCaptured()) {
                 return false;
             }
         }
@@ -51,7 +51,7 @@ public class Game {
     }
 
     //returns the Player whose turn it is
-    public Player playersTurn(){
+    public Player getActivePlayer(){
         if (turnCounter % 2 == 0){
             return redPlayer;
         }
