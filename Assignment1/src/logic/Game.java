@@ -19,7 +19,7 @@ public class Game {
 
     //starts a new game
     public void newGame(){
-
+        Board board = new Board();
     }
 
     //executes a move
