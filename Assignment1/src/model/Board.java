@@ -1,7 +1,7 @@
 package model;
 
 public class Board {
-    private Checker[][] board = new Checker[8][8];
+    public Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
     public void display(){
         // Clear previous output from the terminal
