@@ -1,7 +1,5 @@
 package logic;
-import model.Board;
-import model.Player;
-import model.Checker;
+import model.*;
 
 import java.util.ArrayList;
 
