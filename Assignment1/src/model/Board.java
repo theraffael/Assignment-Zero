@@ -1,7 +1,8 @@
 package model;
 
 public class Board {
-    public Checker[][] board = new Checker[8][8];
+
+    private Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
     public void display(){
         // Clear previous output from the terminal
@@ -43,4 +44,9 @@ public class Board {
         checkerCount--;
         return toRemove;
     }
+
+    public Checker[][] getBoard() {
+        return board;
+    }
+
 }

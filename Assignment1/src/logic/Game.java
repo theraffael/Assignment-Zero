@@ -30,13 +30,13 @@ public class Game {
     public boolean isLegal(int currentX, int currentY, int nextX, int nextY){
         //first check if current checker can be moved diagonally
         if (turnCounter % 2 == 0) {   //when it is red player's turn    //todo: 13.10.2021: instead of only checking one field diagonally, check for the specific move of the player
-            if (board.board[currentX + 1][currentY + 1] == null){   //checks only to the bottom right
+            if (board.getBoard()[currentX + 1][currentY + 1] == null){   //checks only to the bottom right
                 return true;
             }
             else{return false;}
         }
         else {   //when it is white player's turn
-            if (board.board[currentX-1][currentY - 1] == null){  //checks only to the upper left
+            if (board.getBoard()[currentX-1][currentY - 1] == null){  //checks only to the upper left
                 return true;
             }
             else{return false;}
