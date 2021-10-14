@@ -33,26 +33,45 @@ public class Game {
 
     //checks if single move is legal
     public boolean isMove(int currentX, int currentY, int nextX, int nextY){
+        // todo: check if coordinates are valid (0 <= i <= 7)
 
-        if (turnCounter % 2 == 0) {   //when it is red player's turn
-            if ( ( (board.getBoard()[currentX+1][currentY+1] == board.getBoard()[nextX][nextY]) || (board.getBoard()[currentX-1][currentY+1] == board.getBoard()[nextX][nextY]) ) //first checks if the input of the player is a move
-                    &&
-                    (board.getBoard()[nextX][nextY] == null)){//checks if the field is empty
-                return true;
+        // Start square cannot be empty
+        if (board.board[currentX][currentY] == null) {return false;}
+        // Target square must be empty
+        if (board.board[nextX][nextY] != null) {return false;}
+
+        if (getActivePlayer().getColor() == "R") {   //when it is red player's turn
+            // Return false if checker belongs to white player
+            if (board.board[currentX][currentY].getColor() == "W") {return false;}
+
+            // if checker is pawn, nextY must be 1 larger than currentY
+            int distanceY = nextY - currentY;
+            // if checker is king, take absolute difference between nextY and currentY
+            if (board.board[currentX][currentY].isKing()){
+                distanceY = Math.abs(distanceY);
             }
-            else{
-                return false;
+
+            if (distanceY == 1 && (Math.abs(currentX - nextX) == 1 )){
+            return true;
+
             }
+            else{return false;}
         }
+
         else {   //when it is white player's turn
-            if ( ( (board.getBoard()[currentX-1][currentY-1] == board.getBoard()[nextX][nextY]) || (board.getBoard()[currentX+1][currentY-1] == board.getBoard()[nextX][nextY]) ) //first checks if the input of the player is a move
-                    &&
-                    (board.getBoard()[nextX][nextY] == null)){//checks if the field is empty
+            // Return false if checker belongs to red player
+            if (board.board[currentX][currentY].getColor() == "R") {return false;}
+
+            // if checker is pawn, nextY must be 1 smaller than currentY
+            int distanceY = currentY - nextY;
+            // if checker is king, take absolute difference between nextY and currentY
+            if (board.board[currentX][currentY].isKing()){
+                distanceY = Math.abs(distanceY);
+            }
+            if (distanceY == 1 && (Math.abs(currentX - nextX) == 1 )){
                 return true;
             }
-            else{
-                return false;
-            }
+            else{return false;}
         }
         //todo: 13.10.2021:further checks
     }

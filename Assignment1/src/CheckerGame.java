@@ -20,7 +20,7 @@ public class CheckerGame {
         Game game = new Game(board, redPlayer, whitePlayer);
         while (!game.isFinished()){
             board.display();
-            System.out.println("Player Turn: "+ game.getActivePlayer().getColor());
+            System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
             String move = keyBoard.nextLine();
 
             // move red pawn at D3 to E4, no logic implemented yet

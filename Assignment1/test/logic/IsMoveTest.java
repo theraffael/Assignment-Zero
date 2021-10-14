@@ -1,14 +1,12 @@
 package logic;
 import model.*;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+class IsMoveTest {
     private static Game game;
 
     @BeforeEach
@@ -32,7 +30,7 @@ class GameTest {
 
     4   5 |  [   ]  [   ]  [   ]  [   ]  [   ]  [R_P]  [   ]  [R_P]
 
-    5   6 |  [   ]  [   ]  [W_P]  [   ]  [   ]  [   ]  [W_P]  [   ]
+    5   6 |  [   ]  [   ]  [W_K]  [   ]  [   ]  [   ]  [W_P]  [   ]
 
     6   7 |  [   ]  [   ]  [   ]  [   ]  [   ]  [W_P]  [   ]  [   ]
 
@@ -42,6 +40,7 @@ class GameTest {
         board.addPiece(whitePlayer.getCheckers().get(0), 6,1);
         board.addPiece(whitePlayer.getCheckers().get(1), 2,3);
         board.addPiece(whitePlayer.getCheckers().get(2), 2,5);
+        board.board[2][5].crown();
         board.addPiece(whitePlayer.getCheckers().get(3), 6,5);
         board.addPiece(whitePlayer.getCheckers().get(4), 5,6);
 
@@ -55,7 +54,7 @@ class GameTest {
     }
 
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testOnlyMoveInAllowedDirectionRed() {
         // Red turn
         game.setTurnCounter(0);
@@ -66,7 +65,7 @@ class GameTest {
                 "Move up (5,4 to 4,3) with red checker");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testOnlyMoveInAllowedDirectionWhite() {
         // White turn
         game.setTurnCounter(1);
@@ -77,7 +76,18 @@ class GameTest {
                 "Move down (6,1 to 7,2) with white checker");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    void testKingsCanMoveUpAndDown() {
+        // White turn
+        game.setTurnCounter(1);
+        // Move up and down with white king
+        assertTrue(game.isMove(2,5,3,4),
+                "Move up (2,5 to 3,4) with white checker");
+        assertTrue(game.isMove(2,5,1,6),
+                "Move down (2,5 to 1,6) with white checker");
+    }
+
+    @Test
     void testOnlyMoveToEmptySquare() {
         // Red turn
         game.setTurnCounter(0);
@@ -85,7 +95,7 @@ class GameTest {
         assertTrue(game.isMove(3,2,4,3), "4,3 is an empty square");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testMoveToDiagonallyAdjacent() {
         // Red turn
         game.setTurnCounter(0);
@@ -94,7 +104,7 @@ class GameTest {
         assertFalse(game.isMove(5,2,4,7), "5,2 and 4,7 are not diagonally adjacent");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testOnlyMoveCurrentPlayerCheckers() {
         // Red turn
         game.setTurnCounter(0);

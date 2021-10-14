@@ -21,6 +21,10 @@ public class Player {
     }
 
     public String getColor() {
+        return color;
+    }
+
+    public String getColorWord() {
         if (color == "W") {
             return "White";
         }

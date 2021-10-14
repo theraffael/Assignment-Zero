@@ -1,6 +1,7 @@
 package model;
 
 public class Checker {
+
     private String color;
 
     private boolean king = false;
@@ -20,11 +21,15 @@ public class Checker {
         color = c;
     }
 
-    public String toString(){
-        return getColor();
+    public String getColor() {
+        return color;
     }
 
-    public String getColor() {
+    public String toString(){
+        return getSymbol();
+    }
+
+    public String getSymbol() {
         if (king){
             return color + "_K";
         }
