@@ -30,8 +30,8 @@ public class Game {
     public boolean isLegal(int currentX, int currentY, int nextX, int nextY){
         //first check if current checker can be moved diagonally
         if (turnCounter % 2 == 0) {   //when it is red player's turn    //todo: 13.10.2021: instead of only checking one field diagonally, check for the specific move of the player
-            if (board.board[currentX + 1][currentY + 1] == null){   //checks only to the bottom right
-                return true;
+            if (board.board[currentX][currentY] == null){   //checks only to the bottom right
+                return false;
             }
             else{return false;}
         }
