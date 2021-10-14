@@ -89,4 +89,12 @@ public class Game {
     public void CalcPossibleMoves(){
 
     }
+
+    public void increaseTurnCounter() {
+        this.turnCounter++;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+    }
 }
