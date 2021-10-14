@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Player {
     private String color;
     private ArrayList checkers = new ArrayList();
+    private boolean canMove;
 
     public Player(String color) {
         this.color = color;
@@ -26,5 +27,12 @@ public class Player {
         else {
             return "Red";
         }
+    }
+    public boolean isCanMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 }
