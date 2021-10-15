@@ -33,7 +33,10 @@ public class Game {
 
     //checks if single move is legal
     public boolean isMove(int currentX, int currentY, int nextX, int nextY){
-        // todo: check if coordinates are valid (0 <= i <= 7)
+        // Coordinates of start square must be valid
+        if ((currentX < 0) || (currentY < 0) || (currentX > 7) || (currentY > 7)){return false;}
+        // Coordinates of target square must be valid
+        if ((nextX < 0) || (nextY < 0) || (nextX > 7) || (nextY > 7)){return false;}
 
         // Start square cannot be empty
         if (board.board[currentX][currentY] == null) {return false;}
