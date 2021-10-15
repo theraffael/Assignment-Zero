@@ -38,7 +38,7 @@ public class CheckerGame {
             for(int i = 0; i < 8; i+=2)
             {
                 board.addPiece(redPlayer.getCheckers().get(k), i + (j+1)%2, j);
-                redPlayer.setCheckersPositions(i+(j+1)%2,j);
+                redPlayer.setCheckerPosition(i+(j+1)%2,j);
                 k++;
             }
         }
@@ -49,7 +49,7 @@ public class CheckerGame {
             for(int i = 0; i < 8; i+=2)
             {
                 board.addPiece(whitePlayer.getCheckers().get(k), i + (j+1)%2, j);
-                whitePlayer.setCheckersPositions(i+(j+1)%2,j);
+                whitePlayer.setCheckerPosition(i+(j+1)%2,j);
                 k++;
             }
         }

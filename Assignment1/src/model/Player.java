@@ -23,15 +23,18 @@ public class Player {
         return checkers;
     }
 
-    public void setCheckersPositions(int x, int y){
+    //creates an ArrayList with the respective x- and y coordinates of a checker and adds it to the checkersPositions ArrayList
+    public void setCheckerPosition(int x, int y){
         ArrayList<Integer> coordinates = new ArrayList<Integer>();
         coordinates.add(x);
         coordinates.add(y);
         checkersPositions.add(coordinates);
     }
+    //returns an ArrayList of all the positions of the checkers
     public ArrayList getCheckersPositions() {
         return checkersPositions;
     }
+    //returns only the position of the "i-th" checker
     public ArrayList<Integer> getCheckerPosition(int i){
         ArrayList allPositions = getCheckersPositions();
         ArrayList<Integer> wantedPosition = (ArrayList<Integer>) allPositions.get(i);
