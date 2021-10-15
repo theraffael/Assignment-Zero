@@ -20,26 +20,32 @@ public class CheckerGame {
 
     public static void runGame(){
         Game game = new Game(board, redPlayer, whitePlayer);
+        board.display();
+        System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
         while (!game.isFinished()){
             boolean isInputCorrect = false;
+            boolean isMove = false;
             String move = null;
-            board.display();
-            System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
-            while(!isInputCorrect){
+
+            while(!isInputCorrect && !isMove){
                 System.out.println("Please enter coordinate format in form of [a1]x[b2]");
                 move = keyBoard.nextLine();
                 isInputCorrect = checkInputIsValid(move);
-                if (isInputCorrect){
-                    break;
-                }
-                else{
+                if (!isInputCorrect){
                     System.out.println("Coordinate format is incorrect, please try again");
                 }
+                String[] convertedMove = convertInputToXY(move);
+                isMove = game.isMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
+                if (isMove) {
+                    game.newMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
+                    board.display();
+                    System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
+                }
+                else {
+                    System.out.println("Move is invalid, please try again");
+                    break;
+                }
             }
-            String[] convertedMove = convertInputToXY(move);
-
-            // move red pawn at D3 to E4, no logic implemented yet
-            game.newMove(Integer.parseInt(convertedMove[0])-1,Integer.parseInt(convertedMove[1])-1,Integer.parseInt(convertedMove[2])-1,Integer.parseInt(convertedMove[3])-1);
         }
     }
 
