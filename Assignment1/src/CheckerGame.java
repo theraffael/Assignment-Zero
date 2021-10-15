@@ -36,13 +36,14 @@ public class CheckerGame {
                     System.out.println("Coordinate format is incorrect, please try again");
                 }
             }
-            String convertedMove = convertInputToXY(move);
+            String[] convertedMove = convertInputToXY(move);
+
             // move red pawn at D3 to E4, no logic implemented yet
-            game.newMove(convertedMove.charAt(0),convertedMove.charAt(1),convertedMove.charAt(2),convertedMove.charAt(3));
+            game.newMove(Integer.parseInt(convertedMove[0])-1,Integer.parseInt(convertedMove[1])-1,Integer.parseInt(convertedMove[2])-1,Integer.parseInt(convertedMove[3])-1);
         }
     }
 
-    public static String convertInputToXY(String s){
+    public static String[] convertInputToXY(String s){
         s = s.replaceAll("[\\[x\\]]","").toLowerCase(Locale.ROOT);
         String newstring = "";
         for (int i = 0; i < s.length(); i++) {
@@ -54,7 +55,7 @@ public class CheckerGame {
                 newstring = newstring + ch;
             }
         }
-        return newstring;
+        return newstring.split("");
     }
     public static boolean checkInputIsValid(String input){
         Pattern p = Pattern.compile("\\[[a-z][1-8]\\]x\\[[a-z][1-8]\\]");
