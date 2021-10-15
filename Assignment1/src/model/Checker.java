@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+
+
 public class Checker {
 
     private String color;
@@ -16,6 +19,9 @@ public class Checker {
     private boolean captured = false;
     public void capture() {captured = true;}
     public boolean isCaptured() {return captured;}
+
+    private int xPos = -1;
+    private int yPos = -1;
 
     public Checker(String c){
         color = c;
@@ -36,7 +42,5 @@ public class Checker {
         else{
             return color + "_P";
         }
-
     }
-
 }

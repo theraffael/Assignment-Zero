@@ -109,7 +109,10 @@ public class Game {
 
     //calculates all possible moves
     public void CalcPossibleMoves(){
-
+        ArrayList checkers = getActivePlayer().getCheckers();
+        for (int i = 0; i<checkers.size(); i++){
+            Checker c = (Checker)checkers.get(i);
+        }
     }
 
     public void increaseTurnCounter() {
