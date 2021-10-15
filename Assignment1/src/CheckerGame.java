@@ -1,6 +1,8 @@
 import logic.*;
 import model.*;
 
+import java.util.Locale;
+import java.util.regex.*;
 import java.util.Scanner;
 
 public class CheckerGame {
@@ -22,10 +24,17 @@ public class CheckerGame {
             board.display();
             System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
             String move = keyBoard.nextLine();
-
+            boolean isInputCorrect = checkInputIsValid(move);
             // move red pawn at D3 to E4, no logic implemented yet
             game.newMove(3,2,4,3);
         }
+    }
+
+    public static boolean checkInputIsValid(String input){
+        Pattern p = Pattern.compile("\\[[a-z][1-8]\\]x\\[[a-z][1-8]\\]");
+        String lowercase = input.toLowerCase(Locale.ROOT);
+        Matcher m = p.matcher(lowercase);
+        return m.matches();
     }
 
     public static void setBoard()
