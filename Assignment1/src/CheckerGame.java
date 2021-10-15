@@ -33,19 +33,45 @@ public class CheckerGame {
                 isInputCorrect = checkInputIsValid(move);
                 if (!isInputCorrect){
                     System.out.println("Coordinate format is incorrect, please try again");
+                    break;
                 }
+                // check if single move possible
                 String[] convertedMove = convertInputToXY(move);
-                isMove = game.isMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
-                if (isMove) {
-                    game.newMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
-                    board.display();
-                    System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
+                String moveType = checkIfSingleOrJump(convertedMove);
+                if (moveType == "Single") {
+                    isMove = game.isMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
+                    if (isMove) {
+                        game.newMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
+                        board.display();
+                        System.out.println("Player Turn: " + game.getActivePlayer().getColorWord());
+                        break;
+                    }
+                    else{
+                        System.out.println("Move is invalid, please try again");
+                        break;
+                    }
                 }
+                // todo: check if jump possible
+                else if(moveType == "Jump"){}
+
                 else {
                     System.out.println("Move is invalid, please try again");
                     break;
                 }
             }
+        }
+    }
+
+    public static String checkIfSingleOrJump(String[] convertedMove){
+        int x = Math.abs(Integer.parseInt(convertedMove[0]) - Integer.parseInt(convertedMove[2]));
+        if (x == 1){
+            return "Single";
+        }
+        if (x==2){
+            return "Jump";
+        }
+        else{
+            return "";
         }
     }
 
