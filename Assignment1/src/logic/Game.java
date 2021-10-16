@@ -88,29 +88,29 @@ public class Game {
 
 
     // Start square cannot be empty
-        if (board.board[currentX][currentY] == null) {return false;}
+        if (board.getBoard()[currentX][currentY] == null) {return false;}
     // Target square must be empty
-        if (board.board[nextX][nextY] != null) {return false;}
+        if (board.getBoard()[nextX][nextY] != null) {return false;}
 
         if (getActivePlayer().getColor() == "R") {   //when it is red player's turn
         // Return false if checker belongs to white player
-            if (board.board[currentX][currentY].getColor() == "W") {return false;}
+            if (board.getBoard()[currentX][currentY].getColor() == "W") {return false;}
 
             // if checker is pawn, nextY must be 2 larger than currentY (because of the jump)
             int distanceY = nextY - currentY;
             // if checker is king, take absolute difference between nextY and currentY
-            if (board.board[currentX][currentY].isKing()) {
+            if (board.getBoard()[currentX][currentY].isKing()) {
                 distanceY = Math.abs(distanceY);
             }
             if (distanceY == 2 && (Math.abs(currentX - nextX) == 2 )){
                 return true;
             } else {
                 // Return false if checker belongs to red player
-                if (board.board[currentX][currentY].getColor() == "R") {return false;}
+                if (board.getBoard()[currentX][currentY].getColor() == "R") {return false;}
                 // if checker is pawn, nextY must be 2 smaller than currentY
-                int distanceY = currentY - nextY;
+                distanceY = currentY - nextY;
                 // if checker is king, take absolute difference between nextY and currentY
-                if (board.board[currentX][currentY].isKing()){
+                if (board.getBoard()[currentX][currentY].isKing()){
                     distanceY = Math.abs(distanceY);
                 }
                 if (distanceY != 2 && (Math.abs(currentX - nextX) != 2 )){
@@ -120,15 +120,12 @@ public class Game {
             }
 
 
-
         }
 
+        return true;
 
     }
 
-    public boolean isJump(int currentX, int currentY, int nextX, int nextY){
-
-    }
 
     //checks whether the game is finished
     public boolean isFinished(){
