@@ -40,7 +40,7 @@ class IsMoveTest {
         board.addPiece(whitePlayer.getCheckers().get(0), 6,1);
         board.addPiece(whitePlayer.getCheckers().get(1), 2,3);
         board.addPiece(whitePlayer.getCheckers().get(2), 2,5);
-        board.board[2][5].crown();
+        board.getBoard()[2][5].crown();
         board.addPiece(whitePlayer.getCheckers().get(3), 6,5);
         board.addPiece(whitePlayer.getCheckers().get(4), 5,6);
 
