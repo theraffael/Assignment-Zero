@@ -53,8 +53,13 @@ public class Game {
         else if(moveType == "Jump"){
             isMove = this.isLegalJump(fromX, fromY, toX, toY);
             if (isMove) {
+                //add and remove moving checker
                 Checker checker = board.removePiece(fromX, fromY);
                 board.addPiece(checker, toX, toY);
+                //remove captured checker
+                int x = Math.abs(fromX-toX);
+                int y = Math.abs(fromY-toY);
+                board.removePiece(x, y);
                 turnCounter++;
                 board.display();
                 System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
