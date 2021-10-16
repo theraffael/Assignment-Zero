@@ -12,6 +12,16 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
 
+    public boolean isMove() {
+        return isMove;
+    }
+
+    public void setMove(boolean move) {
+        isMove = move;
+    }
+
+    private boolean isMove;
+
     public Game(Board board, Player redPlayer, Player whitePlayer) {
         this.board = board;
         this.redPlayer = redPlayer;
@@ -25,10 +35,43 @@ public class Game {
         /*  checking for validity    */
         //isMove(fromX, fromY, toX, toY);
         //isJump(fromX, fromY, toX, toY);
+        String moveType = checkIfSingleOrJump(fromX, fromY, toX, toY);
+        if (moveType == "Single") {
+            isMove = this.isMove(fromX, fromY, toX, toY);
+            if (isMove) {
+                Checker checker = board.removePiece(fromX, fromY);
+                board.addPiece(checker, toX, toY);
+                turnCounter++;
+                board.display();
+                System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
+            }
+            else{
+                System.out.println("Move is invalid, please try again");
+            }
+        }
+        // todo: check if jump possible
+        else if(moveType == "Jump"){
+            isMove = this.isLegalJump(fromX, fromY, toX, toY);
+            if (isMove) {
+                //add and remove moving checker
+                Checker checker = board.removePiece(fromX, fromY);
+                board.addPiece(checker, toX, toY);
+                //remove captured checker
+                int x = Math.abs(fromX-toX);
+                int y = Math.abs(fromY-toY);
+                board.removePiece(x, y);
+                turnCounter++;
+                board.display();
+                System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
+            }
+            else{
+                System.out.println("Move is invalid, please try again");
+            }
+        }
 
-        Checker checker = board.removePiece(fromX, fromY);
-        board.addPiece(checker, toX, toY);
-        turnCounter++;
+        else {
+            System.out.println("Move is invalid, please try again");
+        }
     }
 
     //checks if single move is legal
@@ -142,6 +185,18 @@ public class Game {
 
     }
 
+    public static String checkIfSingleOrJump(int fromX, int fromY, int toX, int toY){
+        int x = Math.abs(fromX - toX);
+        if (x == 1){
+            return "Single";
+        }
+        if (x==2){
+            return "Jump";
+        }
+        else{
+            return "";
+        }
+    }
 
     //checks whether the game is finished
     public boolean isFinished(){
