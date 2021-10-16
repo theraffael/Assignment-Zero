@@ -102,9 +102,19 @@ public class Game {
             if (board.getBoard()[currentX][currentY].isKing()) {
                 distanceY = Math.abs(distanceY);
             }
+
+            // return false if jumping over own checker red player over red checker
+            int opponentX = (currentX + nextX) / 2;
+            int opponentY = (currentY + nextY) / 2;
+            if (board.getBoard()[opponentX][opponentY].getColor() == "R") {
+                return false;
+            }
+
             if (distanceY == 2 && (Math.abs(currentX - nextX) == 2 )){
                 return true;
-            } else {
+
+            } else // white player's turn
+            {
                 // Return false if checker belongs to red player
                 if (board.getBoard()[currentX][currentY].getColor() == "R") {return false;}
                 // if checker is pawn, nextY must be 2 smaller than currentY
@@ -115,6 +125,12 @@ public class Game {
                 }
                 if (distanceY != 2 && (Math.abs(currentX - nextX) != 2 )){
                     return false;
+                }
+                // return false if jumping over own checker white player over white checker
+                int opponentX = (currentX + nextX) / 2;
+                int opponentY = (currentY + nextY) / 2;
+                if (board.getBoard()[opponentX][opponentY].getColor() == "W"){
+                    return false; //
                 }
                 else{return true;}
             }
