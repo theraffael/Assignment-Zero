@@ -4,6 +4,7 @@ import model.Player;
 import model.Checker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //todo: if it is a jump, then the checker of the rival player has to be removed
 //todo: move has to be of length 1 (now it can move more than one field)
@@ -14,15 +15,15 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
 
-    public boolean isMove() {
-        return isMove;
+    public boolean isValidMove() {
+        return isValidMove;
     }
 
-    public void setMove(boolean move) {
-        isMove = move;
+    public void setValidMove(boolean validMove) {
+        isValidMove = validMove;
     }
 
-    private boolean isMove;
+    private boolean isValidMove;
 
     public Game(Board board, Player redPlayer, Player whitePlayer) {
         this.board = board;
@@ -39,8 +40,8 @@ public class Game {
         //isJump(fromX, fromY, toX, toY);
         String moveType = checkIfSingleOrJump(fromX, fromY, toX, toY);
         if (moveType == "Single") {
-            isMove = this.isMove(fromX, fromY, toX, toY);
-            if (isMove) {
+            isValidMove = this.isMove(fromX, fromY, toX, toY);
+            if (isValidMove) {
                 Checker checker = board.removePiece(fromX, fromY);
                 board.addPiece(checker, toX, toY);
                 turnCounter++;
@@ -53,8 +54,8 @@ public class Game {
         }
         // todo: check if jump possible
         else if(moveType == "Jump"){
-            isMove = this.isSingleJump(fromX, fromY, toX, toY);
-            if (isMove) {
+            isValidMove = this.isSingleJump(fromX, fromY, toX, toY);
+            if (isValidMove) {
                 //add and remove moving checker
                 Checker checker = board.removePiece(fromX, fromY);
                 board.addPiece(checker, toX, toY);
@@ -215,11 +216,88 @@ public class Game {
         }
     }
 
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+    }
+
     public void increaseTurnCounter() {
         this.turnCounter++;
     }
 
-    public void setTurnCounter(int turnCounter) {
-        this.turnCounter = turnCounter;
+    public void newMove(ArrayList<List<Integer>> convertedMoves) {
+        Board testBoard = new Board(board.getBoard());
+
+        if (convertedMoves.size() == 1){
+            List<Integer> move = convertedMoves.get(0);
+            int fromX = move.get(0);
+            int fromY = move.get(1);
+            int toX = move.get(2);
+            int toY = move.get(3);
+
+            if (isMove(move)){
+                // todo: check if no jump is possible anywhere
+                isValidMove = true;
+                // perform move
+                Checker checker = testBoard.removePiece(fromX, fromY);
+                testBoard.addPiece(checker, toX, toY);
+            }
+            else if (isSingleJump(move)){
+                // perform single jump
+                isValidMove = true;
+                Checker checker = testBoard.removePiece(fromX, fromY);
+                testBoard.addPiece(checker, toX, toY);
+
+                int distanceX = toX - fromX;
+                int distanceY = toY - fromY;
+
+                Checker capturedChecker = testBoard.removePiece(fromX + distanceX/2, fromY + distanceY/2);
+                capturedChecker.capture();
+
+                // todo: check if no more jump is possible
+            }
+            else{
+                isValidMove = false;
+            }
+
+        }
+
+        else {
+            for (int i = 0; i < convertedMoves.size(); i++){
+                List<Integer> move = convertedMoves.get(i);
+                int fromX = move.get(0);
+                int fromY = move.get(1);
+                int toX = move.get(2);
+                int toY = move.get(3);
+                if (!isSingleJump(move)) {
+                    isValidMove = false;
+                    break;}
+                else{
+                    isValidMove = true;
+                    // perform jump, update testboard
+                    Checker checker = testBoard.removePiece(fromX, fromY);
+                    testBoard.addPiece(checker, toX, toY);
+                    int distanceX = toX - fromX;
+                    int distanceY = toY - fromY;
+                    Checker capturedChecker = testBoard.removePiece(fromX + distanceX/2, fromY + distanceY/2);
+                    capturedChecker.capture();
+                }
+            }
+        }
+        if (isValidMove){
+            turnCounter++;
+            board = testBoard;
+            board.display();
+            System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
+        }
+
+
+    }
+
+    private boolean isSingleJump(List<Integer> integers) {
+        return isSingleJump(integers.get(0), integers.get(1), integers.get(2), integers.get(3));
+    }
+
+    private boolean isMove(List<Integer> integers) {
+        return isMove(integers.get(0), integers.get(1), integers.get(2), integers.get(3));
     }
 }

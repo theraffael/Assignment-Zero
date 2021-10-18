@@ -1,8 +1,10 @@
 package model;
 
+import com.sun.tools.javac.comp.Check;
+
 import java.util.Arrays;
 
-public class Board {
+public class Board{
     private Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
     public void display(){
@@ -49,4 +51,13 @@ public class Board {
     public Checker[][] getBoard() {
         return board;
     }
+
+    public Board(Checker[][] oldBoard){
+        this.board = oldBoard;
+    }
+
+    public Board() {};
+
 }
+
+
