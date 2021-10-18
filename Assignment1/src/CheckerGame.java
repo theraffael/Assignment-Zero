@@ -1,9 +1,8 @@
 import logic.*;
 import model.*;
 
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.*;
-import java.util.Scanner;
 
 public class CheckerGame {
 
@@ -26,8 +25,8 @@ public class CheckerGame {
         while (!game.isFinished()){
             boolean isInputCorrect = false;
             String move = null;
-            game.setMove(false);
-            while(!isInputCorrect && !game.isMove()){
+            game.setValidMove(false);
+            while(!isInputCorrect && !game.isValidMove()){
                 System.out.println("Please enter coordinate format in form of [a1]x[b2]");
                 move = keyBoard.nextLine();
                 isInputCorrect = checkInputIsValid(move);
@@ -36,32 +35,35 @@ public class CheckerGame {
                     break;
                 }
 
-                String[] convertedMove = convertInputToXY(move);
-
-                game.newMove(Integer.parseInt(convertedMove[0]) - 1, Integer.parseInt(convertedMove[1]) - 1, Integer.parseInt(convertedMove[2]) - 1, Integer.parseInt(convertedMove[3]) - 1);
+                ArrayList<List<Integer>> convertedMoves = convertInputToXY(move);
+                System.out.println(convertedMoves);
+                game.newMove(convertedMoves);
 
             }
         }
     }
 
 
+    public static ArrayList<List<Integer>> convertInputToXY(String s){
+        String[] moves = s.toLowerCase(Locale.ROOT).split("x");
+        ArrayList<List<Integer>> allMoves = new ArrayList();
+        // allow for multi jump moves
+        for (int i = 0; i < moves.length-1; i++) {
+            String current = moves[i];
+            String next = moves[i+1];
 
-    public static String[] convertInputToXY(String s){
-        s = s.replaceAll("[\\[x\\]]","").toLowerCase(Locale.ROOT);
-        String newstring = "";
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (Character.isAlphabetic(ch)) {
-                int pos = ch - 'a' + 1;
-                newstring = newstring + pos;
-            } else {
-                newstring = newstring + ch;
-            }
+            int currentX = current.charAt(0) - 'a';
+            int currentY = Integer.parseInt(current.substring(1))-1;
+            int nextX = next.charAt(0) - 'a';
+            int nextY = Integer.parseInt(next.substring(1)) -1;
+
+            List<Integer> newMove = Arrays.asList(currentX, currentY, nextX, nextY);
+            allMoves.add(newMove);
         }
-        return newstring.split("");
+        return allMoves;
     }
     public static boolean checkInputIsValid(String input){
-        Pattern p = Pattern.compile("\\[[a-z][1-8]\\]x\\[[a-z][1-8]\\]");
+        Pattern p = Pattern.compile("[a-z][1-8](x[a-z][1-8])+");
         String lowercase = input.toLowerCase(Locale.ROOT);
         Matcher m = p.matcher(lowercase);
         return m.matches();
