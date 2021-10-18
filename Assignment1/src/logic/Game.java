@@ -6,6 +6,9 @@ import model.Checker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//todo: if it is a jump, then the checker of the rival player has to be removed
+//todo: move has to be of length 1 (now it can move more than one field)
+
 public class Game {
     private int turnCounter = 0;
     private Board board;
@@ -97,10 +100,8 @@ public class Game {
                 distanceY = Math.abs(distanceY);
             }
 
-            if (distanceY == 1 && (Math.abs(currentX - nextX) == 1 )){
-            return true;
+            if (distanceY == 1 && (Math.abs(currentX - nextX) == 1 )){return true;}
 
-            }
             else{return false;}
         }
 
@@ -119,12 +120,10 @@ public class Game {
             }
             else{return false;}
         }
-        //todo: 13.10.2021:further checks
     }
     //checks if a move is a jump/capture => if at least one jump on a single turn is available, at least one jump has to be taken.
     public boolean isJump(int currentX, int currentY, int nextX, int nextY){
         return true;
-
     }
 
     public boolean isLegalJump(int currentX, int currentY, int nextX, int nextY){
@@ -177,12 +176,8 @@ public class Game {
                 }
                 else{return true;}
             }
-
-
         }
-
         return true;
-
     }
 
     public static String checkIfSingleOrJump(int fromX, int fromY, int toX, int toY){
@@ -205,7 +200,7 @@ public class Game {
             Checker c = (Checker)checkers.get(i);
             // if at least one checker is not captured, the game is not over yet
             // todo: at least one checker has to be able to move
-            if (true/*!c.isCaptured()*/) {//todo: debug isCaptured()...
+            if (!c.isCaptured()) {//todo: debug isCaptured()...
                 return false;
             }
         }
