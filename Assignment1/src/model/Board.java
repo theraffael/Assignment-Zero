@@ -1,6 +1,5 @@
 package model;
-
-
+import logic.Game;
 
 import java.util.Arrays;
 
@@ -36,19 +35,7 @@ public class Board{
 
     public void addPiece(Object checker, int x, int y)
     {
-        Checker checkers = (Checker)checker;
-        String playerColor = checkers.getColor();
-        if (playerColor == "White"){
-            if (y == 0){
-                checkers.crown();
-            }
-        }
-        else{
-            if (y == 7){
-                checkers.crown();
-            }
-        }
-        board[x][y] = checkers;
+        board[x][y] = (Checker)checker;
         checkerCount ++;
     }
 

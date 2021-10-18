@@ -10,6 +10,10 @@ import java.util.List;
 //todo: move has to be of length 1 (now it can move more than one field)
 
 public class Game {
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
     private int turnCounter = 0;
     private Board board;
     private Player redPlayer;
@@ -31,64 +35,7 @@ public class Game {
         this.whitePlayer = whitePlayer;
     }
 
-    //executes a move
-    // todo: 13.10.2021: check if move is valid
-    public void newMove(int fromX, int fromY, int toX, int toY){
-        int x;
-        int y;
-        /*  checking for validity    */
-        //isMove(fromX, fromY, toX, toY);
-        //isJump(fromX, fromY, toX, toY);
-        String moveType = checkIfSingleOrJump(fromX, fromY, toX, toY);
-        if (moveType == "Single") {
-            isValidMove = this.isMove(fromX, fromY, toX, toY);
-            if (isValidMove) {
-                Checker checker = board.removePiece(fromX, fromY);
-                board.addPiece(checker, toX, toY);
-                turnCounter++;
-                board.display();
-                System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
-            }
-            else{
-                System.out.println("Move is invalid, please try again");
-            }
-        }
-        // todo: check if jump possible
-        else if(moveType == "Jump"){
-            isValidMove = this.isSingleJump(fromX, fromY, toX, toY);
-            if (isValidMove) {
-                //add and remove moving checker
-                Checker checker = board.removePiece(fromX, fromY);
-                board.addPiece(checker, toX, toY);
-                //remove captured checker
 
-                if (fromX-toX < 0){
-                    x = fromX+1;
-                }
-                else{
-                    x = fromX - 1;
-                }
-                if (fromY-toY < 0){
-                    y = fromY+1;
-                }
-                else{
-                    y = fromY- 1;
-                }
-
-                board.removePiece(x, y);
-                turnCounter++;
-                board.display();
-                System.out.println("Player Turn: " + this.getActivePlayer().getColorWord());
-            }
-            else{
-                System.out.println("Move is invalid, please try again");
-            }
-        }
-
-        else {
-            System.out.println("Move is invalid, please try again");
-        }
-    }
 
     //checks if single move is legal
     public boolean isMove(int currentX, int currentY, int nextX, int nextY){
@@ -252,18 +199,23 @@ public class Game {
                 isValidMove = true;
                 // perform move
                 Checker checker = testBoard.removePiece(fromX, fromY);
+                isCrown(checker, toY);
                 testBoard.addPiece(checker, toX, toY);
             }
             else if (isSingleJump(move)){
                 // perform single jump
                 isValidMove = true;
                 Checker checker = testBoard.removePiece(fromX, fromY);
+
+                isCrown(checker, toY);
+
                 testBoard.addPiece(checker, toX, toY);
 
                 int distanceX = toX - fromX;
                 int distanceY = toY - fromY;
 
                 Checker capturedChecker = testBoard.removePiece(fromX + distanceX/2, fromY + distanceY/2);
+
                 capturedChecker.capture();
 
                 // todo: check if no more jump is possible
@@ -288,6 +240,7 @@ public class Game {
                     isValidMove = true;
                     // perform jump, update testboard
                     Checker checker = testBoard.removePiece(fromX, fromY);
+                    isCrown(checker, toY);
                     testBoard.addPiece(checker, toX, toY);
                     int distanceX = toX - fromX;
                     int distanceY = toY - fromY;
@@ -306,6 +259,21 @@ public class Game {
 
     }
 
+    private void isCrown(Checker checker, int toY){
+
+        String playerColor = checker.getColor();
+        if (playerColor == "W"){
+            if (toY == 0){
+                checker.crown();
+            }
+        }
+        else{
+            if (toY == 7){
+                checker.crown();
+            }
+        }
+
+    }
     private boolean isSingleJump(List<Integer> integers) {
         return isSingleJump(integers.get(0), integers.get(1), integers.get(2), integers.get(3));
     }
