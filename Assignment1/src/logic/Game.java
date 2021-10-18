@@ -33,7 +33,8 @@ public class Game {
     //executes a move
     // todo: 13.10.2021: check if move is valid
     public void newMove(int fromX, int fromY, int toX, int toY){
-
+        int x;
+        int y;
         /*  checking for validity    */
         //isMove(fromX, fromY, toX, toY);
         //isJump(fromX, fromY, toX, toY);
@@ -59,8 +60,20 @@ public class Game {
                 Checker checker = board.removePiece(fromX, fromY);
                 board.addPiece(checker, toX, toY);
                 //remove captured checker
-                int x = Math.abs(fromX-toX);
-                int y = Math.abs(fromY-toY);
+
+                if (fromX-toX < 0){
+                    x = fromX+1;
+                }
+                else{
+                    x = fromX - 1;
+                }
+                if (fromY-toY < 0){
+                    y = fromY+1;
+                }
+                else{
+                    y = fromY- 1;
+                }
+
                 board.removePiece(x, y);
                 turnCounter++;
                 board.display();
