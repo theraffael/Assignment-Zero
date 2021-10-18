@@ -34,6 +34,8 @@ public class Board {
 
     public void addPiece(Object checker, int x, int y)
     {
+        Checker checkers = (Checker)checker;
+        String playerColor = checkers.getColor();
         board[x][y] = (Checker)checker;
         checkerCount ++;
     }
