@@ -1,6 +1,6 @@
 package model;
 
-import com.sun.tools.javac.comp.Check;
+
 
 import java.util.Arrays;
 
@@ -38,7 +38,17 @@ public class Board{
     {
         Checker checkers = (Checker)checker;
         String playerColor = checkers.getColor();
-        board[x][y] = (Checker)checker;
+        if (playerColor == "White"){
+            if (y == 0){
+                checkers.crown();
+            }
+        }
+        else{
+            if (y == 7){
+                checkers.crown();
+            }
+        }
+        board[x][y] = checkers;
         checkerCount ++;
     }
 

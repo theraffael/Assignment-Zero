@@ -27,7 +27,7 @@ public class CheckerGame {
             String move = null;
             game.setValidMove(false);
             while(!isInputCorrect && !game.isValidMove()){
-                System.out.println("Please enter coordinate format in form of [a1]x[b2]");
+                System.out.println("Please enter coordinate format in form of a1xb2");
                 move = keyBoard.nextLine();
                 isInputCorrect = checkInputIsValid(move);
                 if (!isInputCorrect){
