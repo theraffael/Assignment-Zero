@@ -2,11 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
-
 public class Checker {
 
     private String color;
 
+    public ArrayList<Coordinate> getPossibleMoves() {
+        return possibleMoves;
+    }
+
+    public void setPossibleMoves(int x, int y, String s) {
+        Coordinate coordinate = new Coordinate(x, y, s);
+        this.possibleMoves.add(coordinate);
+    }
+
+    private ArrayList<Coordinate> possibleMoves = new ArrayList<Coordinate>();
     private boolean king = false;
     public void crown()
     {
@@ -20,8 +29,24 @@ public class Checker {
     public void capture() {captured = true;}
     public boolean isCaptured() {return captured;}
 
-    private int xPos = -1;
-    private int yPos = -1;
+    public int getxPos() {
+        return xPos;
+    }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    private int xPos;
+    private int yPos;
 
     public Checker(String c){
         color = c;

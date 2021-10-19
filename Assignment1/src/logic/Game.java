@@ -2,8 +2,10 @@ package logic;
 import model.Board;
 import model.Player;
 import model.Checker;
+import model.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //todo: if it is a jump, then the checker of the rival player has to be removed
@@ -18,6 +20,16 @@ public class Game {
     private Board board;
     private Player redPlayer;
     private Player whitePlayer;
+
+    public ArrayList<Coordinate> getAllPossibleMoves() {
+        return allPossibleMoves;
+    }
+
+    public void setAllPossibleMoves() {
+         this.allPossibleMoves = new ArrayList<Coordinate>();
+    }
+
+    private ArrayList<Coordinate> allPossibleMoves;
 
     public boolean isValidMove() {
         return isValidMove;
@@ -146,16 +158,79 @@ public class Game {
 
     //checks whether the game is finished
     public boolean isFinished(){
-        ArrayList checkers = getActivePlayer().getCheckers();
-        for (int i = 0; i < checkers.size(); i++ ) {
-            Checker c = (Checker)checkers.get(i);
-            // if at least one checker is not captured, the game is not over yet
-            // todo: at least one checker has to be able to move
-            if (!c.isCaptured()) {//todo: debug isCaptured()...
-                return false;
+        ArrayList<Checker> checkers = getActivePlayer().getCheckers();
+        for (Checker checker : checkers) {
+            if (!checker.isKing()) {
+                //check if single move possible
+                if (checker.getColor() == "W") {
+                    List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 1, checker.getyPos() - 1);
+                    if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
+                        if (isMove(moveRight)) {
+                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3), "single");
+                        }
+                    }
+                    List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 1, checker.getyPos() - 1);
+                    if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
+                        if (isMove(moveLeft)) {
+                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3), "single");
+                        }
+                    }
+
+                } else {
+                    List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 1, checker.getyPos() + 1);
+                    if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
+                        if (isMove(moveRight)) {
+                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3), "single");
+                        }
+                    }
+                    List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 1, checker.getyPos() + 1);
+                    if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
+                        if (isMove(moveLeft)) {
+                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3), "single");
+                        }
+                    }
+                }
+
+                //check if jump possible
+                if (getActivePlayer().getColor() == "White") {
+                    List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 2, checker.getyPos() - 2);
+                    if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
+                        if (isSingleJump(moveRight)) {
+                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3),"jump");
+                        }
+                    }
+                    List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 2, checker.getyPos() - 2);
+                    if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
+                        if (isSingleJump(moveLeft)) {
+                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3),"jump");
+                        }
+                    }
+                } else {
+                    List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 2, checker.getyPos() + 2);
+                    if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
+                        if (isSingleJump(moveRight)) {
+                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3),"jump");
+                        }
+                    }
+                    List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 2, checker.getyPos() + 2);
+                    if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
+                        if (isSingleJump(moveLeft)) {
+                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3),"jump");
+                        }
+                    }
+                }
             }
         }
-        return true;
+        this.setAllPossibleMoves();
+        for(Checker checker : checkers){
+            this.allPossibleMoves.addAll(checker.getPossibleMoves());
+        }
+        if (this.allPossibleMoves.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     //returns the Player whose turn it is
@@ -195,12 +270,22 @@ public class Game {
             int toY = move.get(3);
 
             if (isMove(move)){
-                // todo: check if no jump is possible anywhere
                 isValidMove = true;
-                // perform move
-                Checker checker = testBoard.removePiece(fromX, fromY);
-                isCrown(checker, toY);
-                testBoard.addPiece(checker, toX, toY);
+                // todo: check if no jump is possible anywhere
+                for(Coordinate coordinate : this.allPossibleMoves){
+                    if(coordinate.getS() == "jump"){
+                        isValidMove = false;
+                        System.out.println("Invalid move, there is a mandatory jump available");
+                        break;
+                    }
+                }
+                if (isValidMove){
+                    // perform move
+                    Checker checker = testBoard.removePiece(fromX, fromY);
+                    isCrown(checker, toY);
+                    testBoard.addPiece(checker, toX, toY);
+                }
+
             }
             else if (isSingleJump(move)){
                 // perform single jump
@@ -217,6 +302,20 @@ public class Game {
                 Checker capturedChecker = testBoard.removePiece(fromX + distanceX/2, fromY + distanceY/2);
 
                 capturedChecker.capture();
+
+                this.isFinished();
+                for(Coordinate coordinate : this.allPossibleMoves){
+                    if(coordinate.getS() == "jump"){
+                        isValidMove = false;
+                        checker = testBoard.removePiece(toX, toY);
+                        testBoard.addPiece(checker, fromX, fromY);
+                        turnCounter--;
+                        turnCounter--;
+                        System.out.println("Invalid move, there is a mandatory double jump available");
+                        break;
+                    }
+                }
+
 
                 // todo: check if no more jump is possible
             }
