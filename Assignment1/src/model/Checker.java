@@ -14,6 +14,9 @@ public class Checker {
         Coordinate coordinate = new Coordinate(x, y ,toX, toY, s);
         this.possibleMoves.add(coordinate);
     }
+    public void clearPossibleMoves(){
+        this.possibleMoves.clear();
+    }
 
     private ArrayList<Coordinate> possibleMoves = new ArrayList<Coordinate>();
     private boolean king = false;
