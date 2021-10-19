@@ -166,13 +166,13 @@ public class Game {
                     List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 1, checker.getyPos() - 1);
                     if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
                         if (isMove(moveRight)) {
-                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3), "single");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveRight.get(2), moveRight.get(3),   "single");
                         }
                     }
                     List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 1, checker.getyPos() - 1);
                     if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
                         if (isMove(moveLeft)) {
-                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3), "single");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveLeft.get(2), moveLeft.get(3),  "single");
                         }
                     }
 
@@ -180,42 +180,42 @@ public class Game {
                     List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 1, checker.getyPos() + 1);
                     if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
                         if (isMove(moveRight)) {
-                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3), "single");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(), moveRight.get(2), moveRight.get(3),  "single");
                         }
                     }
                     List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 1, checker.getyPos() + 1);
                     if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
                         if (isMove(moveLeft)) {
-                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3), "single");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveLeft.get(2), moveLeft.get(3),  "single");
                         }
                     }
                 }
 
                 //check if jump possible
-                if (getActivePlayer().getColor() == "White") {
+                if (checker.getColor() == "W") {
                     List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 2, checker.getyPos() - 2);
                     if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
                         if (isSingleJump(moveRight)) {
-                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3),"jump");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveRight.get(2), moveRight.get(3), "jump");
                         }
                     }
                     List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 2, checker.getyPos() - 2);
                     if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
                         if (isSingleJump(moveLeft)) {
-                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3),"jump");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveLeft.get(2), moveLeft.get(3), "jump");
                         }
                     }
                 } else {
                     List<Integer> moveRight = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() + 2, checker.getyPos() + 2);
                     if (moveRight.get(2) >= 0 && moveRight.get(3) >= 0 && moveRight.get(2) <= 7 && moveRight.get(3) <= 7){
                         if (isSingleJump(moveRight)) {
-                            checker.setPossibleMoves(moveRight.get(2), moveRight.get(3),"jump");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveRight.get(2), moveRight.get(3), "jump");
                         }
                     }
                     List<Integer> moveLeft = Arrays.asList(checker.getxPos(), checker.getyPos(), checker.getxPos() - 2, checker.getyPos() + 2);
                     if (moveLeft.get(2) >= 0 && moveLeft.get(3) >= 0 && moveLeft.get(2) <= 7 && moveLeft.get(3) <= 7){
                         if (isSingleJump(moveLeft)) {
-                            checker.setPossibleMoves(moveLeft.get(2), moveLeft.get(3),"jump");
+                            checker.setPossibleMoves(checker.getxPos(), checker.getyPos(),moveLeft.get(2), moveLeft.get(3), "jump");
                         }
                     }
                 }
@@ -305,7 +305,7 @@ public class Game {
 
                 this.isFinished();
                 for(Coordinate coordinate : this.allPossibleMoves){
-                    if(coordinate.getS() == "jump"){
+                    if(toX == coordinate.getX() && toY == coordinate.getY() && coordinate.getS() == "jump"){
                         isValidMove = false;
                         checker = testBoard.removePiece(toX, toY);
                         testBoard.addPiece(checker, fromX, fromY);

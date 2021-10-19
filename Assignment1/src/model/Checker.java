@@ -10,8 +10,8 @@ public class Checker {
         return possibleMoves;
     }
 
-    public void setPossibleMoves(int x, int y, String s) {
-        Coordinate coordinate = new Coordinate(x, y, s);
+    public void setPossibleMoves(int x, int y, int toX, int toY, String s) {
+        Coordinate coordinate = new Coordinate(x, y ,toX, toY, s);
         this.possibleMoves.add(coordinate);
     }
 
