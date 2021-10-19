@@ -38,6 +38,9 @@ public class CheckerGame {
                 ArrayList<List<Integer>> convertedMoves = convertInputToXY(move);
                 System.out.println(convertedMoves);
                 game.newMove(convertedMoves);
+                if(!game.isValidMove()){
+                    System.out.println("Incorrect move, please try again");
+                }
 
             }
         }

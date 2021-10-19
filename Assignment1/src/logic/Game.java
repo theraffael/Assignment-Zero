@@ -292,11 +292,11 @@ public class Game {
             }
         }
         if (this.allPossibleMoves.isEmpty()){
-            System.out.println(getActivePlayer().getColorWord() + "has no more possible moves left and loses this game");
+            System.out.println(getActivePlayer().getColorWord() + " has no more possible moves left and loses this game");
             return true;
         }
         if(capturedCounter == 12){
-            System.out.println(getActivePlayer().getColorWord() + "has no more pieces left and loses this game");
+            System.out.println(getActivePlayer().getColorWord() + " has no more pieces left and loses this game");
             return true;
         }
         else{
