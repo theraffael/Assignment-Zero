@@ -284,10 +284,19 @@ public class Game {
 
         }
         this.setAllPossibleMoves();
+        int capturedCounter = 0;
         for(Checker checker : checkers){
             this.allPossibleMoves.addAll(checker.getPossibleMoves());
+            if (checker.isCaptured()){
+                capturedCounter++;
+            }
         }
         if (this.allPossibleMoves.isEmpty()){
+            System.out.println(getActivePlayer().getColorWord() + "has no more possible moves left and loses this game");
+            return true;
+        }
+        if(capturedCounter == 12){
+            System.out.println(getActivePlayer().getColorWord() + "has no more pieces left and loses this game");
             return true;
         }
         else{
@@ -369,8 +378,10 @@ public class Game {
                 for(Coordinate coordinate : this.allPossibleMoves){
                     if(toX == coordinate.getX() && toY == coordinate.getY() && coordinate.getS() == "jump"){
                         isValidMove = false;
-                        checker = testBoard.removePiece(toX, toY);
-                        testBoard.addPiece(checker, fromX, fromY);
+                        capturedChecker.isNotCaptured();
+                        testBoard.addPiece(capturedChecker, fromX + distanceX/2, fromY + distanceY/2);
+                        Checker checkers = testBoard.removePiece(toX, toY);
+                        testBoard.addPiece(checkers, fromX, fromY);
                         turnCounter--;
                         turnCounter--;
                         System.out.println("Invalid move, there is a mandatory double jump available");

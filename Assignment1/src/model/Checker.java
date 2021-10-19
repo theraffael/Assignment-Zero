@@ -17,7 +17,9 @@ public class Checker {
     public void clearPossibleMoves(){
         this.possibleMoves.clear();
     }
-
+    public void isNotCaptured(){
+        captured = false;
+    }
     private ArrayList<Coordinate> possibleMoves = new ArrayList<Coordinate>();
     private boolean king = false;
     public void crown()
