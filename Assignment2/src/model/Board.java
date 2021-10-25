@@ -3,7 +3,7 @@ import logic.Game;
 
 import java.util.Arrays;
 
-public class Board{
+public class Board {
     private Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
     public void display(){
@@ -45,16 +45,33 @@ public class Board{
     {
         Checker toRemove = board[x][y];
         board[x][y] = null;
-        checkerCount--;
+
         return toRemove;
     }
 
-    public Checker[][] getBoard() {
-        return board;
+    public boolean fieldIsEmpty(int x, int y) {
+        return this.board[x][y] == null;
     }
 
-    public Board(Checker[][] oldBoard){
+    public boolean fieldContainsKing(int x, int y) {
+        // avoid error if field is empty
+        if (fieldIsEmpty(x, y)){return false;}
+        return this.board[x][y].isKing();
+    }
+
+    public boolean fieldContainsCheckerColor(int x, int y, String color) {
+        // avoid error if field is empty
+        if (fieldIsEmpty(x, y)){return false;}
+        return this.board[x][y].getColor() == color;
+    }
+
+    private Board(Checker[][] oldBoard){
         this.board = oldBoard;
+    }
+
+    public Board clone() {
+        //Todo: Make copies of checkers as well!!
+        return new Board(this.board);
     }
 
     public Board() {};

@@ -65,7 +65,7 @@ public class Checker {
         return getSymbol();
     }
 
-    public String getSymbol() {
+    private String getSymbol() {
         if (king){
             return color + "_K";
         }

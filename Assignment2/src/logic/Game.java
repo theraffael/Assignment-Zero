@@ -57,18 +57,18 @@ public class Game {
         if ((nextX < 0) || (nextY < 0) || (nextX > 7) || (nextY > 7)){return false;}
 
         // Start square cannot be empty
-        if (board.getBoard()[currentX][currentY] == null) {return false;}
+        if (board.fieldIsEmpty(currentX, currentY)) {return false;}
         // Target square must be empty
-        if (board.getBoard()[nextX][nextY] != null) {return false;}
+        if (!board.fieldIsEmpty(nextX, nextY)) {return false;}
 
         if (getActivePlayer().getColor() == "R") {   //when it is red player's turn
             // Return false if checker belongs to white player
-            if (board.getBoard()[currentX][currentY].getColor() == "W") {return false;}
+            if (board.fieldContainsCheckerColor(currentX,currentY,  "W")) {return false;}
 
             // if checker is pawn, nextY must be 1 larger than currentY
             int distanceY = nextY - currentY;
             // if checker is king, take absolute difference between nextY and currentY
-            if (board.getBoard()[currentX][currentY].isKing()){
+            if (board.fieldContainsKing(currentX, currentY)){
                 distanceY = Math.abs(distanceY);
             }
 
@@ -79,12 +79,12 @@ public class Game {
 
         else {   //when it is white player's turn
             // Return false if checker belongs to red player
-            if (board.getBoard()[currentX][currentY].getColor() == "R") {return false;}
+            if (board.fieldContainsCheckerColor(currentX, currentY,"R")) {return false;}
 
             // if checker is pawn, nextY must be 1 smaller than currentY
             int distanceY = currentY - nextY;
             // if checker is king, take absolute difference between nextY and currentY
-            if (board.getBoard()[currentX][currentY].isKing()){
+            if (board.fieldContainsKing(currentX, currentY)){
                 distanceY = Math.abs(distanceY);
             }
             if (distanceY == 1 && (Math.abs(currentX - nextX) == 1 )){
@@ -100,9 +100,9 @@ public class Game {
 
     public boolean isSingleJump(int currentX, int currentY, int nextX, int nextY){
         // Start square cannot be empty
-        if (board.getBoard()[currentX][currentY] == null) {return false;}
+        if (board.fieldIsEmpty(currentX, currentY)) {return false;}
         // Target square must be empty
-        if (board.getBoard()[nextX][nextY] != null) {return false;}
+        if (!board.fieldIsEmpty(nextX, nextY)) {return false;}
 
         int distanceY = nextY - currentY;
         int distanceX = nextX - currentX;
@@ -111,31 +111,31 @@ public class Game {
 
         if (getActivePlayer().getColor() == "R") {  //when it is red player's turn
         // Return false if checker belongs to white player
-            if (board.getBoard()[currentX][currentY].getColor() == "W") {return false;}
+            if (board.fieldContainsCheckerColor(currentX, currentY, "W")) {return false;}
 
             // Y distance must be 2, can be -2 if checker is king
-            if (distanceY == 2 || (distanceY == -2 && board.getBoard()[currentX][currentY].isKing())){
+            if (distanceY == 2 || (distanceY == -2 && board.fieldContainsKing(currentX, currentY))){
                 // there must be an opponents piece to jump over
                 int opponentX = currentX + distanceX/2;
                 int opponentY = currentY + distanceY/2;
-                if (board.getBoard()[opponentX][opponentY] != null && board.getBoard()[opponentX][opponentY].getColor() == "W"){
+                if (board.fieldContainsCheckerColor(opponentX, opponentY, "W")){
                     return true;}
             }
         }
 
         else { //when it is white player's turn
             // Return false if checker belongs to red player
-            if (board.getBoard()[currentX][currentY].getColor() == "R") {return false;}
+            if (board.fieldContainsCheckerColor(currentX, currentY, "R")) {return false;}
 
             // X distance must be 2 or -2
             if (Math.abs(distanceX) != 2 ) {return false;}
 
             // Y distance must be -2, can be 2 if checker is king
-            if (distanceY == -2 || (distanceY == 2 && board.getBoard()[currentX][currentY].isKing())){
+            if (distanceY == -2 || (distanceY == 2 && board.fieldContainsKing(currentX, currentY))){
                 // there must be an opponents piece to jump over
                 int opponentX = currentX + distanceX/2;
                 int opponentY = currentY + distanceY/2;
-                if (board.getBoard()[opponentX][opponentY] != null && board.getBoard()[opponentX][opponentY].getColor() == "R"){
+                if (board.fieldContainsCheckerColor(opponentX, opponentY, "R")){
                     return true;}
             }
         }
@@ -331,7 +331,7 @@ public class Game {
     }
 
     public void newMove(ArrayList<List<Integer>> convertedMoves) {
-        Board testBoard = new Board(board.getBoard());
+        Board testBoard =  board.clone();
 
         if (convertedMoves.size() == 1){
             List<Integer> move = convertedMoves.get(0);
