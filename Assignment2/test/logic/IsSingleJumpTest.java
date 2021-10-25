@@ -8,10 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IsSingleJumpTest {
     private static Game game;
+    private static Board board;
 
     @BeforeEach
     public void setUp(){
-        Board board = new Board();
+        board = new Board();
         Player redPlayer = new Player("R");
         Player whitePlayer = new Player("W");
 
@@ -36,19 +37,18 @@ class IsSingleJumpTest {
 
     7   8 |  [   ]  [   ]  [R_P]  [   ]  [   ]  [   ]  [   ]  [   ]
 */
-
-        board.addPiece(whitePlayer.getCheckers().get(0), 6,1);
-        board.addPiece(whitePlayer.getCheckers().get(1), 2,3);
-        board.addPiece(whitePlayer.getCheckers().get(2), 2,5);
-        Checker king = (Checker) whitePlayer.getCheckers().get(0);
+        Checker king = new Checker("W");
         king.crown();
-        board.addPiece(whitePlayer.getCheckers().get(3), 6,5);
-        board.addPiece(whitePlayer.getCheckers().get(4), 5,6);
+        board.addPiece(king, 6,1);
+        board.addPiece(new Checker("W"), 2,3);
+        board.addPiece(new Checker("W"), 2,5);
+        board.addPiece(new Checker("W"), 6,5);
+        board.addPiece(new Checker("W"), 5,6);
 
-        board.addPiece(redPlayer.getCheckers().get(0), 3,2);
-        board.addPiece(redPlayer.getCheckers().get(1), 5,2);
-        board.addPiece(redPlayer.getCheckers().get(2), 5,4);
-        board.addPiece(redPlayer.getCheckers().get(5), 2,7);
+        board.addPiece(new Checker("R"), 3,2);
+        board.addPiece(new Checker("R"), 5,2);
+        board.addPiece(new Checker("R"), 5,4);
+        board.addPiece(new Checker("R"), 2,7);
 
         game = new Game(board, redPlayer, whitePlayer);
     }
@@ -59,10 +59,11 @@ class IsSingleJumpTest {
         // Red turn
         game.setTurnCounter(0);
         // Only move down with red checker
-        assertTrue(game.isSingleJump(5,4,7,6),
-                "Jump from (5,4 to 7,6)  with red checker");
-        assertFalse(game.isSingleJump(5,2,7,0),
-                "Jump from (5,2 to 7,8) with red checker");
+        Move m1 = new Move(5,4,7,6);
+        Move m2 = new Move(5,2,7,0);
+
+        assertTrue(game.isSingleJump(m1, board),"Jump from (5,4 to 7,6)  with red checker");
+        assertFalse(game.isSingleJump(m2, board),"Jump from (5,2 to 7,8) with red checker");
     }
 
 
@@ -81,8 +82,8 @@ class IsSingleJumpTest {
     void testOnlyMoveToEmptySquare() {
         // Red turn
         game.setTurnCounter(0);
-        assertFalse(game.isSingleJump(7,4,5,6));
-        assertTrue(game.isSingleJump(5,4,7,6));
+        assertFalse(game.isSingleJump(new Move(7,4,5,6), board));
+        assertTrue(game.isSingleJump(new Move(5,4,7,6), board));
     }
 
 
@@ -90,13 +91,13 @@ class IsSingleJumpTest {
     void testOnlyJumpIfOpponentIsThere() {
         // Red turn
         game.setTurnCounter(0);
-        assertFalse(game.isSingleJump(5,4,3,6));
-        assertTrue(game.isSingleJump(5,4,7,6));
+        assertFalse(game.isSingleJump(new Move(5,4,3,6), board));
+        assertTrue(game.isSingleJump(new Move(5,4,7,6), board));
 
         // White turn
         game.setTurnCounter(1);
-        assertFalse(game.isSingleJump(5,6,7,4));
-        assertTrue(game.isSingleJump(6,1,4,3));
+        assertFalse(game.isSingleJump(new Move(5,6,7,4), board));
+        assertTrue(game.isSingleJump(new Move(6,1,4,3), board));
     }
 
 
@@ -104,8 +105,8 @@ class IsSingleJumpTest {
     void testMoveToDiagonallyAdjacent() {
         // Red turn
         game.setTurnCounter(1);
-        assertTrue(game.isSingleJump(6,1,4,3));
-        assertFalse(game.isSingleJump(6,1,3,4));
+        assertTrue(game.isSingleJump(new Move(6,1,4,3), board));
+        assertFalse(game.isSingleJump(new Move(6,1,3,4), board));
     }
 
     @Test
@@ -114,12 +115,12 @@ class IsSingleJumpTest {
         game.setTurnCounter(0);
 
         // Move up with white checker
-        assertFalse(game.isSingleJump(2,3,4,1));
+        assertFalse(game.isSingleJump(new Move(2,3,4,1), board));
 
         // White turn
         game.setTurnCounter(1);
         // Move up with white checker
-        assertFalse(game.isSingleJump(3,2,1,4));
+        assertFalse(game.isSingleJump(new Move(3,2,1,4), board));
     }
 
 

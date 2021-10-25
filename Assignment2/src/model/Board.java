@@ -6,6 +6,27 @@ import java.util.Arrays;
 public class Board {
     private Checker[][] board = new Checker[8][8];
     private int checkerCount = 0;
+
+    public void placeCheckersInitialSetup()
+    {
+        //this for loop is to set the red piece on top of the board in the arrangement of classic checkers
+
+        for(int j = 0; j < 3; j++) {
+            for (int i = 0; i < 8; i += 2) {
+                addPiece(new Checker("R"), i + (j + 1) % 2, j);
+            }
+        }
+
+        //this for loop sets the white pieces on the bottom of the board in the arrangement of classic checkers
+        for(int j = 5; j < 8; j++)
+        {
+            for(int i = 0; i < 8; i+=2)
+            {
+                addPiece(new Checker("W"), i + (j+1)%2, j);
+            }
+        }
+    }
+
     public void display(){
         // Clear previous output from the terminal
         System.out.print("\033[H\033[2J");
@@ -65,16 +86,18 @@ public class Board {
         return this.board[x][y].getColor() == color;
     }
 
-    private Board(Checker[][] oldBoard){
-        this.board = oldBoard;
+    // Copy board state to new board object
+    public Board(Board oldBoard){
+        for (int x = 0; x<8; x++){
+            for (int y = 0; y<8; y++){
+                if (!oldBoard.fieldIsEmpty(x, y)) {
+                    this.addPiece(new Checker(oldBoard.board[x][y]), x, y);
+                }
+            }
+        }
     }
 
-    public Board clone() {
-        //Todo: Make copies of checkers as well!!
-        return new Board(this.board);
-    }
-
-    public Board() {};
+    public Board() {}
 
 }
 

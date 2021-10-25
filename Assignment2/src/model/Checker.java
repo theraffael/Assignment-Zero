@@ -6,12 +6,12 @@ public class Checker {
 
     private String color;
 
-    public ArrayList<Coordinate> getPossibleMoves() {
+    public ArrayList<Move> getPossibleMoves() {
         return possibleMoves;
     }
 
     public void setPossibleMoves(int x, int y, int toX, int toY, String s) {
-        Coordinate coordinate = new Coordinate(x, y ,toX, toY, s);
+        Move coordinate = new Move(x, y ,toX, toY, s);
         this.possibleMoves.add(coordinate);
     }
     public void clearPossibleMoves(){
@@ -20,7 +20,7 @@ public class Checker {
     public void isNotCaptured(){
         captured = false;
     }
-    private ArrayList<Coordinate> possibleMoves = new ArrayList<Coordinate>();
+    private ArrayList<Move> possibleMoves = new ArrayList<Move>();
     private boolean king = false;
     public void crown()
     {
@@ -55,6 +55,13 @@ public class Checker {
 
     public Checker(String c){
         color = c;
+    }
+
+    // Copy checker
+    public Checker(Checker oldChecker){
+        this.color= oldChecker.color;
+        this.king = oldChecker.king;
+        this.captured = oldChecker.captured;
     }
 
     public String getColor() {
