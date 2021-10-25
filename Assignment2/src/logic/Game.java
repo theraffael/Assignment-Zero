@@ -169,7 +169,7 @@ public class Game {
     //calculates all possible moves
     public ArrayList<Move> calcPossibleMoves(Board testBoard){
         ArrayList<Position> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
-        ArrayList<Move> possibleMoves = new ArrayList<Move>();
+        ArrayList<Move> possibleMoves = new ArrayList<>();
         for (Position position : checkerPositions) {
             //check if jump possible
             for (int i = -2; i <= 2; i += 4) {
