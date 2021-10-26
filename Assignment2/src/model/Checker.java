@@ -4,23 +4,8 @@ import java.util.ArrayList;
 
 public class Checker {
 
-    private String color;
+    private PlayerColor playerColor;
 
-    public ArrayList<Move> getPossibleMoves() {
-        return possibleMoves;
-    }
-
-    public void setPossibleMoves(int x, int y, int toX, int toY, String s) {
-        Move coordinate = new Move(x, y ,toX, toY, s);
-        this.possibleMoves.add(coordinate);
-    }
-    public void clearPossibleMoves(){
-        this.possibleMoves.clear();
-    }
-    public void isNotCaptured(){
-        captured = false;
-    }
-    private ArrayList<Move> possibleMoves = new ArrayList<Move>();
     private boolean king = false;
     public void crown()
     {
@@ -32,40 +17,35 @@ public class Checker {
 
     private boolean captured = false;
     public void capture() {captured = true;}
-    public boolean isCaptured() {return captured;}
 
-    public int getxPos() {
-        return xPos;
-    }
 
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public int getyPos() {
-        return yPos;
-    }
-
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
-
-    private int xPos;
-    private int yPos;
-
-    public Checker(String c){
-        color = c;
+    public Checker(PlayerColor c){
+        this.playerColor = c;
     }
 
     // Copy checker
     public Checker(Checker oldChecker){
-        this.color= oldChecker.color;
+        this.playerColor= oldChecker.playerColor;
         this.king = oldChecker.king;
         this.captured = oldChecker.captured;
     }
 
-    public String getColor() {
-        return color;
+
+    public boolean isWhitePlayerChecker() {
+        if(this.playerColor == PlayerColor.WHITE){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public PlayerColor playerColor() {
+        if (playerColor == PlayerColor.WHITE) {
+            return PlayerColor.WHITE;
+        }
+        else {
+            return PlayerColor.RED;
+        }
     }
 
     public String toString(){
@@ -73,6 +53,13 @@ public class Checker {
     }
 
     private String getSymbol() {
+        String color;
+        if(playerColor == PlayerColor.RED){
+            color = "R";
+        }
+        else{
+            color = "W";
+        }
         if (king){
             return color + "_K";
         }

@@ -5,7 +5,10 @@ import java.util.Arrays;
 
 public class Board {
     private Checker[][] board = new Checker[8][8];
-    private int checkerCount = 0;
+
+    public Board(){
+        this.placeCheckersInitialSetup();
+    }
 
     public void placeCheckersInitialSetup()
     {
@@ -13,7 +16,7 @@ public class Board {
 
         for(int j = 0; j < 3; j++) {
             for (int i = 0; i < 8; i += 2) {
-                addPiece(new Checker("R"), i + (j + 1) % 2, j);
+                addPiece(new Checker(PlayerColor.RED), i + (j + 1) % 2, j);
             }
         }
 
@@ -22,7 +25,7 @@ public class Board {
         {
             for(int i = 0; i < 8; i+=2)
             {
-                addPiece(new Checker("W"), i + (j+1)%2, j);
+                addPiece(new Checker(PlayerColor.WHITE), i + (j+1)%2, j);
             }
         }
     }
@@ -57,16 +60,12 @@ public class Board {
     public void addPiece(Object checker, int x, int y)
     {
         board[x][y] = (Checker)checker;
-        ((Checker) checker).setxPos(x);
-        ((Checker) checker).setyPos(y);
-        checkerCount ++;
     }
 
     public Checker removePiece(int x, int y)
     {
         Checker toRemove = board[x][y];
         board[x][y] = null;
-
         return toRemove;
     }
 
@@ -80,25 +79,22 @@ public class Board {
         return this.board[x][y].isKing();
     }
 
-    public boolean fieldContainsCheckerColor(int x, int y, String color) {
+    public boolean fieldContainsCheckerColor(int x, int y, PlayerColor color) {
         // avoid error if field is empty
         if (fieldIsEmpty(x, y)){return false;}
-        return this.board[x][y].getColor() == color;
+        return this.board[x][y].playerColor().equals(color);
     }
 
     // Copy board state to new board object
-    public Board(Board oldBoard){
-        for (int x = 0; x<8; x++){
-            for (int y = 0; y<8; y++){
+    public Board(Board oldBoard) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
                 if (!oldBoard.fieldIsEmpty(x, y)) {
                     this.addPiece(new Checker(oldBoard.board[x][y]), x, y);
                 }
             }
         }
     }
-
-    public Board() {}
-
 }
 
 

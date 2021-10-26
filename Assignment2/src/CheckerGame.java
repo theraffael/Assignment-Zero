@@ -6,22 +6,19 @@ import java.util.regex.*;
 
 public class CheckerGame {
 
-
     public static Board board = new Board();
-
-    public static Player redPlayer = new Player("R");
-    public static Player whitePlayer = new Player("W");
+    public static Player redPlayer = new Player(PlayerColor.RED);
+    public static Player whitePlayer = new Player(PlayerColor.WHITE);
     public static Scanner keyBoard = new Scanner(System.in);
 
     public static void main(String[] args) {
-        board.placeCheckersInitialSetup();
         runGame();
     }
 
     public static void runGame(){
         Game game = new Game(board, redPlayer, whitePlayer);
         board.display();
-        System.out.println("Player Turn: "+ game.getActivePlayer().getColorWord());
+        System.out.println("Player Turn: "+ game.getActivePlayer().playerColorToString());
 
         while (!game.isFinished()){
             boolean isInputCorrect = false;
@@ -38,12 +35,7 @@ public class CheckerGame {
                 }
 
                 ArrayList<Move> convertedMoves = convertInputToXY(move);
-                System.out.println(convertedMoves);
                 moveSuccessful = game.newMove(convertedMoves);
-                if(!moveSuccessful){
-                    System.out.println("Incorrect move, please try again");
-                }
-
             }
         }
     }
