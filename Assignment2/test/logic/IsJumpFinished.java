@@ -11,6 +11,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class IsJumpFinished {
 
     @Test
+    void isJumpFinishedWhenCrowned() {
+        Board board = new Board(false);
+        board.addPiece(new Checker(PlayerColor.WHITE), 1,6);
+        board.addPiece(new Checker(PlayerColor.WHITE), 3,6);
+        board.addPiece(new Checker(PlayerColor.RED), 0,5);
+
+        Player redPlayer = new Player(PlayerColor.RED);
+        Player whitePlayer = new Player(PlayerColor.WHITE);
+        Game game = new Game(board, redPlayer, whitePlayer);
+
+        Move m1 = new Move(0,5, 2,7, "jump");
+        Move m2 = new Move(2,7, 4,5, "jump");
+
+        ArrayList oneJump = new ArrayList();
+        ArrayList twoJumps = new ArrayList();
+        oneJump.add(m1);
+        twoJumps.add(m1);
+        twoJumps.add(m2);
+
+        assertFalse(game.newMove(twoJumps));
+        assertTrue(game.newMove(oneJump));
+
+    }
+
+
+    @Test
     void isJumpFinished() {
         Board board = new Board(false);
         board.addPiece(new Checker(PlayerColor.WHITE), 2,3);
