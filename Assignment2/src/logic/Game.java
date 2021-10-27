@@ -2,6 +2,7 @@ package logic;
 
 import model.*;
 
+import com.sun.tools.javac.util.List;
 import java.util.ArrayList;
 
 public class Game {
@@ -141,13 +142,13 @@ public class Game {
 
     //calculates all possible moves
     public ArrayList<Move> calcPossibleMoves(Board testBoard){
-        ArrayList<Position> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
+        ArrayList<List<Integer>> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
         ArrayList<Move> possibleMoves = new ArrayList<>();
-        for (Position position : checkerPositions) {
+        for (List<Integer> position : checkerPositions) {
             //check if jump possible
             for (int i = -2; i <= 2; i += 4) {
                 for (int j = -2; j <= 2; j += 4) {
-                    Move candidateMove = new Move(position.x, position.y, position.x + i, position.y + j, "jump");
+                    Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "jump");
                     if (isSingleJump(candidateMove, testBoard)) {
                         possibleMoves.add(candidateMove);
                     }
@@ -157,11 +158,11 @@ public class Game {
         // if jumps are possible, return list of jumps and don't compute moves
         if (possibleMoves.size() > 0) {return possibleMoves;}
 
-        for (Position position : checkerPositions) {
+        for (List<Integer> position : checkerPositions) {
             //check if move possible
             for (int i = -1; i<=1; i+=2){
                 for (int j = -1; j<=1; j+=2){
-                    Move candidateMove = new Move(position.x, position.y, position.x + i, position.y + j, "move");
+                    Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "move");
                     if (isMove(candidateMove, testBoard)){
                         possibleMoves.add(candidateMove);
                     }

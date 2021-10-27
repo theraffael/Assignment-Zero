@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.tools.javac.util.List;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -14,7 +16,7 @@ public class Player {
         for (int x = 0; x<8; x++){
             for (int y = 0; y<8; y++){
                 if (board.fieldContainsCheckerColor(x, y, this.playerColor)) {
-                    checkers.add(new Position(x,y));
+                    checkers.add(List.of(x,y));
                 }
             }
         }
