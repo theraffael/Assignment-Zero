@@ -38,24 +38,25 @@ public class Board {
         System.out.flush();
 
         // Start printing board
-        System.out.println("       a      b      c      d      e      f      g      h"+
-                "\n  +_______________________________________________________+\n");
+        System.out.print("      a     b     c     d     e     f     g     h"+
+                "\n  +-------------------------------------------------+\n");
         for(int j = 0; j < 8; j++)
         {
-            System.out.print(j+1+" |  ");
+            System.out.print(j+1+" | ");
             for(int i = 0; i < 8; i++)
             {
                 if(board[i][j] == null)
                 {
-                    System.out.print("[   ]  ");
+                    System.out.print("[   ] ");
                 }
                 else {
-                    System.out.print("[" + board[i][j].toString()+ "]  ");
+                    System.out.print("[" + board[i][j].toString()+ "] ");
                 }
             }
-            System.out.println("\n");
+            System.out.print("| "+ (j+1) + "\n");
         }
-        System.out.println("\n");
+        System.out.println("  +-------------------------------------------------+");
+        System.out.println("      a     b     c     d     e     f     g     h");
     }
 
     public void addPiece(Object checker, int x, int y)
