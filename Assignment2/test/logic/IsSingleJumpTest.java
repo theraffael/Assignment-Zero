@@ -12,9 +12,9 @@ class IsSingleJumpTest {
 
     @BeforeEach
     public void setUp(){
-        board = new Board();
-        Player redPlayer = new Player("R");
-        Player whitePlayer = new Player("W");
+        board = new Board(false);
+        Player redPlayer = new Player(PlayerColor.RED);
+        Player whitePlayer = new Player(PlayerColor.WHITE);
 
 /*      Setup board for testing purposes:
              0      1      2      3      4      5      6      7
@@ -37,18 +37,18 @@ class IsSingleJumpTest {
 
     7   8 |  [   ]  [   ]  [R_P]  [   ]  [   ]  [   ]  [   ]  [   ]
 */
-        Checker king = new Checker("W");
+        Checker king = new Checker(PlayerColor.WHITE);
         king.crown();
         board.addPiece(king, 6,1);
-        board.addPiece(new Checker("W"), 2,3);
-        board.addPiece(new Checker("W"), 2,5);
-        board.addPiece(new Checker("W"), 6,5);
-        board.addPiece(new Checker("W"), 5,6);
+        board.addPiece(new Checker(PlayerColor.WHITE), 2,3);
+        board.addPiece(new Checker(PlayerColor.WHITE), 2,5);
+        board.addPiece(new Checker(PlayerColor.WHITE), 6,5);
+        board.addPiece(new Checker(PlayerColor.WHITE), 5,6);
 
-        board.addPiece(new Checker("R"), 3,2);
-        board.addPiece(new Checker("R"), 5,2);
-        board.addPiece(new Checker("R"), 5,4);
-        board.addPiece(new Checker("R"), 2,7);
+        board.addPiece(new Checker(PlayerColor.RED), 3,2);
+        board.addPiece(new Checker(PlayerColor.RED), 5,2);
+        board.addPiece(new Checker(PlayerColor.RED), 5,4);
+        board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
         game = new Game(board, redPlayer, whitePlayer);
     }

@@ -20,11 +20,15 @@ public class Move {
     public int fromY;
     public int toX;
     public int toY;
-
-    public String getS() {
-        return s;
-    }
-
     private String s;
+
+    public boolean isMoveJump(){
+        if(s == "jump"){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 

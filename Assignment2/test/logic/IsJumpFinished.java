@@ -1,9 +1,6 @@
 package logic;
 
-import model.Board;
-import model.Checker;
-import model.Move;
-import model.Player;
+import model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,13 +12,13 @@ public class IsJumpFinished {
 
     @Test
     void isJumpFinished() {
-        Board board = new Board();
-        board.addPiece(new Checker("W"), 2,3);
-        board.addPiece(new Checker("W"), 2,5);
-        board.addPiece(new Checker("R"), 3,2);
+        Board board = new Board(false);
+        board.addPiece(new Checker(PlayerColor.WHITE), 2,3);
+        board.addPiece(new Checker(PlayerColor.WHITE), 2,5);
+        board.addPiece(new Checker(PlayerColor.RED), 3,2);
 
-        Player redPlayer = new Player("R");
-        Player whitePlayer = new Player("W");
+        Player redPlayer = new Player(PlayerColor.RED);
+        Player whitePlayer = new Player(PlayerColor.WHITE);
         Game game = new Game(board, redPlayer, whitePlayer);
 
         Move m1 = new Move(3,2, 1,4, "jump");
@@ -40,16 +37,16 @@ public class IsJumpFinished {
 
     @Test
     void isMultiJumpFinished() {
-        Board board = new Board();
-        Checker king = new Checker("W");
+        Board board = new Board(false);
+        Checker king = new Checker(PlayerColor.WHITE);
         king.crown();
         board.addPiece(king, 2,3);
-        board.addPiece(new Checker("R"), 3,2);
-        board.addPiece(new Checker("R"), 5,2);
-        board.addPiece(new Checker("R"), 5,4);
+        board.addPiece(new Checker(PlayerColor.RED), 3,2);
+        board.addPiece(new Checker(PlayerColor.RED), 5,2);
+        board.addPiece(new Checker(PlayerColor.RED), 5,4);
 
-        Player redPlayer = new Player("R");
-        Player whitePlayer = new Player("W");
+        Player redPlayer = new Player(PlayerColor.RED);
+        Player whitePlayer = new Player(PlayerColor.WHITE);
         Game game = new Game(board, redPlayer, whitePlayer);
         game.setTurnCounter(1);
 
