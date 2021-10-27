@@ -12,6 +12,11 @@ public class IsJumpFinished {
 
     @Test
     void isJumpFinishedWhenCrowned() {
+        /*
+        When a single piece reaches the row of the board furthest from the player,
+        i.e the king-row, by reason of a simple move, or as the completion of a jump,
+        it becomes a king. This ends the player’s turn.
+         */
         Board board = new Board(false);
         board.addPiece(new Checker(PlayerColor.WHITE), 1,6);
         board.addPiece(new Checker(PlayerColor.WHITE), 3,6);
