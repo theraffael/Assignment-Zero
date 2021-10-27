@@ -12,7 +12,7 @@ public class Board {
         }
     }
 
-    public void placeCheckersInitialSetup()
+    private void placeCheckersInitialSetup()
     {
         //this for loop is to set the red piece on top of the board in the arrangement of classic checkers
 
@@ -42,7 +42,6 @@ public class Board {
                 "\n  +_______________________________________________________+\n");
         for(int j = 0; j < 8; j++)
         {
-            // // TODO: 13.10.21 : Invert numbers?  
             System.out.print(j+1+" |  ");
             for(int i = 0; i < 8; i++)
             {

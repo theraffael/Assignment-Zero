@@ -12,14 +12,15 @@ public class Move {
     public Move(int fromX, int fromY, int toX, int toY) {
         this.fromX = fromX;
         this.fromY = fromY;
+        this.s = "unk";
         this.toX = toX;
         this.toY = toY;
     }
 
-    public int fromX;
-    public int fromY;
-    public int toX;
-    public int toY;
+    public final int fromX;
+    public final int fromY;
+    public final int toX;
+    public final int toY;
     private String s;
 
     public boolean isMoveJump(){
