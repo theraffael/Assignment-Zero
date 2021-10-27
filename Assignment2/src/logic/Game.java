@@ -203,6 +203,7 @@ public class Game {
             else if (isSingleJump(move, testBoard)){
                 // perform single jump
                 Checker checker = testBoard.removePiece(move.fromX, move.fromY);
+                isCrown(checker, move.toY);
                 testBoard.addPiece(checker, move.toX, move.toY);
 
                 int distanceX = move.toX - move.fromX;
