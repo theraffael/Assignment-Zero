@@ -6,14 +6,12 @@ import java.util.regex.*;
 
 public class CheckerGame {
 
-    public static Board board = new Board();
+    public static Board board = new Board(true);
     public static Player redPlayer = new Player(PlayerColor.RED);
     public static Player whitePlayer = new Player(PlayerColor.WHITE);
     public static Scanner keyBoard = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        runGame();
-    }
+    public static void main(String[] args) {runGame();}
 
     public static void runGame(){
         Game game = new Game(board, redPlayer, whitePlayer);

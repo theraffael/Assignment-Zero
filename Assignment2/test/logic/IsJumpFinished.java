@@ -12,7 +12,7 @@ public class IsJumpFinished {
 
     @Test
     void isJumpFinished() {
-        Board board = new Board();
+        Board board = new Board(false);
         board.addPiece(new Checker(PlayerColor.WHITE), 2,3);
         board.addPiece(new Checker(PlayerColor.WHITE), 2,5);
         board.addPiece(new Checker(PlayerColor.RED), 3,2);
@@ -37,7 +37,7 @@ public class IsJumpFinished {
 
     @Test
     void isMultiJumpFinished() {
-        Board board = new Board();
+        Board board = new Board(false);
         Checker king = new Checker(PlayerColor.WHITE);
         king.crown();
         board.addPiece(king, 2,3);

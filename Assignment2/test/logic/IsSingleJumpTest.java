@@ -12,7 +12,7 @@ class IsSingleJumpTest {
 
     @BeforeEach
     public void setUp(){
-        board = new Board();
+        board = new Board(false);
         Player redPlayer = new Player(PlayerColor.RED);
         Player whitePlayer = new Player(PlayerColor.WHITE);
 

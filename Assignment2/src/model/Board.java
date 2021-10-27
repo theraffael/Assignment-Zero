@@ -6,8 +6,10 @@ import java.util.Arrays;
 public class Board {
     private Checker[][] board = new Checker[8][8];
 
-    public Board(){
-        this.placeCheckersInitialSetup();
+    public Board(boolean isSetupBoard){
+        if (isSetupBoard) {
+            this.placeCheckersInitialSetup();
+        }
     }
 
     public void placeCheckersInitialSetup()

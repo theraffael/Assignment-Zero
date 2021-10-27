@@ -92,7 +92,7 @@ public class Game {
 
         else { //when it is white player's turn
             // Return false if checker belongs to red player
-            if (board.fieldContainsCheckerColor(move.fromX, move.fromY, PlayerColor.WHITE)) {return false;}
+            if (board.fieldContainsCheckerColor(move.fromX, move.fromY, PlayerColor.RED)) {return false;}
 
             // X distance must be 2 or -2
             if (Math.abs(distanceX) != 2 ) {return false;}
