@@ -241,8 +241,7 @@ public class Game {
                     testBoard.addPiece(checker, move.toX, move.toY);
                     int distanceX = move.toX - move.fromX;
                     int distanceY = move.toY - move.fromY;
-                    Checker capturedChecker = testBoard.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
-                    capturedChecker.capture();
+                    testBoard.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
                 }
             }
             // test if the checker we just moved could make another jump

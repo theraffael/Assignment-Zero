@@ -15,10 +15,6 @@ public class Checker {
         return king;
     }
 
-    private boolean captured = false;
-    public void capture() {captured = true;}
-
-
     public Checker(PlayerColor c){
         this.playerColor = c;
     }
@@ -27,7 +23,6 @@ public class Checker {
     public Checker(Checker oldChecker){
         this.playerColor= oldChecker.playerColor;
         this.king = oldChecker.king;
-        this.captured = oldChecker.captured;
     }
 
 
