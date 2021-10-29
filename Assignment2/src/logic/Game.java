@@ -12,7 +12,7 @@ public class Game {
     private PlayerType whitePlayer;
     private boolean isFinished;
 
-    public Game(Board board, PlayerType redPlayer, PlayerType whitePlayer) {
+    public Game(Board board, PlayerType redPlayer, PlayerType whitePlayer, UI ui) {
         this.board = board;
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
@@ -172,7 +172,7 @@ public class Game {
 
     //calculates all possible moves
     public ArrayList<Move> calcPossibleMoves(Board testBoard){
-        ArrayList<List<Integer>> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
+        ArrayList<List<Integer>> checkerPositions = this.findPlayerCheckers(testBoard);
         ArrayList<Move> possibleMoves = new ArrayList<>();
         for (List<Integer> position : checkerPositions) {
             //check if jump possible

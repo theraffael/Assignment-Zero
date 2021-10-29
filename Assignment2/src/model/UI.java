@@ -47,7 +47,7 @@ public class UI {
         System.out.println("Please enter Player type for white checkers");
         String whitePlayerType = keyBoard.nextLine();
         Board board = new Board(true);
-        Game game = new Game(board, convertToEnum(redPlayerType), convertToEnum(whitePlayerType));
+        Game game = new Game(board, convertToEnum(redPlayerType), convertToEnum(whitePlayerType), this.ui);
         this.display();
     }
     private PlayerType convertToEnum(String playerType) {
