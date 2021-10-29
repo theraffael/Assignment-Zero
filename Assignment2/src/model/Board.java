@@ -87,6 +87,11 @@ public class Board {
         return this.board[x][y].playerColor().equals(color);
     }
 
+    public Checker[][] getBoard(){
+        Checker[][] boardClone = board.clone();
+        return boardClone;
+    }
+
     // Copy board state to new board object
     public Board(Board oldBoard) {
         for (int x = 0; x < 8; x++) {

@@ -2,20 +2,49 @@ package logic;
 
 import model.*;
 
-import com.sun.tools.javac.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
     private int turnCounter = 0;
     private Board board;
-    private Player redPlayer;
-    private Player whitePlayer;
+    private PlayerContext redPlayer;
+    private PlayerContext whitePlayer;
+    private UI ui;
+    private boolean isFinished;
 
-    public Game(Board board, Player redPlayer, Player whitePlayer) {
+    public Game(Board board, PlayerContext redPlayer, PlayerContext whitePlayer, UI ui) {
         this.board = board;
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        this.ui = ui;
     }
+
+    public void runGame(){
+        isFinished = false;
+        while (!this.isFinished()){
+            ArrayList<Move> convertedMoves;
+            boolean moveSuccessful = false;
+            while(!moveSuccessful){
+                if (moveSuccessful){
+                    break;
+                }
+                else{
+                    if(isRedPlayersTurn()){
+                        convertedMoves = redPlayer.getMove(board, ui);
+                        }
+                    else{
+                        convertedMoves = whitePlayer.getMove(board,ui);
+                    }
+                    moveSuccessful = this.newMove(convertedMoves);
+                    }
+                }
+
+            ui.display();
+            }
+        }
+
 
     //checks if single move is legal
     public boolean isMove(Move move, Board board){
@@ -29,7 +58,7 @@ public class Game {
         // Target square must be empty
         if (!board.fieldIsEmpty(move.toX, move.toY)) {return false;}
 
-        if (getActivePlayer().isRedPlayersTurn()) {   //when it is red player's turn
+        if (this.isRedPlayersTurn()) {   //when it is red player's turn
             // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.fromX,move.fromY,  PlayerColor.WHITE)) {return false;}
 
@@ -77,7 +106,7 @@ public class Game {
         // X distance must be 2 or -2, check Y later
         if (Math.abs(distanceX) != 2 ) {return false;}
 
-        if (getActivePlayer().isRedPlayersTurn()) {  //when it is red player's turn
+        if (this.isRedPlayersTurn()) {  //when it is red player's turn
         // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.fromX, move.fromY, PlayerColor.WHITE)) {return false;}
 
@@ -117,12 +146,12 @@ public class Game {
 
         ArrayList possibleMoves = calcPossibleMoves(board);
 
-        if(getActivePlayer().findPlayerCheckers(board).size() == 0){
-            System.out.println(getActivePlayer().playerColorToString() + " has no more pieces left and loses this game");
+        if(this.findPlayerCheckers(board).size() == 0){
+            System.out.println(getActivePlayer().toString() + " has no more pieces left and loses this game");
             return true;
         }
         if (possibleMoves.isEmpty()){
-            System.out.println(getActivePlayer().playerColorToString() + " has no more possible moves left and loses this game");
+            System.out.println(getActivePlayer().toString() + " has no more possible moves left and loses this game");
             return true;
         }
         else{
@@ -130,19 +159,31 @@ public class Game {
         }
     }
 
+    public ArrayList findPlayerCheckers(Board board) {
+        ArrayList checkers = new ArrayList();
+        for (int x = 0; x<8; x++){
+            for (int y = 0; y<8; y++){
+                if (board.fieldContainsCheckerColor(x, y, this.getActivePlayer())) {
+                    checkers.add(List.of(x,y));
+                }
+            }
+        }
+        return checkers;
+    }
+
     //returns the Player whose turn it is
-    public Player getActivePlayer(){
+    public PlayerColor getActivePlayer(){
         if (turnCounter % 2 == 0){
-            return redPlayer;
+            return PlayerColor.RED;
         }
         else {
-            return whitePlayer;
+            return PlayerColor.WHITE;
         }
     }
 
     //calculates all possible moves
     public ArrayList<Move> calcPossibleMoves(Board testBoard){
-        ArrayList<List<Integer>> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
+        ArrayList<List<Integer>> checkerPositions = this.findPlayerCheckers(testBoard);
         ArrayList<Move> possibleMoves = new ArrayList<>();
         for (List<Integer> position : checkerPositions) {
             //check if jump possible
@@ -181,14 +222,14 @@ public class Game {
     }
 
     public boolean newMove(ArrayList<Move> convertedMoves) {
-        Board testBoard =  new Board(this.board);
+        //Board testBoard =  new Board(this.board);
 
         // handle one move inputs
         if (convertedMoves.size() == 1){
             Move move = convertedMoves.get(0);
-            if (isMove(move, testBoard)){
+            if (isMove(move, board)){
                 // check if no jump is possible anywhere
-                for(Move possibleMove : calcPossibleMoves(testBoard)){
+                for(Move possibleMove : calcPossibleMoves(board)){
                     if(possibleMove.isMoveJump())
                     {
                         System.out.println("Invalid move, there is a mandatory jump available");
@@ -196,24 +237,24 @@ public class Game {
                     }
                 }
                 // perform move
-                Checker checker = testBoard.removePiece(move.fromX, move.fromY);
+                Checker checker = board.removePiece(move.fromX, move.fromY);
                 isCrown(checker, move.toY);
-                testBoard.addPiece(checker, move.toX, move.toY);
+                board.addPiece(checker, move.toX, move.toY);
 
             }
-            else if (isSingleJump(move, testBoard)){
+            else if (isSingleJump(move, board)){
                 // perform single jump
-                Checker checker = testBoard.removePiece(move.fromX, move.fromY);
+                Checker checker = board.removePiece(move.fromX, move.fromY);
                 isCrown(checker, move.toY);
-                testBoard.addPiece(checker, move.toX, move.toY);
+                board.addPiece(checker, move.toX, move.toY);
 
                 int distanceX = move.toX - move.fromX;
                 int distanceY = move.toY - move.fromY;
 
-                testBoard.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
+                board.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
 
                 // test if the checker we just moved could make another jump
-                for(Move possibleMove : calcPossibleMoves(testBoard)){
+                for(Move possibleMove : calcPossibleMoves(board)){
                     if(move.toX == possibleMove.fromX && move.toY == possibleMove.fromY && possibleMove.isMoveJump()){
                         System.out.println("Invalid move, the checker can jump further");
                         return false;
@@ -231,23 +272,23 @@ public class Game {
         else {
             for (int i = 0; i < convertedMoves.size(); i++){
                 Move move = convertedMoves.get(i);
-                if (!isSingleJump(move, testBoard)) {
+                if (!isSingleJump(move, board)) {
                     System.out.println("Invalid jump, please try again.");
                     return false;
                 }
                 else {
                     // perform jump, update testboard
-                    Checker checker = testBoard.removePiece(move.fromX, move.fromY);
+                    Checker checker = board.removePiece(move.fromX, move.fromY);
                     isCrown(checker, move.toY);
-                    testBoard.addPiece(checker, move.toX, move.toY);
+                    board.addPiece(checker, move.toX, move.toY);
                     int distanceX = move.toX - move.fromX;
                     int distanceY = move.toY - move.fromY;
-                    testBoard.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
+                    board.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
                 }
             }
             // test if the checker we just moved could make another jump
             Move move = convertedMoves.get(convertedMoves.size() -1 );
-            for(Move possibleMove : calcPossibleMoves(testBoard)){
+            for(Move possibleMove : calcPossibleMoves(board)){
                 if(move.toX == possibleMove.fromX && move.toY == possibleMove.fromY && possibleMove.isMoveJump()){
                     System.out.println("Invalid move, the checker can jump further");
                     return false;
@@ -256,10 +297,15 @@ public class Game {
         }
 
         turnCounter++;
-        this.board = testBoard;
-        this.board.display();
-        System.out.println("Player Turn: " + this.getActivePlayer().playerColorToString());
         return true;
+    }
+    public boolean isRedPlayersTurn() {
+        if(this.getActivePlayer() == PlayerColor.RED){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private void isCrown(Checker checker, int toY){
