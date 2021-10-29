@@ -12,7 +12,7 @@ public class Board {
         }
     }
 
-    public void placeCheckersInitialSetup()
+    private void placeCheckersInitialSetup()
     {
         //this for loop is to set the red piece on top of the board in the arrangement of classic checkers
 
@@ -30,6 +30,33 @@ public class Board {
                 addPiece(new Checker(PlayerColor.WHITE), i + (j+1)%2, j);
             }
         }
+    }
+
+    public void display(){
+        // Clear previous output from the terminal
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        // Start printing board
+        System.out.print("      a     b     c     d     e     f     g     h"+
+                "\n  +-------------------------------------------------+\n");
+        for(int j = 0; j < 8; j++)
+        {
+            System.out.print(j+1+" | ");
+            for(int i = 0; i < 8; i++)
+            {
+                if(board[i][j] == null)
+                {
+                    System.out.print("[   ] ");
+                }
+                else {
+                    System.out.print("[" + board[i][j].toString()+ "] ");
+                }
+            }
+            System.out.print("| "+ (j+1) + "\n");
+        }
+        System.out.println("  +-------------------------------------------------+");
+        System.out.println("      a     b     c     d     e     f     g     h");
     }
 
     public void addPiece(Object checker, int x, int y)
