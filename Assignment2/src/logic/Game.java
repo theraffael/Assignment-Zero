@@ -7,13 +7,31 @@ import java.util.ArrayList;
 public class Game {
     private int turnCounter = 0;
     private Board board;
-    private Player redPlayer;
-    private Player whitePlayer;
+    private PlayerType redPlayer;
+    private PlayerType whitePlayer;
+    private boolean isFinished;
 
-    public Game(Board board, Player redPlayer, Player whitePlayer) {
+    public Game(Board board, PlayerType redPlayer, PlayerType whitePlayer) {
         this.board = board;
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+    }
+
+    public void runGame(ArrayList convertedMoves){
+        isFinished = false;
+        while (!this.isFinished()){
+            boolean moveSuccessful = false;
+            String move;
+            while(!moveSuccessful){
+                moveSuccessful = this.newMove(convertedMoves);
+                if (moveSuccessful){
+                    break;
+                }
+                else{
+                    UI ui = new UI(false);
+                }
+            }
+        }
     }
 
     //checks if single move is legal
@@ -28,7 +46,7 @@ public class Game {
         // Target square must be empty
         if (!board.fieldIsEmpty(move.toX, move.toY)) {return false;}
 
-        if (getActivePlayer().isRedPlayersTurn()) {   //when it is red player's turn
+        if (this.isRedPlayersTurn()) {   //when it is red player's turn
             // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.fromX,move.fromY,  PlayerColor.WHITE)) {return false;}
 
@@ -76,7 +94,7 @@ public class Game {
         // X distance must be 2 or -2, check Y later
         if (Math.abs(distanceX) != 2 ) {return false;}
 
-        if (getActivePlayer().isRedPlayersTurn()) {  //when it is red player's turn
+        if (this.isRedPlayersTurn()) {  //when it is red player's turn
         // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.fromX, move.fromY, PlayerColor.WHITE)) {return false;}
 
@@ -116,12 +134,12 @@ public class Game {
 
         ArrayList possibleMoves = calcPossibleMoves(board);
 
-        if(getActivePlayer().findPlayerCheckers(board).size() == 0){
-            System.out.println(getActivePlayer().playerColorToString() + " has no more pieces left and loses this game");
+        if(this.findPlayerCheckers(board).size() == 0){
+            System.out.println(getActivePlayer().toString() + " has no more pieces left and loses this game");
             return true;
         }
         if (possibleMoves.isEmpty()){
-            System.out.println(getActivePlayer().playerColorToString() + " has no more possible moves left and loses this game");
+            System.out.println(getActivePlayer().toString() + " has no more possible moves left and loses this game");
             return true;
         }
         else{
@@ -129,19 +147,31 @@ public class Game {
         }
     }
 
+    public ArrayList findPlayerCheckers(Board board) {
+        ArrayList checkers = new ArrayList();
+        for (int x = 0; x<8; x++){
+            for (int y = 0; y<8; y++){
+                if (board.fieldContainsCheckerColor(x, y, this.getActivePlayer())) {
+                    checkers.add(new Position(x,y));
+                }
+            }
+        }
+        return checkers;
+    }
+
     //returns the Player whose turn it is
-    public Player getActivePlayer(){
+    public PlayerColor getActivePlayer(){
         if (turnCounter % 2 == 0){
-            return redPlayer;
+            return PlayerColor.RED;
         }
         else {
-            return whitePlayer;
+            return PlayerColor.WHITE;
         }
     }
 
     //calculates all possible moves
     public ArrayList<Move> calcPossibleMoves(Board testBoard){
-        ArrayList<Position> checkerPositions = getActivePlayer().findPlayerCheckers(testBoard);
+        ArrayList<Position> checkerPositions = this.findPlayerCheckers(testBoard);
         ArrayList<Move> possibleMoves = new ArrayList<>();
         for (Position position : checkerPositions) {
             //check if jump possible
@@ -256,12 +286,17 @@ public class Game {
         }
 
         turnCounter++;
-        this.board = testBoard;
-        this.board.display();
-        System.out.println("Player Turn: " + this.getActivePlayer().playerColorToString());
+        UI ui = new UI(false);
         return true;
     }
-
+    public boolean isRedPlayersTurn() {
+        if(this.getActivePlayer() == PlayerColor.RED){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     private void isCrown(Checker checker, int toY){
 
         if (checker.isWhitePlayerChecker()){
