@@ -3,15 +3,33 @@ package logic;
 import model.Board;
 import model.Move;
 import model.PlayerColor;
+import model.UI;
+
+import java.util.ArrayList;
 
 public class PlayerContext {
-    private PlayerStrategy strategy;
-
-    public PlayerContext(PlayerStrategy strategy){
-        this.strategy = strategy;
+    public PlayerStrategy getStrategy() {
+        return strategy;
     }
 
-    public Move getMove(Board board, PlayerColor color){
-        return strategy.getMove(board, color);
+    private PlayerStrategy strategy;
+    private PlayerColor playerColor;
+
+    public PlayerContext(PlayerStrategy strategy, PlayerColor color){
+        this.strategy = strategy;
+        this.playerColor= color;
+    }
+
+    public ArrayList<Move> getMove(Board board, UI ui){
+        return strategy.getMove(board, ui);
+    }
+
+    public String playerColorToString() {
+        if (this.playerColor == PlayerColor.WHITE) {
+            return "White";
+        }
+        else {
+            return "Red";
+        }
     }
 }

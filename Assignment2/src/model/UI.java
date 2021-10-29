@@ -1,6 +1,6 @@
 package model;
 
-import logic.Game;
+import logic.*;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -10,8 +10,6 @@ import java.util.regex.Pattern;
 
 public class UI {
 
-    private PlayerType redPlayerType;
-    private PlayerType whitePlayerType;
     private Game game;
     private Board board;
     private String move;
@@ -22,10 +20,9 @@ public class UI {
         if(isStartUp){
             this.startUp();
         }
-        this.handleInput();
     }
-    private void handleInput(){
-        System.out.println("Player Turn: "+ "white");
+    public ArrayList<Move> handleInput(){
+        System.out.println("Player Turn: "+ game.getActivePlayer().toString());
         isInputCorrect = false;
         while (!isInputCorrect) {
             System.out.println("Please enter coordinate format in form of a1xb2, or a1xb2xc3 for a multi jump");
@@ -36,59 +33,65 @@ public class UI {
                 break;
             }
         }
-        ArrayList<Move> convertedMoves = this.convertInputToXY(move);
-        game.runGame(convertedMoves);
+        return this.convertInputToXY(move);
     }
 
     private void startUp(){
         System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, SimpleAI, ChallengingAI");
         System.out.println("Please enter Player type for red checkers");
         String redPlayerType = keyBoard.nextLine();
+        PlayerStrategy playerType = convertToStrategy(redPlayerType);
+        PlayerContext redPlayer = new PlayerContext(playerType, PlayerColor.RED);
+
         System.out.println("Please enter Player type for white checkers");
         String whitePlayerType = keyBoard.nextLine();
-        Board board = new Board(true);
-        Game game = new Game(board, convertToEnum(redPlayerType), convertToEnum(whitePlayerType), this.ui);
+        PlayerStrategy wplayerType = convertToStrategy(whitePlayerType);
+        PlayerContext whitePlayer = new PlayerContext(wplayerType, PlayerColor.RED);
+
+
+        this.board = new Board(true);
+        this.game = new Game(board, redPlayer, whitePlayer, this);
         this.display();
+        game.runGame();
     }
-    private PlayerType convertToEnum(String playerType) {
-        switch (playerType) {
-            case "HumanPlayer":
-                return PlayerType.HumanPlayer;
-            break;
-            case "SimpleAI":
-                return PlayerType.SimpleAI;
-            break;
-            case "HardAI":
-                return PlayerType.HardAI;
-            break;
+    private PlayerStrategy convertToStrategy(String playerType) {
+        if (playerType.equals("HumanPlayer")) {
+            return new HumanPlayer();
+        }
+        else if (playerType.equals("SimpleAI")) {
+            return new RandomPlayer();
+        }
+        else {
+            return new MinMaxPlayer();
         }
     }
-    private void display(){
-        Checker[][] board = this.board.getBoard();
+    public void display(){
+        Checker[][] checkerBoard = board.getBoard();
         // Clear previous output from the terminal
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
         // Start printing board
-        System.out.println("       a      b      c      d      e      f      g      h"+
-                "\n  +_______________________________________________________+\n");
+        System.out.print("      a     b     c     d     e     f     g     h"+
+                "\n  +-------------------------------------------------+\n");
         for(int j = 0; j < 8; j++)
         {
             // // TODO: 13.10.21 : Invert numbers?
-            System.out.print(j+1+" |  ");
+            System.out.print(j+1+" | ");
             for(int i = 0; i < 8; i++)
             {
-                if(board[i][j] == null)
+                if(checkerBoard[i][j] == null)
                 {
-                    System.out.print("[   ]  ");
+                    System.out.print("[   ] ");
                 }
                 else {
-                    System.out.print("[" + board[i][j].toString()+ "]  ");
+                    System.out.print("[" + checkerBoard[i][j].toString()+ "] ");
                 }
             }
-            System.out.println("\n");
+            System.out.print("| "+ (j+1) + "\n");
         }
-        System.out.println("\n");
+        System.out.println("  +-------------------------------------------------+");
+        System.out.println("      a     b     c     d     e     f     g     h");
     }
     private ArrayList<Move> convertInputToXY(String s){
         String[] moves = s.toLowerCase(Locale.ROOT).split("x");
