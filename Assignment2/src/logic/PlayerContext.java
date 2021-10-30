@@ -20,8 +20,8 @@ public class PlayerContext {
         this.playerColor= color;
     }
 
-    public ArrayList<Move> getMove(Board board, UI ui){
-        return strategy.getMove(board, ui);
+    public ArrayList<Move> getMove(ArrayList<Move> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
+        return strategy.getMove(possibleMoves,opposingPlayerCheckers, ui);
     }
 
     public String playerColorToString() {
