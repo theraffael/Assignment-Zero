@@ -37,7 +37,7 @@ public class UI {
     }
 
     private void startUp(){
-        System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, SimpleAI, ChallengingAI");
+        System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
         System.out.println("Please enter Player type for red checkers");
         String redPlayerType = keyBoard.nextLine();
         PlayerStrategy playerType = convertToStrategy(redPlayerType);
@@ -116,5 +116,8 @@ public class UI {
         String lowercase = input.toLowerCase(Locale.ROOT);
         Matcher m = p.matcher(lowercase);
         return m.matches();
+    }
+    public void outputMoveToConsole(String aiPlayerMove){
+        System.out.println(aiPlayerMove);
     }
 }

@@ -21,6 +21,7 @@ public class RandomPlayer implements PlayerStrategy {
         int randomNum = rand.nextInt((max_val - min_val) + 1) + min_val;
         ArrayList possibleMove = new ArrayList();
         possibleMove.add(possibleMoves.get(randomNum));
+        ui.outputMoveToConsole(possibleMove.get(0).toString());
         return possibleMove;
     }
 }

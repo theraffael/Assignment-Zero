@@ -31,5 +31,16 @@ public class Move {
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "AI Player Move{" +
+                "fromX=" + fromX +
+                ", fromY=" + fromY +
+                ", toX=" + toX +
+                ", toY=" + toY +
+                ", move type='" + s + '\'' +
+                '}';
+    }
 }
 
