@@ -58,7 +58,7 @@ public class UI {
         if (playerType.equals("HumanPlayer")) {
             return new HumanPlayer();
         }
-        else if (playerType.equals("SimpleAI")) {
+        else if (playerType.equals("RandomPlayer")) {
             return new RandomPlayer();
         }
         else {

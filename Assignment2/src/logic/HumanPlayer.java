@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class HumanPlayer implements PlayerStrategy {
 
-    public ArrayList<Move> getMove(Board board, UI ui){
+    public ArrayList<Move> getMove(ArrayList possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
         return ui.handleInput();
     }
 }

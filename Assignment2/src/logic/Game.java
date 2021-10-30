@@ -13,6 +13,7 @@ public class Game {
     private PlayerContext whitePlayer;
     private UI ui;
     private boolean isFinished;
+    private ArrayList possibleMoves;
 
     public Game(Board board, PlayerContext redPlayer, PlayerContext whitePlayer, UI ui) {
         this.board = board;
@@ -32,10 +33,10 @@ public class Game {
                 }
                 else{
                     if(isRedPlayersTurn()){
-                        convertedMoves = redPlayer.getMove(board, ui);
+                        convertedMoves = redPlayer.getMove(this.calcPossibleMoves(board), this.findOpposingPlayerCheckers(board),ui);
                         }
                     else{
-                        convertedMoves = whitePlayer.getMove(board,ui);
+                        convertedMoves = whitePlayer.getMove(this.calcPossibleMoves(board),this.findOpposingPlayerCheckers(board),ui);
                     }
                     moveSuccessful = this.newMove(convertedMoves);
                     }
@@ -144,7 +145,7 @@ public class Game {
     //checks whether the game is finished
     public boolean isFinished(){
 
-        ArrayList possibleMoves = calcPossibleMoves(board);
+        this.possibleMoves = calcPossibleMoves(board);
 
         if(this.findPlayerCheckers(board).size() == 0){
             System.out.println(getActivePlayer().toString() + " has no more pieces left and loses this game");
@@ -164,6 +165,24 @@ public class Game {
         for (int x = 0; x<8; x++){
             for (int y = 0; y<8; y++){
                 if (board.fieldContainsCheckerColor(x, y, this.getActivePlayer())) {
+                    checkers.add(List.of(x,y));
+                }
+            }
+        }
+        return checkers;
+    }
+    public ArrayList findOpposingPlayerCheckers(Board board) {
+        ArrayList checkers = new ArrayList();
+        PlayerColor opposingPlayerColor;
+        if (this.getActivePlayer().equals(PlayerColor.RED)){
+            opposingPlayerColor = PlayerColor.WHITE;
+        }
+        else{
+            opposingPlayerColor = PlayerColor.RED;
+        }
+        for (int x = 0; x<8; x++){
+            for (int y = 0; y<8; y++){
+                if (board.fieldContainsCheckerColor(x, y, opposingPlayerColor)) {
                     checkers.add(List.of(x,y));
                 }
             }
