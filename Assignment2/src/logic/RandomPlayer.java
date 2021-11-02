@@ -1,6 +1,8 @@
 package logic;
 
+import model.Board;
 import model.Move;
+import model.PlayerColor;
 import model.UI;
 
 import java.security.SecureRandom;
@@ -9,7 +11,8 @@ import java.util.Date;
 
 public class RandomPlayer implements PlayerStrategy {
 
-    public ArrayList<Move> getMove(ArrayList<ArrayList<Move>> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
+    public ArrayList<Move> getMove(Game game, UI ui, PlayerColor playerColor){
+        ArrayList<ArrayList<Move>> possibleMoves = game.calcPossibleMoves();
         int possibleMovesSize = possibleMoves.size();
         int min_val = 0;
         int max_val = possibleMovesSize - 1;

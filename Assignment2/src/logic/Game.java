@@ -22,6 +22,11 @@ public class Game {
         this.ui = ui;
     }
 
+    public Game(Game originalGame){
+        this.board = new Board(originalGame.board);
+        this.turnCounter = originalGame.turnCounter;
+    }
+
     public void runGame(){
         isFinished = false;
         while (!this.isFinished()){
@@ -33,10 +38,10 @@ public class Game {
                 }
                 else{
                     if(isRedPlayersTurn()){
-                        convertedMoves = redPlayer.getMove(this.calcPossibleMoves(board), this.findOpposingPlayerCheckers(board),ui);
+                        convertedMoves = redPlayer.getMove(new Game(this), ui);
                         }
                     else{
-                        convertedMoves = whitePlayer.getMove(this.calcPossibleMoves(board),this.findOpposingPlayerCheckers(board),ui);
+                        convertedMoves = whitePlayer.getMove(new Game(this), ui);
                     }
                     moveSuccessful = this.newMove(convertedMoves);
                     }
@@ -216,6 +221,10 @@ public class Game {
         return previousMoves;
     }
 
+    public ArrayList<ArrayList<Move>> calcPossibleMoves(){
+        return calcPossibleMoves(new Board(this.board));
+    }
+
     //calculates all possible moves
     public ArrayList<ArrayList<Move>> calcPossibleMoves(Board testBoard){
         ArrayList<List<Integer>> checkerPositions = this.findPlayerCheckers(testBoard);
@@ -251,6 +260,7 @@ public class Game {
             Move move = jumps.get(i);
             if (!isSingleJump(move, board)) {
                 System.out.println("Invalid jump, please try again.");
+                System.exit(0);
                 return false;
             }
             else {
