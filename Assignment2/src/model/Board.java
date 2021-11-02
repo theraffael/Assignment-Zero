@@ -1,7 +1,4 @@
 package model;
-import logic.Game;
-
-import java.util.Arrays;
 
 public class Board {
     private Checker[][] board = new Checker[8][8];
@@ -66,7 +63,7 @@ public class Board {
         for(int j = 0; j < 8; j++)
         {
             boardString = boardString + (j+1) +" | ";
-            // System.out.print(j+1+" | ");
+
             for(int i = 0; i < 8; i++)
             {
                 if(board[i][j] == null)

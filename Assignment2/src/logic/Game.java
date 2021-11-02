@@ -200,19 +200,35 @@ public class Game {
         }
     }
 
-    //calculates all possible moves
-    public ArrayList<Move> calcPossibleMoves(Board testBoard){
-        ArrayList<List<Integer>> checkerPositions = this.findPlayerCheckers(testBoard);
-        ArrayList<Move> possibleMoves = new ArrayList<>();
-        for (List<Integer> position : checkerPositions) {
-            //check if jump possible
-            for (int i = -2; i <= 2; i += 4) {
-                for (int j = -2; j <= 2; j += 4) {
-                    Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "jump");
-                    if (isSingleJump(candidateMove, testBoard)) {
-                        possibleMoves.add(candidateMove);
-                    }
+    private ArrayList<Move> findNextJump(List<Integer> position, Board testBoard, ArrayList<Move> previousMoves){
+
+        for (int i = -2; i <= 2; i += 4) {
+            for (int j = -2; j <= 2; j += 4) {
+                Move move = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "jump");
+                if (isSingleJump(move, testBoard)) {
+                    previousMoves.add(move);
+                    Board boardCopy = new Board(testBoard);
+                    Checker checker = boardCopy.removePiece(move.fromX, move.fromY);
+                    boardCopy.addPiece(checker, move.toX, move.toY);
+                    int distanceX = move.toX - move.fromX;
+                    int distanceY = move.toY - move.fromY;
+                    boardCopy.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
+
+                    return findNextJump(List.of(move.toX, move.toY), boardCopy, previousMoves);
                 }
+            }
+        }
+        return previousMoves;
+    }
+
+    //calculates all possible moves
+    public ArrayList<ArrayList<Move>> calcPossibleMoves(Board testBoard){
+        ArrayList<List<Integer>> checkerPositions = this.findPlayerCheckers(testBoard);
+        ArrayList<ArrayList<Move>> possibleMoves = new ArrayList<>();
+        for (List<Integer> position : checkerPositions) {
+            ArrayList<Move> nextMove = findNextJump(position, testBoard, new ArrayList<>());
+            if (nextMove.size() > 0) {
+                possibleMoves.add(nextMove);
             }
         }
         // if jumps are possible, return list of jumps and don't compute moves
@@ -224,7 +240,9 @@ public class Game {
                 for (int j = -1; j<=1; j+=2){
                     Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "move");
                     if (isMove(candidateMove, testBoard)){
-                        possibleMoves.add(candidateMove);
+                        ArrayList m = new ArrayList<Move>();
+                        m.add(candidateMove);
+                        possibleMoves.add(m);
                     }
                 }
             }
@@ -248,8 +266,8 @@ public class Game {
             Move move = convertedMoves.get(0);
             if (isMove(move, board)){
                 // check if no jump is possible anywhere
-                for(Move possibleMove : calcPossibleMoves(board)){
-                    if(possibleMove.isMoveJump())
+                for(ArrayList<Move> possibleMove : calcPossibleMoves(board)){
+                    if(possibleMove.get(0).isMoveJump())
                     {
                         System.out.println("Invalid move, there is a mandatory jump available");
                         return false;
@@ -273,10 +291,12 @@ public class Game {
                 board.removePiece(move.fromX + distanceX/2, move.fromY + distanceY/2);
 
                 // test if the checker we just moved could make another jump
-                for(Move possibleMove : calcPossibleMoves(board)){
-                    if(move.toX == possibleMove.fromX && move.toY == possibleMove.fromY && possibleMove.isMoveJump()){
-                        System.out.println("Invalid move, the checker can jump further");
-                        return false;
+                for(ArrayList<Move> possibleMove : calcPossibleMoves(board)){
+                    for(Move m : possibleMove) {
+                        if (move.toX == m.fromX && move.toY == m.fromY && m.isMoveJump()) {
+                            System.out.println("Invalid move, the checker can jump further");
+                            return false;
+                        }
                     }
                 }
             }
@@ -307,10 +327,12 @@ public class Game {
             }
             // test if the checker we just moved could make another jump
             Move move = convertedMoves.get(convertedMoves.size() -1 );
-            for(Move possibleMove : calcPossibleMoves(board)){
-                if(move.toX == possibleMove.fromX && move.toY == possibleMove.fromY && possibleMove.isMoveJump()){
-                    System.out.println("Invalid move, the checker can jump further");
-                    return false;
+            for(ArrayList<Move> possibleMove : calcPossibleMoves(board)){
+                for(Move m : possibleMove) {
+                    if (move.toX == m.fromX && move.toY == m.fromY && m.isMoveJump()) {
+                        System.out.println("Invalid move, the checker can jump further");
+                        return false;
+                    }
                 }
             }
         }

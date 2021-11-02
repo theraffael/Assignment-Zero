@@ -1,6 +1,5 @@
 package logic;
 
-import model.Board;
 import model.Move;
 import model.PlayerColor;
 import model.UI;
@@ -20,7 +19,7 @@ public class PlayerContext {
         this.playerColor= color;
     }
 
-    public ArrayList<Move> getMove(ArrayList<Move> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
+    public ArrayList<Move> getMove(ArrayList<ArrayList<Move>> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
         return strategy.getMove(possibleMoves,opposingPlayerCheckers, ui);
     }
 

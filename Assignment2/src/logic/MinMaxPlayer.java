@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class MinMaxPlayer implements PlayerStrategy {
 
-    public ArrayList<Move> getMove(ArrayList<Move> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
+    public ArrayList<Move> getMove(ArrayList<ArrayList<Move>> possibleMoves, ArrayList opposingPlayerCheckers, UI ui){
         return new ArrayList<>();
     }
 }
