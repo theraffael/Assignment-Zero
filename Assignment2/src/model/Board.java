@@ -32,33 +32,6 @@ public class Board {
         }
     }
 
-    public void display(){
-        // Clear previous output from the terminal
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-        // Start printing board
-        System.out.print("      a     b     c     d     e     f     g     h"+
-                "\n  +-------------------------------------------------+\n");
-        for(int j = 0; j < 8; j++)
-        {
-            System.out.print(j+1+" | ");
-            for(int i = 0; i < 8; i++)
-            {
-                if(board[i][j] == null)
-                {
-                    System.out.print("[   ] ");
-                }
-                else {
-                    System.out.print("[" + board[i][j].toString()+ "] ");
-                }
-            }
-            System.out.print("| "+ (j+1) + "\n");
-        }
-        System.out.println("  +-------------------------------------------------+");
-        System.out.println("      a     b     c     d     e     f     g     h");
-    }
-
     public void addPiece(Object checker, int x, int y)
     {
         board[x][y] = (Checker)checker;
@@ -87,9 +60,28 @@ public class Board {
         return this.board[x][y].playerColor().equals(color);
     }
 
-    public Checker[][] getBoard(){
-        Checker[][] boardClone = board.clone();
-        return boardClone;
+    public String getBoardString(){
+        String boardString = "      a     b     c     d     e     f     g     h\n  +-------------------------------------------------+\n";
+
+        for(int j = 0; j < 8; j++)
+        {
+            boardString = boardString + (j+1) +" | ";
+            // System.out.print(j+1+" | ");
+            for(int i = 0; i < 8; i++)
+            {
+                if(board[i][j] == null)
+                {
+                    boardString = boardString + "[   ] ";
+                }
+                else {
+                    boardString = boardString + "[" + board[i][j].toString()+ "] ";
+                }
+            }
+            boardString = boardString + "| "+ (j+1) + "\n";
+        }
+        boardString = boardString + "  +-------------------------------------------------+\n      a     b     c     d     e     f     g     h\n";
+
+        return boardString;
     }
 
     // Copy board state to new board object

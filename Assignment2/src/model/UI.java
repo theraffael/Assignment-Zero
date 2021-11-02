@@ -46,7 +46,7 @@ public class UI {
         System.out.println("Please enter Player type for white checkers");
         String whitePlayerType = keyBoard.nextLine();
         PlayerStrategy wplayerType = convertToStrategy(whitePlayerType);
-        PlayerContext whitePlayer = new PlayerContext(wplayerType, PlayerColor.RED);
+        PlayerContext whitePlayer = new PlayerContext(wplayerType, PlayerColor.WHITE);
 
 
         this.board = new Board(true);
@@ -66,32 +66,12 @@ public class UI {
         }
     }
     public void display(){
-        Checker[][] checkerBoard = board.getBoard();
+        String boardString = board.getBoardString();
         // Clear previous output from the terminal
         System.out.print("\033[H\033[2J");
         System.out.flush();
+        System.out.println(boardString);
 
-        // Start printing board
-        System.out.print("      a     b     c     d     e     f     g     h"+
-                "\n  +-------------------------------------------------+\n");
-        for(int j = 0; j < 8; j++)
-        {
-            // // TODO: 13.10.21 : Invert numbers?
-            System.out.print(j+1+" | ");
-            for(int i = 0; i < 8; i++)
-            {
-                if(checkerBoard[i][j] == null)
-                {
-                    System.out.print("[   ] ");
-                }
-                else {
-                    System.out.print("[" + checkerBoard[i][j].toString()+ "] ");
-                }
-            }
-            System.out.print("| "+ (j+1) + "\n");
-        }
-        System.out.println("  +-------------------------------------------------+");
-        System.out.println("      a     b     c     d     e     f     g     h");
     }
     private ArrayList<Move> convertInputToXY(String s){
         String[] moves = s.toLowerCase(Locale.ROOT).split("x");
