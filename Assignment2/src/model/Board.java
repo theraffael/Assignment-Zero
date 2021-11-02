@@ -29,6 +29,17 @@ public class Board {
         }
     }
 
+    public void checkAndCrown(){
+        for (int i = 0; i < 8; i++){
+            if (fieldContainsCheckerColor(i, 0, PlayerColor.WHITE)){
+                this.board[i][0].crown();
+            }
+            if (fieldContainsCheckerColor(i, 7, PlayerColor.RED)){
+                this.board[i][7].crown();
+            }
+        }
+    }
+
     public void addPiece(Object checker, int x, int y)
     {
         board[x][y] = (Checker)checker;

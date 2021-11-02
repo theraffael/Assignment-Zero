@@ -275,14 +275,12 @@ public class Game {
                 }
                 // perform move
                 Checker checker = board.removePiece(move.fromX, move.fromY);
-                isCrown(checker, move.toY);
                 board.addPiece(checker, move.toX, move.toY);
 
             }
             else if (isSingleJump(move, board)){
                 // perform single jump
                 Checker checker = board.removePiece(move.fromX, move.fromY);
-                isCrown(checker, move.toY);
                 board.addPiece(checker, move.toX, move.toY);
 
                 int distanceX = move.toX - move.fromX;
@@ -318,7 +316,6 @@ public class Game {
                 else {
                     // perform jump, update testboard
                     Checker checker = board.removePiece(move.fromX, move.fromY);
-                    isCrown(checker, move.toY);
                     board.addPiece(checker, move.toX, move.toY);
                     int distanceX = move.toX - move.fromX;
                     int distanceY = move.toY - move.fromY;
@@ -337,6 +334,7 @@ public class Game {
             }
         }
 
+        board.checkAndCrown();
         turnCounter++;
         return true;
     }
@@ -349,18 +347,4 @@ public class Game {
         }
     }
 
-    private void isCrown(Checker checker, int toY){
-
-        if (checker.isWhitePlayerChecker()){
-            if (toY == 0){
-                checker.crown();
-            }
-        }
-        else{
-            if (toY == 7){
-                checker.crown();
-            }
-        }
-
-    }
 }
