@@ -17,11 +17,27 @@ public class Move {
         this.toY = toY;
     }
 
-    public final int fromX;
-    public final int fromY;
-    public final int toX;
-    public final int toY;
-    private String s;
+    public int getFromX() {
+        return fromX;
+    }
+
+    public int getFromY() {
+        return fromY;
+    }
+
+    public int getToX() {
+        return toX;
+    }
+
+    public int getToY() {
+        return toY;
+    }
+
+    private final int fromX;
+    private final int fromY;
+    private final int toX;
+    private final int toY;
+    private final String s;
 
     public boolean isMoveJump(){
         if(s == "jump"){
