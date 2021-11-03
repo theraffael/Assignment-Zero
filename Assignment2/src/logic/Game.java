@@ -176,18 +176,12 @@ public class Game {
         }
         return checkers;
     }
-    public ArrayList findOpposingPlayerCheckers(Board board) {
+
+    public ArrayList findPlayerCheckers(PlayerColor color) {
         ArrayList checkers = new ArrayList();
-        PlayerColor opposingPlayerColor;
-        if (this.getActivePlayer().equals(PlayerColor.RED)){
-            opposingPlayerColor = PlayerColor.WHITE;
-        }
-        else{
-            opposingPlayerColor = PlayerColor.RED;
-        }
         for (int x = 0; x<8; x++){
             for (int y = 0; y<8; y++){
-                if (board.fieldContainsCheckerColor(x, y, opposingPlayerColor)) {
+                if (board.fieldContainsCheckerColor(x, y, color)) {
                     checkers.add(List.of(x,y));
                 }
             }
@@ -276,6 +270,7 @@ public class Game {
     }
 
     public boolean newMove(ArrayList<Move> convertedMoves) {
+        if (convertedMoves.isEmpty()) {return false;}
         Move firstMove = convertedMoves.get(0);
         // handle simple move inputs
         if (convertedMoves.size() == 1 && isMove(firstMove, board)){
