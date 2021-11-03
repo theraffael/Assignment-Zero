@@ -1,7 +1,6 @@
 package logic;
 
 import model.Move;
-import model.Board;
 import model.PlayerColor;
 import model.UI;
 
@@ -19,14 +18,5 @@ public class PlayerContext {
 
     public ArrayList<Move> getMove(Game game, UI ui){
         return strategy.getMove(game, ui, this.playerColor);
-    }
-
-    public String playerColorToString() {
-        if (this.playerColor == PlayerColor.WHITE) {
-            return "White";
-        }
-        else {
-            return "Red";
-        }
     }
 }

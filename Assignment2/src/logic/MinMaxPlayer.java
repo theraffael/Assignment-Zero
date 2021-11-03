@@ -4,7 +4,6 @@ import model.Move;
 import model.PlayerColor;
 import model.UI;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MinMaxPlayer implements PlayerStrategy {
