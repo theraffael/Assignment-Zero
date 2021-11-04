@@ -258,7 +258,7 @@ public class Game {
                 return false;
             }
             else {
-                // perform jump, update testboard
+                // perform jump, update board
                 Checker checker = board.removePiece(move.getFromX(), move.getFromY());
                 board.addPiece(checker, move.getToX(), move.getToY());
                 int distanceX = move.getToX() - move.getFromX();
