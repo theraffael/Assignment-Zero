@@ -49,7 +49,7 @@ public class Game {
                         convertedMoves = whitePlayer.getMove(new Game(this), ui);
                     }
                     moveSuccessful = this.newMove(convertedMoves);
-                    
+
                 }
             ui.display();
             }
@@ -57,10 +57,13 @@ public class Game {
         if(this.findPlayerCheckers(board).size() == 0){
             ui.gameFinishedNoMorePieces(getActivePlayer().toString());
         }
-        if (possibleMoves.isEmpty()){
+        else if (possibleMoves.isEmpty()){
             ui.gameFinishedNoMoreMoves(getActivePlayer().toString());
         }
-        }
+
+        //display moves the game took
+        ui.displayAmountOfMoves(turnCounter);
+    }
 
 
     //checks if single move is legal

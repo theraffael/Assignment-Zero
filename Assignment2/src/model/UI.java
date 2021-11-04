@@ -2,9 +2,7 @@ package model;
 
 import logic.*;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,14 +35,37 @@ public class UI {
     }
 
     private void startUp(){
+        String[] acceptedPlayerTypes = {"HumanPlayer", "RandomPlayer", "MinMaxPlayer"};
+        List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
+
         System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
         System.out.println("Please enter Player type for red checkers");
-        String redPlayerType = keyBoard.nextLine();
+        boolean isPlayerTypeAccepted = false;
+        String redPlayerType = null;
+        while(!isPlayerTypeAccepted){
+            redPlayerType = keyBoard.nextLine();
+            if(acceptedPlayerTypesList.contains(redPlayerType)){
+                isPlayerTypeAccepted = true;
+            }
+            else{
+                System.out.println("Input not accepted. Please enter only the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
+            }
+        }
         PlayerStrategy playerType = convertToStrategy(redPlayerType);
         PlayerContext redPlayer = new PlayerContext(playerType, PlayerColor.RED);
 
         System.out.println("Please enter Player type for white checkers");
-        String whitePlayerType = keyBoard.nextLine();
+        boolean isWhitePlayerTypeAccepted = false;
+        String whitePlayerType = null;
+        while(!isWhitePlayerTypeAccepted){
+            whitePlayerType = keyBoard.nextLine();
+            if(acceptedPlayerTypesList.contains(whitePlayerType)){
+                isWhitePlayerTypeAccepted = true;
+            }
+            else{
+                System.out.println("Input not accepted. Please enter only the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
+            }
+        }
         PlayerStrategy wplayerType = convertToStrategy(whitePlayerType);
         PlayerContext whitePlayer = new PlayerContext(wplayerType, PlayerColor.WHITE);
 
@@ -141,5 +162,9 @@ public class UI {
     }
     public void gameFinishedNoMorePieces(String player){
         System.out.println(player + " has no more pieces left and loses this game");
+    }
+    public void displayAmountOfMoves(int turnCounter){
+        String output = String.format("This game took %s moves to finish", turnCounter);
+        System.out.println(output);
     }
 }
