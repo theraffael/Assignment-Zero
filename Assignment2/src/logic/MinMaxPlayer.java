@@ -28,8 +28,8 @@ public class MinMaxPlayer implements PlayerStrategy {
                 this.bestMove = move;
             }
         }
-        for (Object m : this.bestMove){
-            ui.outputMoveToConsole(m.toString());
+        for (Move m : this.bestMove){
+            ui.outputMoveToConsole(m);
         }
         return this.bestMove;
     }
