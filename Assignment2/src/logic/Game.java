@@ -32,11 +32,16 @@ public class Game {
         while (!this.isFinished()){
             ArrayList<Move> convertedMoves;
             boolean moveSuccessful = false;
+
+             //print out who's turn it is
+            if(isRedPlayersTurn()){
+                ui.printPlayerTurn(true);
+            }
+            else{
+                ui.printPlayerTurn(false);
+            }
+
             while(!moveSuccessful){
-                if (moveSuccessful){
-                    break;
-                }
-                else{
                     if(isRedPlayersTurn()){
                         convertedMoves = redPlayer.getMove(new Game(this), ui);
                         }
@@ -44,12 +49,21 @@ public class Game {
                         convertedMoves = whitePlayer.getMove(new Game(this), ui);
                     }
                     moveSuccessful = this.newMove(convertedMoves);
-                    }
-                }
 
+                }
             ui.display();
             }
+        //display reason for game over
+        if(this.findPlayerCheckers(board).size() == 0){
+            ui.gameFinishedNoMorePieces(getActivePlayer().toString());
         }
+        else if (possibleMoves.isEmpty()){
+            ui.gameFinishedNoMoreMoves(getActivePlayer().toString());
+        }
+
+        //display moves the game took
+        ui.displayAmountOfMoves(turnCounter);
+    }
 
 
     //checks if single move is legal
@@ -153,11 +167,9 @@ public class Game {
         this.possibleMoves = calcPossibleMoves(board);
 
         if(this.findPlayerCheckers(board).size() == 0){
-            System.out.println(getActivePlayer().toString() + " has no more pieces left and loses this game");
             return true;
         }
         if (possibleMoves.isEmpty()){
-            System.out.println(getActivePlayer().toString() + " has no more possible moves left and loses this game");
             return true;
         }
         else{
@@ -253,7 +265,7 @@ public class Game {
         for (int i = 0; i < jumps.size(); i++){
             Move move = jumps.get(i);
             if (!isSingleJump(move, board)) {
-                System.out.println("Invalid jump, please try again.");
+                ui.printInvalidJump();
                 System.exit(0);
                 return false;
             }
@@ -278,7 +290,7 @@ public class Game {
             for(ArrayList<Move> possibleMove : calcPossibleMoves(board)){
                 if(possibleMove.get(0).isMoveJump())
                 {
-                    System.out.println("Invalid move, there is a mandatory jump available");
+                    ui.printInvalidMoveMandatoryJump();
                     return false;
                 }
             }
@@ -297,7 +309,7 @@ public class Game {
             Move move = convertedMoves.get(convertedMoves.size() -1 );
             ArrayList nextJump = findNextJump(List.of(move.getToX(), move.getToY()), boardCopy, new ArrayList<>());
             if (nextJump.size() > 0) {
-                System.out.println("Invalid move, the checker can jump further");
+                ui.printInvalidMoveFurtherJump();
                 return false;
             }
             else{

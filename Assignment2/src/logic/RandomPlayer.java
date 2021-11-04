@@ -18,10 +18,10 @@ public class RandomPlayer implements PlayerStrategy {
         SecureRandom rand = new SecureRandom();
         rand.setSeed(new Date().getTime());
         int randomNum = rand.nextInt((max_val - min_val) + 1) + min_val;
-        ArrayList possibleMove = new ArrayList();
+        ArrayList<Move> possibleMove = new ArrayList();
         possibleMove = possibleMoves.get(randomNum);
-        for (Object m : possibleMove){
-            ui.outputMoveToConsole(m.toString());
+        for (Move m : possibleMove){
+            ui.outputMoveToConsole(m);
         }
         return possibleMove;
     }
