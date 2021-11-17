@@ -52,7 +52,6 @@ public class ItalianGame extends Game{
                 int opponentY = move.getFromY() + distanceY/2;
                 if (board.fieldContainsCheckerColor(opponentX, opponentY, PlayerColor.WHITE)){
                     if (board.fieldContainsKing(opponentX, opponentY) && !board.fieldContainsKing(move.getFromX(), move.getFromY())){
-                        System.out.println("cant capture" + move);
                     return false;}
                     else {return true;}
 
