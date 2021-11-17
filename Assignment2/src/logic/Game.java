@@ -322,6 +322,9 @@ public class Game {
         return true;
     }
 
+    public void pass(){
+        turnCounter++;
+    }
 
     public boolean isRedPlayersTurn() {
         if(this.getActivePlayer() == PlayerColor.RED){

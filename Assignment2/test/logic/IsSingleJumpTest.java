@@ -13,8 +13,8 @@ class IsSingleJumpTest {
     @BeforeEach
     public void setUp(){
         board = new Board(false);
-        Player redPlayer = new Player(PlayerColor.RED);
-        Player whitePlayer = new Player(PlayerColor.WHITE);
+        PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
+        PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
 
 /*      Setup board for testing purposes:
              0      1      2      3      4      5      6      7
@@ -50,14 +50,14 @@ class IsSingleJumpTest {
         board.addPiece(new Checker(PlayerColor.RED), 5,4);
         board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
-        game = new Game(board, redPlayer, whitePlayer);
+        game = new Game(board, redPlayer, whitePlayer, new UI(false));
     }
 
 
     @Test
     void testOnlyMoveInAllowedDirection() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
         // Only move down with red checker
         Move m1 = new Move(5,4,7,6);
         Move m2 = new Move(5,2,7,0);
@@ -67,21 +67,11 @@ class IsSingleJumpTest {
     }
 
 
-/*    @Test
-    void testKingsCanMoveUpAndDown() {
-        // White turn
-        game.setTurnCounter(1);
-        // Move up and down with white king
-        assertTrue(game.isLegalJump(2,5,3,4),
-                "Move up (2,5 to 3,4) with white checker");
-        assertTrue(game.isLegalJump(2,5,1,6),
-                "Move down (2,5 to 1,6) with white checker");
-    }*/
 
     @Test
     void testOnlyMoveToEmptySquare() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
         assertFalse(game.isSingleJump(new Move(7,4,5,6), board));
         assertTrue(game.isSingleJump(new Move(5,4,7,6), board));
     }
@@ -90,12 +80,12 @@ class IsSingleJumpTest {
     @Test
     void testOnlyJumpIfOpponentIsThere() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
         assertFalse(game.isSingleJump(new Move(5,4,3,6), board));
         assertTrue(game.isSingleJump(new Move(5,4,7,6), board));
 
         // White turn
-        game.setTurnCounter(1);
+        game.pass();
         assertFalse(game.isSingleJump(new Move(5,6,7,4), board));
         assertTrue(game.isSingleJump(new Move(6,1,4,3), board));
     }
@@ -104,7 +94,7 @@ class IsSingleJumpTest {
     @Test
     void testMoveToDiagonallyAdjacent() {
         // Red turn
-        game.setTurnCounter(1);
+        game.pass();
         assertTrue(game.isSingleJump(new Move(6,1,4,3), board));
         assertFalse(game.isSingleJump(new Move(6,1,3,4), board));
     }
@@ -112,13 +102,13 @@ class IsSingleJumpTest {
     @Test
     void testOnlyMoveCurrentPlayerCheckers() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
 
         // Move up with white checker
         assertFalse(game.isSingleJump(new Move(2,3,4,1), board));
 
         // White turn
-        game.setTurnCounter(1);
+        game.pass();
         // Move up with white checker
         assertFalse(game.isSingleJump(new Move(3,2,1,4), board));
     }

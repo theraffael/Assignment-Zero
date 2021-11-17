@@ -13,8 +13,8 @@ class IsMoveTest {
     @BeforeEach
     public void setUp(){
         board = new Board(false);
-        Player redPlayer = new Player(PlayerColor.RED);
-        Player whitePlayer = new Player(PlayerColor.WHITE);
+        PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
+        PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
 
 /*      Setup board for testing purposes:
              0      1      2      3      4      5      6      7
@@ -51,14 +51,14 @@ class IsMoveTest {
         board.addPiece(new Checker(PlayerColor.RED), 7,4);
         board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
-        game = new Game(board, redPlayer, whitePlayer);
+        game = new Game(board, redPlayer, whitePlayer, new UI(false));
     }
 
 
     @Test
     void testOnlyMoveInAllowedDirectionRed() {
         // Red turn
-        game.setTurnCounter(0);
+        // game.setTurnCounter(0);
         // Only move down with red checker
         assertTrue(game.isMove(new Move(5,4,4,5), board),
                 "Move down (5,4 to 4,5)  with red checker");
@@ -69,7 +69,7 @@ class IsMoveTest {
     @Test
     void testOnlyMoveInAllowedDirectionWhite() {
         // White turn
-        game.setTurnCounter(1);
+        game.pass();
         // Only move up with white checker
         assertTrue(game.isMove(new Move(6,1,5,0), board),
                 "Move up (6,1 to 5,0) with white checker");
@@ -80,7 +80,7 @@ class IsMoveTest {
     @Test
     void testKingsCanMoveUpAndDown() {
         // White turn
-        game.setTurnCounter(1);
+        game.pass();
         // Move up and down with white king
         assertTrue(game.isMove(new Move(2,5,3,4), board),
                 "Move up (2,5 to 3,4) with white checker");
@@ -91,7 +91,7 @@ class IsMoveTest {
     @Test
     void testOnlyMoveToEmptySquare() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
         assertFalse(game.isMove(new Move(3,2,2,3), board),"2,3 is not an empty square");
         assertTrue(game.isMove(new Move(3,2,4,3), board), "4,3 is an empty square");
     }
@@ -99,7 +99,7 @@ class IsMoveTest {
     @Test
     void testMoveToDiagonallyAdjacent() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
         assertTrue(game.isMove(new Move(5,2,6,3), board),"5,2 and 6,3 are diagonally adjacent");
         assertFalse(game.isMove(new Move(5,2,5,3),board), "5,2 and 5,3 are not diagonally adjacent");
         assertFalse(game.isMove(new Move(5,2,4,7), board),"5,2 and 4,7 are not diagonally adjacent");
@@ -108,7 +108,7 @@ class IsMoveTest {
     @Test
     void testOnlyMoveCurrentPlayerCheckers() {
         // Red turn
-        game.setTurnCounter(0);
+        //game.setTurnCounter(0);
 
         // Move down with white checker
         assertFalse(game.isMove(new Move(5,6,4,7), board),
