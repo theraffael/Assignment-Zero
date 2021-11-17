@@ -29,10 +29,15 @@ public class GameTest {
         Game game = new Game(board, redPlayer, whitePlayer, new UI(false));
 
         Move m1 = new Move(0,5, 2,7, "jump");
+        Move m2 = new Move(2,7, 4,5, "jump");
 
         ArrayList oneJump = new ArrayList();
+        ArrayList twoJumps = new ArrayList();
         oneJump.add(m1);
+        twoJumps.add(m1);
+        twoJumps.add(m2);
 
+        assertFalse(game.newMove(twoJumps));
         assertTrue(game.newMove(oneJump));
 
     }
