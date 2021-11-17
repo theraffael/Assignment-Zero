@@ -266,7 +266,6 @@ public class Game {
             Move move = jumps.get(i);
             if (!isSingleJump(move, board)) {
                 ui.printInvalidJump();
-                System.exit(0);
                 return false;
             }
             else {
