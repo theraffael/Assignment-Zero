@@ -27,6 +27,10 @@ public class Game {
         this.turnCounter = originalGame.turnCounter;
     }
 
+    public Game copy(){
+        return new Game(this);
+    }
+
     public void runGame(){
         isFinished = false;
         while (!this.isFinished()){
@@ -43,10 +47,10 @@ public class Game {
 
             while(!moveSuccessful){
                     if(isRedPlayersTurn()){
-                        convertedMoves = redPlayer.getMove(new Game(this), ui);
+                        convertedMoves = redPlayer.getMove(copy(), ui);
                         }
                     else{
-                        convertedMoves = whitePlayer.getMove(new Game(this), ui);
+                        convertedMoves = whitePlayer.getMove(copy(), ui);
                     }
                     moveSuccessful = this.newMove(convertedMoves);
 
