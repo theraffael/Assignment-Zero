@@ -14,11 +14,20 @@ public class UI {
     private boolean isInputCorrect;
     public static Scanner keyBoard = new Scanner(System.in);
 
-    public UI(boolean isStartUp) {
+    private static UI instance = new UI();
+
+    private UI(){}
+
+    public static UI getInstance(){
+        return instance;
+    }
+
+    /*public UI(boolean isStartUp) {
         if(isStartUp){
             this.startUp();
         }
-    }
+    }*/
+
     public ArrayList<Move> handleInput(){
         System.out.println("Player Turn: "+ game.getActivePlayer().toString());
         isInputCorrect = false;
@@ -34,7 +43,7 @@ public class UI {
         return this.convertInputToXY(move);
     }
 
-    private void startUp(){
+    public void startUp(){
         String[] acceptedPlayerTypes = {"HumanPlayer", "RandomPlayer", "MinMaxPlayer"};
         List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
 

@@ -29,7 +29,7 @@ public class UITest {
         //sysInBackup = System.in; // backup System.in to restore it later
         //in = new ByteArrayInputStream("My string".getBytes());
         //System.setIn(in);
-        checkerGame = new UI(true);
+        checkerGame = UI.getInstance();
 
     }
 
