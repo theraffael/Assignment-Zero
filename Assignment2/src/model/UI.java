@@ -84,6 +84,7 @@ public class UI {
         this.display();
         game.runGame();
     }
+
     static PlayerStrategy convertToStrategy(String playerType) {
         if (playerType.equals("HumanPlayer")) {
             return new HumanPlayer();
@@ -95,6 +96,7 @@ public class UI {
             return new MinMaxPlayer();
         }
     }
+
     public void display(){
         String boardString = board.getBoardString();
         // Clear previous output from the terminal
@@ -103,7 +105,7 @@ public class UI {
         System.out.println(boardString);
 
     }
-    private ArrayList<Move> convertInputToXY(String s){
+    static ArrayList<Move> convertInputToXY(String s){
         String[] moves = s.toLowerCase(Locale.ROOT).split("x");
         ArrayList<Move> allMoves = new ArrayList();
         // allow for multi jump moves

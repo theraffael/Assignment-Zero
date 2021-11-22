@@ -51,9 +51,27 @@ public class UITest {
 
     }
 
-    @Test
+    @Test //assume input has already been checked for validity
     public void testConvertInputToXY(){
+        String testString1 = "a1xb2xc3";
+        String testString2 = "c5xd6";
 
+        ArrayList<Move> Move1 = new ArrayList();
+        ArrayList<Move> Move2 = new ArrayList();
+
+        Move newMove1 = new Move(0,0,1,1);
+        Move newMove2 = new Move(1,1,2,2);
+        Move newMove3 = new Move(2,4,3,5);
+
+        Move1.add(newMove1);
+        Move1.add(newMove2);
+        Move2.add(newMove3);
+
+        ArrayList<Move> actual1 = UI.convertInputToXY(testString1);
+        ArrayList<Move> actual2 = UI.convertInputToXY(testString2);
+
+        assertEquals(Move1.toString(), actual1.toString());
+        assertEquals(Move2.toString(), actual2.toString());
     }
 
     @Test
