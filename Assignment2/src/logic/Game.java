@@ -39,10 +39,10 @@ public class Game {
 
              //print out who's turn it is
             if(isRedPlayersTurn()){
-                ui.printPlayerTurn(true);
+                System.out.println(ui.returnPlayerTurn(true));
             }
             else{
-                ui.printPlayerTurn(false);
+                System.out.println(ui.returnPlayerTurn(false));
             }
 
             while(!moveSuccessful){

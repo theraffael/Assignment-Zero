@@ -75,7 +75,7 @@ public class UI {
         this.display();
         game.runGame();
     }
-    private PlayerStrategy convertToStrategy(String playerType) {
+    static PlayerStrategy convertToStrategy(String playerType) {
         if (playerType.equals("HumanPlayer")) {
             return new HumanPlayer();
         }
@@ -112,7 +112,7 @@ public class UI {
         }
         return allMoves;
     }
-    private boolean checkInputIsValid(String input){
+    static boolean checkInputIsValid(String input){
         Pattern p = Pattern.compile("[a-z][1-8](x[a-z][1-8])+");
         String lowercase = input.toLowerCase(Locale.ROOT);
         Matcher m = p.matcher(lowercase);
@@ -136,16 +136,16 @@ public class UI {
         String output = String.format("AI Player Move: From %s%s To %s%s; Move Type %s",letterFromCoordinate,intFromCoordinate,letterToCoordinate,intToCoordinate,moveType);
         System.out.println(output);
     }
-    private String getCharForNumber(int i) {
+    static String getCharForNumber(int i) {
         return i > 0 && i < 27 ? String.valueOf((char)(i + 'A')) : null;
     }
 
-    public void printPlayerTurn(boolean isRed){
+    public static String returnPlayerTurn(boolean isRed){
         if (isRed){
-            System.out.println("Red Players Turn");
+            return "Red Players Turn";
         }
         else{
-            System.out.println("White Players Turn");
+            return "White Players Turn";
         }
     }
     public void printInvalidMoveFurtherJump(){
