@@ -50,8 +50,9 @@ class IsSingleJumpTest {
         board.addPiece(new Checker(PlayerColor.RED), 5,4);
         board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
-        game = new Game(board, redPlayer, whitePlayer, UI.getInstance());
-    }
+        Game game = new Game();
+        game.setUpGame();
+        game.runGame();    }
 
 
     @Test

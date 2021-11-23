@@ -15,11 +15,8 @@ public class Game {
     private boolean isFinished;
     private ArrayList possibleMoves;
 
-    public Game(Board board, PlayerContext redPlayer, PlayerContext whitePlayer, UI ui) {
-        this.board = board;
-        this.redPlayer = redPlayer;
-        this.whitePlayer = whitePlayer;
-        this.ui = ui;
+    public Game() {
+
     }
 
     public Game(Game originalGame){
@@ -31,9 +28,45 @@ public class Game {
         return new Game(this);
     }
 
+    //Observer pattern
+    private List<Observer> observers = new ArrayList<Observer>();
+    private String boardString;
+
+    public String getState() {
+        return boardString;
+    }
+
+    public void setState(String boardString) {
+        this.boardString = boardString;
+        notifyAllObservers();
+    }
+
+    public void attach(Observer observer){
+        observers.add(observer);
+    }
+
+    public void notifyAllObservers(){
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    public void setUpGame(){
+        this.ui = UI.getInstance();
+        this.board = new Board(true);
+        this.redPlayer = ui.redPlayerstartUp();
+        this.whitePlayer = ui.whitePlayerstartUp();
+
+        //setup observer which monitors when ui has changed see line 63 & 92
+        new UIUpdateObserver(this, this.ui);
+        //inform subscribers that UI needs to be updated
+        this.setState(board.getBoardString());
+    }
+
     public void runGame(){
         isFinished = false;
         while (!this.isFinished()){
+
             ArrayList<Move> convertedMoves;
             boolean moveSuccessful = false;
 
@@ -55,7 +88,8 @@ public class Game {
                     moveSuccessful = this.newMove(convertedMoves);
 
                 }
-            ui.display();
+            //inform subscribers that UI needs to be updated
+            this.setState(board.getBoardString());
             }
         //display reason for game over
         if(this.findPlayerCheckers(board).size() == 0){
@@ -68,6 +102,7 @@ public class Game {
         //display moves the game took
         ui.displayAmountOfMoves(turnCounter);
     }
+
 
 
     //checks if single move is legal
