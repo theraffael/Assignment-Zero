@@ -85,7 +85,6 @@ public class UITest {
         assertFalse(UI.checkInputIsValid("HumanPlayer"));
         assertFalse(UI.checkInputIsValid("asdf6sadf6"));
         assertFalse(UI.checkInputIsValid("a23xb3"));
-
     }
 
     @Test
