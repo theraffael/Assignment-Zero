@@ -27,7 +27,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
 
         Move m1 = new Move(0,5, 2,7, "jump");
@@ -55,7 +54,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
 
         Move m1 = new Move(3,2, 1,4, "jump");
@@ -85,7 +83,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
         game.pass();
 
@@ -117,7 +114,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
         Move m1 = new Move(3,2, 4,3, "move");
         ArrayList move = new ArrayList();
@@ -134,7 +130,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
         assertTrue(game.isFinished());
     }
@@ -150,7 +145,6 @@ public class GameTest {
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
         assertTrue(game.isFinished());
     }

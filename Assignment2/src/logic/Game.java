@@ -16,7 +16,15 @@ public class Game {
     private ArrayList possibleMoves;
 
     public Game() {
+        this.ui = UI.getInstance();
+        this.board = new Board(true);
+        this.redPlayer = ui.redPlayerstartUp();
+        this.whitePlayer = ui.whitePlayerstartUp();
 
+        //setup observer which monitors when ui has changed see line 63 & 92
+        new UIUpdateObserver(this, this.ui);
+        //inform subscribers that UI needs to be updated
+        this.setState(board.getBoardString());
     }
 
     public Game(Game originalGame){
@@ -49,18 +57,6 @@ public class Game {
         for (Observer observer : observers) {
             observer.update();
         }
-    }
-
-    public void setUpGame(){
-        this.ui = UI.getInstance();
-        this.board = new Board(true);
-        this.redPlayer = ui.redPlayerstartUp();
-        this.whitePlayer = ui.whitePlayerstartUp();
-
-        //setup observer which monitors when ui has changed see line 63 & 92
-        new UIUpdateObserver(this, this.ui);
-        //inform subscribers that UI needs to be updated
-        this.setState(board.getBoardString());
     }
 
     public void runGame(){

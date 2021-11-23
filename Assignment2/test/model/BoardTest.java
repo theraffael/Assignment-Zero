@@ -86,7 +86,6 @@ public class BoardTest {
 
 
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
         Move m1 = new Move(4,6, 3,7);
         Move m2 = new Move(4,1, 5,0);

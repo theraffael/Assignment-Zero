@@ -101,7 +101,7 @@ public class UI {
         System.out.println(boardString);
 
     }
-    private ArrayList<Move> convertInputToXY(String s){
+    public static ArrayList<Move> convertInputToXY(String s){
         String[] moves = s.toLowerCase(Locale.ROOT).split("x");
         ArrayList<Move> allMoves = new ArrayList();
         // allow for multi jump moves

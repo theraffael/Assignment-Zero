@@ -52,7 +52,6 @@ class IsMoveTest {
         board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
         Game game = new Game();
-        game.setUpGame();
         game.runGame();
     }
 
