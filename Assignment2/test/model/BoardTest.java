@@ -85,8 +85,8 @@ public class BoardTest {
         board.addPiece(new Checker(PlayerColor.WHITE), 4,1);
 
 
-        game = new Game(board, redPlayer, whitePlayer, UI.getInstance());
-
+        Game game = new Game();
+        game.runGame();
         Move m1 = new Move(4,6, 3,7);
         Move m2 = new Move(4,1, 5,0);
 

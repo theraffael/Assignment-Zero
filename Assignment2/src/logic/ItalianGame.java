@@ -12,8 +12,8 @@ public class ItalianGame extends Game{
         - regular checkers pieces are not allowed to capture kings.
     */
 
-    public ItalianGame(Board board, PlayerContext redPlayer, PlayerContext whitePlayer, UI ui) {
-        super(board, redPlayer, whitePlayer, ui);
+    public ItalianGame() {
+        super();
     }
 
     public ItalianGame(ItalianGame originalGame) {

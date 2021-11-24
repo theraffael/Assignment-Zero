@@ -8,12 +8,15 @@ import java.util.regex.Pattern;
 
 public class UI {
 
-    private Game game;
-    private Board board;
     private String move;
     private boolean isInputCorrect;
     public static Scanner keyBoard = new Scanner(System.in);
 
+    private String[] acceptedPlayerTypes = {"HumanPlayer", "RandomPlayer", "MinMaxPlayer"};
+    List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
+
+
+    //Singleton pattern
     private static UI instance = new UI();
 
     private UI(){}
@@ -29,7 +32,6 @@ public class UI {
     }*/
 
     public ArrayList<Move> handleInput(){
-        System.out.println("Player Turn: "+ game.getActivePlayer().toString());
         isInputCorrect = false;
         while (!isInputCorrect) {
             System.out.println("Please enter coordinate format in form of a1xb2, or a1xb2xc3 for a multi jump");
@@ -43,8 +45,7 @@ public class UI {
         return this.convertInputToXY(move);
     }
 
-    public void startUp(){
-        String[] acceptedPlayerTypes = {"HumanPlayer", "RandomPlayer", "MinMaxPlayer"};
+    public PlayerContext redPlayerstartUp(){
         List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
 
         System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
@@ -62,7 +63,9 @@ public class UI {
         }
         PlayerStrategy playerType = convertToStrategy(redPlayerType);
         PlayerContext redPlayer = new PlayerContext(playerType, PlayerColor.RED);
-
+        return redPlayer;
+    }
+    public PlayerContext whitePlayerstartUp(){
         System.out.println("Please enter Player type for white checkers");
         boolean isWhitePlayerTypeAccepted = false;
         String whitePlayerType = null;
@@ -78,13 +81,8 @@ public class UI {
         PlayerStrategy wplayerType = convertToStrategy(whitePlayerType);
         PlayerContext whitePlayer = new PlayerContext(wplayerType, PlayerColor.WHITE);
 
-
-        this.board = new Board(true);
-        this.game = new Game(board, redPlayer, whitePlayer, this);
-        this.display();
-        game.runGame();
+        return whitePlayer;
     }
-
     static PlayerStrategy convertToStrategy(String playerType) {
         if (playerType.equals("HumanPlayer")) {
             return new HumanPlayer();
@@ -96,16 +94,14 @@ public class UI {
             return new MinMaxPlayer();
         }
     }
-
-    public void display(){
-        String boardString = board.getBoardString();
+    public void display(String boardString){
         // Clear previous output from the terminal
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println(boardString);
 
     }
-    static ArrayList<Move> convertInputToXY(String s){
+    public static ArrayList<Move> convertInputToXY(String s){
         String[] moves = s.toLowerCase(Locale.ROOT).split("x");
         ArrayList<Move> allMoves = new ArrayList();
         // allow for multi jump moves
@@ -148,7 +144,7 @@ public class UI {
         System.out.println(output);
     }
     static String getCharForNumber(int i) {
-        return i > 0 && i < 27 ? String.valueOf((char)(i + 'A')) : null;
+        return i >= 0 && i < 27 ? String.valueOf((char)(i + 'A')) : null;
     }
 
     public static String returnPlayerTurn(boolean isRed){
