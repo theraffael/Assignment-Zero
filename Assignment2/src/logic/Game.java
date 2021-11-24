@@ -27,6 +27,13 @@ public class Game {
         this.setState(board.getBoardString());
     }
 
+    public Game(PlayerContext redPlayer, PlayerContext whitePlayer, Board board) {
+        this.ui = UI.getInstance();
+        this.board = board;
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
+    }
+
     public Game(Game originalGame){
         this.board = new Board(originalGame.board);
         this.turnCounter = originalGame.turnCounter;

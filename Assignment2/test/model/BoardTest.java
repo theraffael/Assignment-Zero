@@ -56,8 +56,8 @@ public class BoardTest {
     @Test
     public void testCheckAndCrown(){
         board = new Board(false);
-        //PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
-        //PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
+        PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
+        PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
 
         /*      Setup board for testing purposes:
                      0      1      2      3      4      5      6      7
@@ -85,8 +85,7 @@ public class BoardTest {
         board.addPiece(new Checker(PlayerColor.WHITE), 4,1);
 
 
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
         Move m1 = new Move(4,6, 3,7);
         Move m2 = new Move(4,1, 5,0);
 

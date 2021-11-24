@@ -26,8 +26,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
 
         Move m1 = new Move(0,5, 2,7, "jump");
         Move m2 = new Move(2,7, 4,5, "jump");
@@ -53,8 +52,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
 
         Move m1 = new Move(3,2, 1,4, "jump");
         Move m2 = new Move(1,4, 3,6, "jump");
@@ -82,8 +80,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
         game.pass();
 
         Move m1 = new Move(2,3, 4,1, "jump");
@@ -113,8 +110,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
         Move m1 = new Move(3,2, 4,3, "move");
         ArrayList move = new ArrayList();
         move.add(m1);
@@ -129,8 +125,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
         assertTrue(game.isFinished());
     }
 
@@ -144,8 +139,7 @@ public class GameTest {
 
         PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
         PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new Game();
-        game.runGame();
+        Game game = new Game(redPlayer, whitePlayer, board);
         assertTrue(game.isFinished());
     }
 

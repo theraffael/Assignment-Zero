@@ -56,8 +56,7 @@ class ItalianGameTest {
         board.addPiece(new Checker(PlayerColor.RED), 5,4);
         board.addPiece(new Checker(PlayerColor.RED), 2,7);
 
-        ItalianGame game = new ItalianGame();
-        game.runGame();
+        game = new ItalianGame(redPlayer, whitePlayer, board);
     }
 
     @Test
