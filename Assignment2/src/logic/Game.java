@@ -35,6 +35,7 @@ public class Game {
     }
 
     public Game(Game originalGame){
+        this.ui = UI.getInstance();
         this.board = new Board(originalGame.board);
         this.turnCounter = originalGame.turnCounter;
     }
@@ -253,7 +254,7 @@ public class Game {
         }
     }
 
-    private ArrayList<Move> findNextJump(List<Integer> position, Board testBoard, ArrayList<Move> previousMoves){
+    public ArrayList<Move> findNextJump(List<Integer> position, Board testBoard, ArrayList<Move> previousMoves){
 
         for (int i = -2; i <= 2; i += 4) {
             for (int j = -2; j <= 2; j += 4) {
@@ -303,7 +304,7 @@ public class Game {
     }
 
 
-    private boolean performJumps(Board board, List<Move> jumps){
+    public boolean performJumps(Board board, List<Move> jumps){
         for (int i = 0; i < jumps.size(); i++){
             Move move = jumps.get(i);
             if (!isSingleJump(move, board)) {

@@ -20,7 +20,7 @@ public class MinMaxPlayer implements PlayerStrategy {
         Collections.shuffle(possibleMoves);
 
         for (ArrayList<Move> move : possibleMoves){
-            Game gameCopy = new Game(game);
+            Game gameCopy = game.copy();
             gameCopy.newMove(move);
             int x = minimax(gameCopy, 3);
             if (x > this.bestValue){
@@ -57,7 +57,7 @@ public class MinMaxPlayer implements PlayerStrategy {
         if (game.getActivePlayer() == this.playerColor){
             int max = -1;
             for (ArrayList<Move> move : possibleMoves){
-                Game gameCopy = new Game(game);
+                Game gameCopy = game.copy();
                 gameCopy.newMove(move);
                 int val = minimax(gameCopy, depth -1);
                 max = Math.max(val, max);
@@ -67,7 +67,7 @@ public class MinMaxPlayer implements PlayerStrategy {
         else{
             int min = 100;
             for (ArrayList<Move> move : possibleMoves){
-                Game gameCopy = new Game(game);
+                Game gameCopy = game.copy();
                 gameCopy.newMove(move);
                 int val = minimax(gameCopy, depth -1);
                 min = Math.min(val, min);
