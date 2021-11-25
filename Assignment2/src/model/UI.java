@@ -15,6 +15,8 @@ public class UI {
     private String[] acceptedPlayerTypes = {"HumanPlayer", "RandomPlayer", "MinMaxPlayer"};
     List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
 
+    private String[] acceptedGameTypes = {"Standard", "Italian", "Spanish", "Turkish"};
+    List<String> acceptedGameTypesList = new ArrayList<>(Arrays.asList(acceptedGameTypes));
 
     //Singleton pattern
     private static UI instance = new UI();
@@ -45,10 +47,42 @@ public class UI {
         return this.convertInputToXY(move);
     }
 
+    public Game gameStartup(){
+        System.out.println("Welcome to Checkers, please choose the following Game types: Standard, Italian, Spanish, Turkish");
+        System.out.println("Please enter the desired Game type");
+        boolean isGameTypeAccepted = false;
+        String gameType = null;
+        while(!isGameTypeAccepted){
+            gameType = keyBoard.nextLine();
+            if(acceptedGameTypesList.contains(gameType)){
+                isGameTypeAccepted = true;
+            }
+            else{
+                System.out.println("Input not accepted. Please enter only the following Game types: Standard, Italian, Spanish, Turkish");
+            }
+        }
+        return convertToGame(gameType);
+    }
+
+    static Game convertToGame(String gameType) {
+        if (gameType.equals("Turkish")) {
+            return new TurkishGame();
+        }
+        else if (gameType.equals("Spanish")) {
+            return new SpanishGame();
+        }
+        else if (gameType.equals("Italian")) {
+            return new ItalianGame();
+        }
+        else {
+            return new Game();
+        }
+    }
+
     public PlayerContext redPlayerstartUp(){
         List<String> acceptedPlayerTypesList = new ArrayList<>(Arrays.asList(acceptedPlayerTypes));
 
-        System.out.println("Welcome to Checkers, please choose the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
+        System.out.println("Now choose one of the following Player types: HumanPlayer, RandomPlayer, MinMaxPlayer");
         System.out.println("Please enter Player type for red checkers");
         boolean isPlayerTypeAccepted = false;
         String redPlayerType = null;

@@ -350,20 +350,5 @@ class SpanishGameTest {
         assertFalse(game.newMove(move));
     }
 
-    @Test
-    void MoveDebug() {
-        Board board = new Board(false);
-        Checker king = new Checker(PlayerColor.RED);
-        board.addPiece(king, 4,7);
-
-        PlayerContext redPlayer = new PlayerContext(new HumanPlayer(), PlayerColor.RED);
-        PlayerContext whitePlayer = new PlayerContext(new HumanPlayer(), PlayerColor.WHITE);
-        Game game = new SpanishGame(redPlayer, whitePlayer, board);
-        Move m1 = new Move(4,7, 1,4, "move");
-        ArrayList move = new ArrayList();
-        move.add(m1);
-
-        assertFalse(game.newMove(move));
-    }
 
 }

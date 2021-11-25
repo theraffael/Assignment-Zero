@@ -6,6 +6,7 @@ import model.PlayerColor;
 import model.UI;
 
 public class ItalianGame extends Game{
+    private UI ui;
     /*
     Italian Game:
     Same as base game, except:
@@ -14,10 +15,12 @@ public class ItalianGame extends Game{
 
     public ItalianGame() {
         super();
+        this.ui = UI.getInstance();
     }
 
     public ItalianGame(PlayerContext redPlayer, PlayerContext whitePlayer, Board board) {
         super(redPlayer, whitePlayer, board);
+        this.ui = UI.getInstance();
     }
 
     public ItalianGame(ItalianGame originalGame) {

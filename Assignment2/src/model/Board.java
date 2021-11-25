@@ -3,10 +3,20 @@ package model;
 public class Board {
     private Checker[][] board = new Checker[8][8];
 
-    public Board(boolean isSetupBoard){
-        if (isSetupBoard) {
+    public Board(boolean standardSetup){
+        if (standardSetup) {
             this.placeCheckersInitialSetup();
         }
+    }
+
+    public Board(BoardType boardType){
+        if (boardType == BoardType.STANDARD) {
+            this.placeCheckersInitialSetup();
+        }
+        else if (boardType == BoardType.TURKISH){
+            this.placeCheckersTurkishSetup();
+        }
+        else if (boardType == BoardType.EMPTY){}
     }
 
     private void placeCheckersInitialSetup()
@@ -25,6 +35,26 @@ public class Board {
             for(int i = 0; i < 8; i+=2)
             {
                 addPiece(new Checker(PlayerColor.WHITE), i + (j+1)%2, j);
+            }
+        }
+    }
+
+    public void placeCheckersTurkishSetup()
+    {
+        //this for loop is to set the red piece on top of the board in the arrangement of classic checkers
+
+        for(int j = 1; j <= 2; j++) {
+            for (int i = 0; i < 8; i++) {
+                addPiece(new Checker(PlayerColor.RED), i , j);
+            }
+        }
+
+        //this for loop sets the white pieces on the bottom of the board in the arrangement of classic checkers
+        for(int j = 5; j <= 6; j++)
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                addPiece(new Checker(PlayerColor.WHITE), i , j);
             }
         }
     }

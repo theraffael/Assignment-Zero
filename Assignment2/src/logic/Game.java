@@ -15,9 +15,13 @@ public class Game {
     private boolean isFinished;
     private ArrayList possibleMoves;
 
-    public Game() {
+    public Game(){
+        this(BoardType.STANDARD);
+    }
+
+    public Game(BoardType boardType) {
         this.ui = UI.getInstance();
-        this.board = new Board(true);
+        this.board = new Board(boardType);
         this.redPlayer = ui.redPlayerstartUp();
         this.whitePlayer = ui.whitePlayerstartUp();
 
@@ -43,6 +47,7 @@ public class Game {
     public Game copy(){
         return new Game(this);
     }
+
 
     //Observer pattern
     private List<Observer> observers = new ArrayList<Observer>();

@@ -5,32 +5,34 @@ import model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpanishGame extends Game{
+public class TurkishGame extends Game{
     private UI ui;
     /*
-    Spanish Game:
-    Same as base game, except:
-        - regular checkers pieces are not allowed to capture kings.
-        - kings can move and jump to any square along the diagonal (but only jump over max 1 opponent)
+    Turkish Game:
+    On an 8×8 board, 16 men are lined up on each side, in two rows. The back rows are vacant.
+    Men move orthogonally forwards or sideways one square, capturing by means of a jump; they cannot move or capture backwards or diagonally.
+    When a man reaches the back row, it promotes to a king. Kings can move any number of empty squares orthogonally forwards, backwards or sideways.
+    A king captures by jumping over a single piece any number of empty squares away, landing on any open square beyond the captured piece along a straight line.
+    If a jump is available it must be taken. There is no distinction between king and man during captures; each counts as a piece.
     */
 
-    public SpanishGame() {
-        super();
+    public TurkishGame() {
+        super(BoardType.TURKISH);
         this.ui = UI.getInstance();
     }
 
-    public SpanishGame(PlayerContext redPlayer, PlayerContext whitePlayer, Board board){
+    public TurkishGame(PlayerContext redPlayer, PlayerContext whitePlayer, Board board){
         super(redPlayer, whitePlayer, board);
         this.ui = UI.getInstance();
     }
 
-    public SpanishGame(SpanishGame originalGame) {
+    public TurkishGame(TurkishGame originalGame) {
         super(originalGame);
     }
 
     @Override
     public Game copy(){
-        return new SpanishGame(this);
+        return new TurkishGame(this);
     }
 
     @Override
@@ -55,13 +57,10 @@ public class SpanishGame extends Game{
 
             // if checker is pawn, nextY must be 1 larger than currentY
             int distanceY = move.getToY() - move.getFromY();
-            // if checker is king, take absolute difference between nextY and currentY
-            if (board.fieldContainsKing(move.getFromX(), move.getFromY())){
-                distanceY = Math.abs(distanceY);
-            }
+            int distanceX = move.getFromX() - move.getToX();
 
-            if (distanceY == 1 && (Math.abs(move.getFromX() - move.getToX()) == 1 )){return true;}
-
+            if (distanceX == 0 && distanceY == 1){return true;}
+            else if (distanceY == 0 && Math.abs(distanceX) == 1){return true;}
             else{return false;}
         }
 
@@ -71,13 +70,10 @@ public class SpanishGame extends Game{
 
             // if checker is pawn, nextY must be 1 smaller than currentY
             int distanceY = move.getFromY() - move.getToY();
-            // if checker is king, take absolute difference between nextY and currentY
-            if (board.fieldContainsKing(move.getFromX(), move.getFromY())){
-                distanceY = Math.abs(distanceY);
-            }
-            if (distanceY == 1 && (Math.abs(move.getFromX() - move.getToX()) == 1 )){
-                return true;
-            }
+            int distanceX = move.getFromX() - move.getToX();
+
+            if (distanceX == 0 && distanceY == 1){return true;}
+            else if (distanceY == 0 && Math.abs(distanceX) == 1){return true;}
             else{return false;}
         }
     }
@@ -88,14 +84,14 @@ public class SpanishGame extends Game{
         int signY = Integer.signum(distanceY);
         int signX = Integer.signum(distanceX);
 
-        // X distance must be equal to Y distance
-        if (Math.abs(distanceX) != Math.abs(distanceY)) {return false;}
+        // one distance must be 0
+        if (!(distanceX == 0 ^ distanceY == 0)) {return false;}
 
         if (this.isRedPlayersTurn()) {  //when it is red player's turn
             // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.WHITE)) {return false;}
 
-            for (int i = 1; i < Math.abs(distanceX); i++){
+            for (int i = 1; i < Math.max(Math.abs(distanceX), Math.abs(distanceY)); i++){
                  if (!board.fieldIsEmpty(move.getFromX() + signX * i, move.getFromY() + signY * i)){
                     return false;
                 }
@@ -107,7 +103,7 @@ public class SpanishGame extends Game{
             // Return false if checker belongs to red player
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.RED)) {return false;}
 
-            for (int i = 1; i < Math.abs(distanceX); i++){
+            for (int i = 1; i < Math.max(Math.abs(distanceX), Math.abs(distanceY)); i++){
                 if (!board.fieldIsEmpty(move.getFromX() + signX * i, move.getFromY() + signY * i)){
                     return false;
                 }
@@ -135,23 +131,18 @@ public class SpanishGame extends Game{
 
         int distanceY = move.getToY() - move.getFromY();
         int distanceX = move.getToX() - move.getFromX();
-        // X distance must be 2 or -2, check Y later
-        if (Math.abs(distanceX) != 2 ) {return false;}
 
         if (this.isRedPlayersTurn()) {  //when it is red player's turn
             // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.WHITE)) {return false;}
 
-            // Y distance must be 2, can be -2 if checker is king
-            if (distanceY == 2 ){
+            // only move two spaces orthogonally
+            if ((distanceY == 2 && distanceX == 0) || (distanceY == 0 && Math.abs(distanceX) == 2)){
                 // there must be an opponents piece to jump over
                 int opponentX = move.getFromX() + distanceX/2;
                 int opponentY = move.getFromY() + distanceY/2;
                 if (board.fieldContainsCheckerColor(opponentX, opponentY, PlayerColor.WHITE)){
-                    if (board.fieldContainsKing(opponentX, opponentY)){
-                    return false;}
-                    else {return true;}
-
+                    return true;
                 }
             }
         }
@@ -160,18 +151,13 @@ public class SpanishGame extends Game{
             // Return false if checker belongs to red player
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.RED)) {return false;}
 
-            // X distance must be 2 or -2
-            if (Math.abs(distanceX) != 2 ) {return false;}
-
-            // Y distance must be -2, can be 2 if checker is king
-            if (distanceY == -2 ){
+            // only move two spaces orthogonally
+            if ((distanceY == -2 && distanceX == 0) || (distanceY == 0 && Math.abs(distanceX) == 2)){
                 // there must be an opponents piece to jump over
                 int opponentX = move.getFromX() + distanceX/2;
                 int opponentY = move.getFromY() + distanceY/2;
                 if (board.fieldContainsCheckerColor(opponentX, opponentY, PlayerColor.RED)){
-                    if (board.fieldContainsKing(opponentX, opponentY)){
-                        return false;}
-                    else {return true;}
+                    return true;
                 }
             }
         }
@@ -179,21 +165,22 @@ public class SpanishGame extends Game{
         return false;
     }
 
+
     private boolean isKingJump(Move move, Board board) {
         int distanceY = move.getToY() - move.getFromY();
         int distanceX = move.getToX() - move.getFromX();
         int signY = Integer.signum(distanceY);
         int signX = Integer.signum(distanceX);
 
-        // X distance must be equal to Y distance
-        if (Math.abs(distanceX) != Math.abs(distanceY) || Math.abs(distanceY) < 2) {return false;}
+        // one distance must be 0
+        if (!(distanceX == 0 ^ distanceY == 0)) {return false;}
 
         if (this.isRedPlayersTurn()) {  //when it is red player's turn
             // Return false if checker belongs to white player
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.WHITE)) {return false;}
 
             int enemyCaptured = 0;
-            for (int i = 1; i < Math.abs(distanceX); i++){
+            for (int i = 1; i < Math.max(Math.abs(distanceX), Math.abs(distanceY)); i++){
                 if (board.fieldContainsCheckerColor(move.getFromX() + signX * i, move.getFromY() + signY * i, PlayerColor.WHITE)){
                     enemyCaptured += 1;
                 }
@@ -213,7 +200,7 @@ public class SpanishGame extends Game{
             if (board.fieldContainsCheckerColor(move.getFromX(), move.getFromY(), PlayerColor.RED)) {return false;}
 
             int enemyCaptured = 0;
-            for (int i = 1; i < Math.abs(distanceX); i++){
+            for (int i = 1; i < Math.max(Math.abs(distanceX), Math.abs(distanceY)); i++){
                 if (board.fieldContainsCheckerColor(move.getFromX() + signX * i, move.getFromY() + signY * i, PlayerColor.RED)){
                     enemyCaptured += 1;
                 }
@@ -248,7 +235,7 @@ public class SpanishGame extends Game{
                 int distanceY = move.getToY() - move.getFromY();
                 int signY = Integer.signum(distanceY);
                 int signX = Integer.signum(distanceX);
-                for (int j = 1; j < Math.abs(distanceX); j++) {
+                for (int j = 1; j < Math.max(Math.abs(distanceX), Math.abs(distanceY)); j++) {
                     board.removePiece(move.getFromX() + signX * j, move.getFromY() + signY * j);
                 }
             }
@@ -259,16 +246,20 @@ public class SpanishGame extends Game{
 
     @Override
     public ArrayList<Move> findNextJump(List<Integer> position, Board testBoard, ArrayList<Move> previousMoves){
-
         for (int i = -7; i <= 7; i += 1) {
-            for (int j = -7; j <= 7; j += 1) {
-                Move move = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "jump");
-                if (isSingleJump(move, testBoard)) {
+            Move move = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) , "jump");
+            if (isSingleJump(move, testBoard)) {
                     previousMoves.add(move);
                     Board boardCopy = new Board(testBoard);
                     performJumps(boardCopy, List.of(move));
                     return findNextJump(List.of(move.getToX(), move.getToY()), boardCopy, previousMoves);
                 }
+            move = new Move(position.get(0), position.get(1), position.get(0), position.get(1) + i, "jump");
+            if (isSingleJump(move, testBoard)) {
+                previousMoves.add(move);
+                Board boardCopy = new Board(testBoard);
+                performJumps(boardCopy, List.of(move));
+                return findNextJump(List.of(move.getToX(), move.getToY()), boardCopy, previousMoves);
             }
         }
         return previousMoves;
@@ -291,15 +282,21 @@ public class SpanishGame extends Game{
 
         for (List<Integer> position : checkerPositions) {
             //check if move possible
-            for (int i = -7; i <= 7; i += 1) {
-                for (int j = -7; j <= 7; j += 1) {
-                    Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1) + j, "move");
+            for (int i = -1; i <= 1; i += 2) {
+                Move candidateMove = new Move(position.get(0), position.get(1), position.get(0) + i, position.get(1), "move");
                     if (isMove(candidateMove, testBoard)){
                         ArrayList m = new ArrayList<Move>();
                         m.add(candidateMove);
                         possibleMoves.add(m);
                     }
+
+                candidateMove = new Move(position.get(0), position.get(1), position.get(0), position.get(1) + i, "move");
+                if (isMove(candidateMove, testBoard)){
+                    ArrayList m = new ArrayList<Move>();
+                    m.add(candidateMove);
+                    possibleMoves.add(m);
                 }
+
             }
         }
         return possibleMoves;
