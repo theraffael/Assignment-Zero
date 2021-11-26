@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > Checker</title>
+  <title>Coverage Report > BoardType</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">model</a>
 </div>
 
-<h1>Coverage Summary for Class: Checker (model)</h1>
+<h1>Coverage Summary for Class: BoardType (model)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -39,29 +39,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Checker</td>
+  <td class="name">BoardType</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (1/1)
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    87.5%
+    0%
   </span>
   <span class="absValue">
-    (7/8)
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    81%
+    0%
   </span>
   <span class="absValue">
-    (17/21)
+    (0/4)
   </span>
 </td>
 </tr>
@@ -75,69 +75,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package model;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import java.util.ArrayList;
-<i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;public class Checker {
-<i class="no-highlight">6</i>&nbsp;
-<i class="no-highlight">7</i>&nbsp;    private PlayerColor playerColor;
-<i class="no-highlight">8</i>&nbsp;
-<b class="fc"><i class="no-highlight">9</i>&nbsp;    private boolean king = false;</b>
-<i class="no-highlight">10</i>&nbsp;    public void crown()
-<i class="no-highlight">11</i>&nbsp;    {
-<b class="fc"><i class="no-highlight">12</i>&nbsp;        king = true;</b>
-<i class="no-highlight">13</i>&nbsp;    }
-<i class="no-highlight">14</i>&nbsp;    public boolean isKing() {
-<b class="fc"><i class="no-highlight">15</i>&nbsp;        return king;</b>
-<i class="no-highlight">16</i>&nbsp;    }
-<i class="no-highlight">17</i>&nbsp;
-<b class="fc"><i class="no-highlight">18</i>&nbsp;    public Checker(PlayerColor c){</b>
-<b class="fc"><i class="no-highlight">19</i>&nbsp;        this.playerColor = c;</b>
-<i class="no-highlight">20</i>&nbsp;    }
-<i class="no-highlight">21</i>&nbsp;
-<i class="no-highlight">22</i>&nbsp;    // Copy checker
-<b class="fc"><i class="no-highlight">23</i>&nbsp;    public Checker(Checker oldChecker){</b>
-<b class="fc"><i class="no-highlight">24</i>&nbsp;        this.playerColor= oldChecker.playerColor;</b>
-<b class="fc"><i class="no-highlight">25</i>&nbsp;        this.king = oldChecker.king;</b>
-<i class="no-highlight">26</i>&nbsp;    }
-<i class="no-highlight">27</i>&nbsp;
-<i class="no-highlight">28</i>&nbsp;
-<i class="no-highlight">29</i>&nbsp;    public boolean isWhitePlayerChecker() {
-<b class="nc"><i class="no-highlight">30</i>&nbsp;        if(this.playerColor == PlayerColor.WHITE){</b>
-<b class="nc"><i class="no-highlight">31</i>&nbsp;            return true;</b>
-<i class="no-highlight">32</i>&nbsp;        }
-<i class="no-highlight">33</i>&nbsp;        else{
-<b class="nc"><i class="no-highlight">34</i>&nbsp;            return false;</b>
-<i class="no-highlight">35</i>&nbsp;        }
-<i class="no-highlight">36</i>&nbsp;    }
-<i class="no-highlight">37</i>&nbsp;    public PlayerColor playerColor() {
-<b class="fc"><i class="no-highlight">38</i>&nbsp;        if (playerColor == PlayerColor.WHITE) {</b>
-<b class="fc"><i class="no-highlight">39</i>&nbsp;            return PlayerColor.WHITE;</b>
-<i class="no-highlight">40</i>&nbsp;        }
-<i class="no-highlight">41</i>&nbsp;        else {
-<b class="fc"><i class="no-highlight">42</i>&nbsp;            return PlayerColor.RED;</b>
-<i class="no-highlight">43</i>&nbsp;        }
-<i class="no-highlight">44</i>&nbsp;    }
-<i class="no-highlight">45</i>&nbsp;
-<i class="no-highlight">46</i>&nbsp;    public String toString(){
-<b class="fc"><i class="no-highlight">47</i>&nbsp;        return getSymbol();</b>
-<i class="no-highlight">48</i>&nbsp;    }
-<i class="no-highlight">49</i>&nbsp;
-<i class="no-highlight">50</i>&nbsp;    private String getSymbol() {
-<i class="no-highlight">51</i>&nbsp;        String color;
-<b class="fc"><i class="no-highlight">52</i>&nbsp;        if(playerColor == PlayerColor.RED){</b>
-<b class="fc"><i class="no-highlight">53</i>&nbsp;            color = &quot;R&quot;;</b>
-<i class="no-highlight">54</i>&nbsp;        }
-<i class="no-highlight">55</i>&nbsp;        else{
-<b class="fc"><i class="no-highlight">56</i>&nbsp;            color = &quot;W&quot;;</b>
-<i class="no-highlight">57</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">58</i>&nbsp;        if (king){</b>
-<b class="nc"><i class="no-highlight">59</i>&nbsp;            return color + &quot;_K&quot;;</b>
-<i class="no-highlight">60</i>&nbsp;        }
-<i class="no-highlight">61</i>&nbsp;        else{
-<b class="fc"><i class="no-highlight">62</i>&nbsp;            return color + &quot;_P&quot;;</b>
-<i class="no-highlight">63</i>&nbsp;        }
-<i class="no-highlight">64</i>&nbsp;    }
-<i class="no-highlight">65</i>&nbsp;}
+<b class="nc"><i class="no-highlight">3</i>&nbsp;public enum BoardType {</b>
+<b class="nc"><i class="no-highlight">4</i>&nbsp;    STANDARD,</b>
+<b class="nc"><i class="no-highlight">5</i>&nbsp;    TURKISH,</b>
+<b class="nc"><i class="no-highlight">6</i>&nbsp;    EMPTY</b>
+<i class="no-highlight">7</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -164,7 +106,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-11-22 18:51</div>
+    <div style="float:right;">generated on 2021-11-25 17:48</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > Move</title>
+  <title>Coverage Report > Checker</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">model</a>
 </div>
 
-<h1>Coverage Summary for Class: Move (model)</h1>
+<h1>Coverage Summary for Class: Checker (model)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -39,7 +39,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Move</td>
+  <td class="name">Checker</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -50,18 +50,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    87.5%
   </span>
   <span class="absValue">
-    (8/8)
+    (7/8)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    85.7%
   </span>
   <span class="absValue">
-    (20/20)
+    (18/21)
   </span>
 </td>
 </tr>
@@ -75,66 +75,69 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package model;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;public class Move {
-<b class="fc"><i class="no-highlight">4</i>&nbsp;    public Move(int fromX, int fromY, int toX, int toY, String s) {</b>
-<b class="fc"><i class="no-highlight">5</i>&nbsp;        this.fromX = fromX;</b>
-<b class="fc"><i class="no-highlight">6</i>&nbsp;        this.fromY = fromY;</b>
-<b class="fc"><i class="no-highlight">7</i>&nbsp;        this.s = s;</b>
-<b class="fc"><i class="no-highlight">8</i>&nbsp;        this.toX = toX;</b>
-<b class="fc"><i class="no-highlight">9</i>&nbsp;        this.toY = toY;</b>
-<i class="no-highlight">10</i>&nbsp;    }
-<i class="no-highlight">11</i>&nbsp;
-<b class="fc"><i class="no-highlight">12</i>&nbsp;    public Move(int fromX, int fromY, int toX, int toY) {</b>
-<b class="fc"><i class="no-highlight">13</i>&nbsp;        this.fromX = fromX;</b>
-<b class="fc"><i class="no-highlight">14</i>&nbsp;        this.fromY = fromY;</b>
-<b class="fc"><i class="no-highlight">15</i>&nbsp;        this.s = &quot;unk&quot;;</b>
-<b class="fc"><i class="no-highlight">16</i>&nbsp;        this.toX = toX;</b>
-<b class="fc"><i class="no-highlight">17</i>&nbsp;        this.toY = toY;</b>
-<i class="no-highlight">18</i>&nbsp;    }
-<i class="no-highlight">19</i>&nbsp;
-<i class="no-highlight">20</i>&nbsp;    public int getFromX() {
-<b class="fc"><i class="no-highlight">21</i>&nbsp;        return fromX;</b>
-<i class="no-highlight">22</i>&nbsp;    }
-<i class="no-highlight">23</i>&nbsp;
-<i class="no-highlight">24</i>&nbsp;    public int getFromY() {
-<b class="fc"><i class="no-highlight">25</i>&nbsp;        return fromY;</b>
+<i class="no-highlight">3</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;public class Checker {
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;    private PlayerColor playerColor;
+<i class="no-highlight">8</i>&nbsp;
+<b class="fc"><i class="no-highlight">9</i>&nbsp;    private boolean king = false;</b>
+<i class="no-highlight">10</i>&nbsp;    public void crown()
+<i class="no-highlight">11</i>&nbsp;    {
+<b class="fc"><i class="no-highlight">12</i>&nbsp;        king = true;</b>
+<i class="no-highlight">13</i>&nbsp;    }
+<i class="no-highlight">14</i>&nbsp;    public boolean isKing() {
+<b class="fc"><i class="no-highlight">15</i>&nbsp;        return king;</b>
+<i class="no-highlight">16</i>&nbsp;    }
+<i class="no-highlight">17</i>&nbsp;
+<b class="fc"><i class="no-highlight">18</i>&nbsp;    public Checker(PlayerColor c){</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        this.playerColor = c;</b>
+<i class="no-highlight">20</i>&nbsp;    }
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    // Copy checker
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    public Checker(Checker oldChecker){</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        this.playerColor= oldChecker.playerColor;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        this.king = oldChecker.king;</b>
 <i class="no-highlight">26</i>&nbsp;    }
 <i class="no-highlight">27</i>&nbsp;
-<i class="no-highlight">28</i>&nbsp;    public int getToX() {
-<b class="fc"><i class="no-highlight">29</i>&nbsp;        return toX;</b>
-<i class="no-highlight">30</i>&nbsp;    }
-<i class="no-highlight">31</i>&nbsp;
-<i class="no-highlight">32</i>&nbsp;    public int getToY() {
-<b class="fc"><i class="no-highlight">33</i>&nbsp;        return toY;</b>
-<i class="no-highlight">34</i>&nbsp;    }
-<i class="no-highlight">35</i>&nbsp;
-<i class="no-highlight">36</i>&nbsp;    private final int fromX;
-<i class="no-highlight">37</i>&nbsp;    private final int fromY;
-<i class="no-highlight">38</i>&nbsp;    private final int toX;
-<i class="no-highlight">39</i>&nbsp;    private final int toY;
-<i class="no-highlight">40</i>&nbsp;    private final String s;
-<i class="no-highlight">41</i>&nbsp;
-<i class="no-highlight">42</i>&nbsp;    public boolean isMoveJump(){
-<b class="fc"><i class="no-highlight">43</i>&nbsp;        if(s == &quot;jump&quot;){</b>
-<b class="fc"><i class="no-highlight">44</i>&nbsp;            return true;</b>
-<i class="no-highlight">45</i>&nbsp;        }
-<i class="no-highlight">46</i>&nbsp;        else{
-<b class="fc"><i class="no-highlight">47</i>&nbsp;            return false;</b>
-<i class="no-highlight">48</i>&nbsp;        }
-<i class="no-highlight">49</i>&nbsp;    }
-<i class="no-highlight">50</i>&nbsp;
-<i class="no-highlight">51</i>&nbsp;    @Override
-<i class="no-highlight">52</i>&nbsp;    public String toString() {
-<b class="fc"><i class="no-highlight">53</i>&nbsp;        return &quot;AI Player Move{&quot; +</b>
-<i class="no-highlight">54</i>&nbsp;                &quot;fromX=&quot; + fromX +
-<i class="no-highlight">55</i>&nbsp;                &quot;, fromY=&quot; + fromY +
-<i class="no-highlight">56</i>&nbsp;                &quot;, toX=&quot; + toX +
-<i class="no-highlight">57</i>&nbsp;                &quot;, toY=&quot; + toY +
-<i class="no-highlight">58</i>&nbsp;                &quot;, move type=&#39;&quot; + s + &#39;\&#39;&#39; +
-<i class="no-highlight">59</i>&nbsp;                &#39;}&#39;;
-<i class="no-highlight">60</i>&nbsp;    }
-<i class="no-highlight">61</i>&nbsp;}
-<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    public boolean isWhitePlayerChecker() {
+<b class="nc"><i class="no-highlight">30</i>&nbsp;        if(this.playerColor == PlayerColor.WHITE){</b>
+<b class="nc"><i class="no-highlight">31</i>&nbsp;            return true;</b>
+<i class="no-highlight">32</i>&nbsp;        }
+<i class="no-highlight">33</i>&nbsp;        else{
+<b class="nc"><i class="no-highlight">34</i>&nbsp;            return false;</b>
+<i class="no-highlight">35</i>&nbsp;        }
+<i class="no-highlight">36</i>&nbsp;    }
+<i class="no-highlight">37</i>&nbsp;    public PlayerColor playerColor() {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        if (playerColor == PlayerColor.WHITE) {</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;            return PlayerColor.WHITE;</b>
+<i class="no-highlight">40</i>&nbsp;        }
+<i class="no-highlight">41</i>&nbsp;        else {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            return PlayerColor.RED;</b>
+<i class="no-highlight">43</i>&nbsp;        }
+<i class="no-highlight">44</i>&nbsp;    }
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    public String toString(){
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        return getSymbol();</b>
+<i class="no-highlight">48</i>&nbsp;    }
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;    private String getSymbol() {
+<i class="no-highlight">51</i>&nbsp;        String color;
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        if(playerColor == PlayerColor.RED){</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;            color = &quot;R&quot;;</b>
+<i class="no-highlight">54</i>&nbsp;        }
+<i class="no-highlight">55</i>&nbsp;        else{
+<b class="fc"><i class="no-highlight">56</i>&nbsp;            color = &quot;W&quot;;</b>
+<i class="no-highlight">57</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        if (king){</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;            return color + &quot;_K&quot;;</b>
+<i class="no-highlight">60</i>&nbsp;        }
+<i class="no-highlight">61</i>&nbsp;        else{
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            return color + &quot;_P&quot;;</b>
+<i class="no-highlight">63</i>&nbsp;        }
+<i class="no-highlight">64</i>&nbsp;    }
+<i class="no-highlight">65</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -161,7 +164,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-11-22 18:51</div>
+    <div style="float:right;">generated on 2021-11-25 17:48</div>
 </div>
 </body>
 </html>
