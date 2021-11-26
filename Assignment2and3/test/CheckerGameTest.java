@@ -52,7 +52,7 @@ public class CheckerGameTest {
             assertTrue(game.isFinished());
             //assertEquals(PlayerColor.RED, game.getActivePlayer());
         }
-        assertTrue(wonByMinMay> (runs-1)); //sometimes the random player wins, which is expected although unlikely
+        assertTrue(wonByMinMay>= (runs-1)); //sometimes the random player wins, which is expected although unlikely
 
         endResult(wonByMinMay,runs,runsToPass);
     }
@@ -83,7 +83,7 @@ public class CheckerGameTest {
             assertTrue(game.isFinished());
             //assertEquals(PlayerColor.RED, game.getActivePlayer());
         }
-        assertTrue(wonByMinMay> (runs-1)); //sometimes the random player wins, which is expected although unlikely
+        assertTrue(wonByMinMay>= (runs-1)); //sometimes the random player wins, which is expected although unlikely
         endResult(wonByMinMay,runs,runsToPass);
     }
 
@@ -91,7 +91,7 @@ public class CheckerGameTest {
     void MinMaxVsRandomSpanish(){
         int runs = 5;
         int runsToPass = runs-1;
-        int wonByMinMay = 0;
+        int wonByMinMax = 0;
         String mode = "Spanish";
 
         opening(runs, mode);
@@ -109,13 +109,13 @@ public class CheckerGameTest {
             intermediateResult(i, game);
 
             if (game.isFinished() && (game.getActivePlayer() == PlayerColor.RED)){
-                wonByMinMay++;
+                wonByMinMax++;
             }
             assertTrue(game.isFinished());
             //assertEquals(PlayerColor.RED, game.getActivePlayer());
         }
-        assertTrue(wonByMinMay> (runs-1)); //sometimes the random player wins, which is expected although unlikely
-        endResult(wonByMinMay,runs,runsToPass);
+        assertTrue(wonByMinMax>= (runs-1)); //sometimes the random player wins, which is expected although unlikely
+        endResult(wonByMinMax,runs,runsToPass);
     }
 
     /* commented out as it takes ~10-20 minutes to finish
@@ -145,7 +145,7 @@ public class CheckerGameTest {
             assertTrue(game.isFinished());
             //assertEquals(PlayerColor.RED, game.getActivePlayer());
         }
-        assertTrue(wonByMinMay> (runs-1)); //sometimes the random player wins, which is expected although unlikely
+        assertTrue(wonByMinMay>= (runs-1)); //sometimes the random player wins, which is expected although unlikely
                 endResult(wonByMinMay,runs,runsToPass);
     }
 
