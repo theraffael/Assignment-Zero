@@ -3,6 +3,7 @@ package model;
 import logic.HumanPlayer;
 import logic.MinMaxPlayer;
 import logic.RandomPlayer;
+import logic.TurkishGame;
 import model.*;
 import org.junit.After;
 import org.junit.Before;
@@ -120,6 +121,11 @@ public class UITest {
     @Test
     public void testDisplayAmountOfMoves(){
 
+    }
+
+    @Test
+    public void testConvertToGame(){
+ 
     }
 
     @After
