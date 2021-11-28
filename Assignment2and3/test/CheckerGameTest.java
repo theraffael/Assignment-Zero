@@ -118,7 +118,6 @@ public class CheckerGameTest {
         endResult(wonByMinMax,runs,runsToPass);
     }
 
-    /* commented out as it takes ~10-20 minutes to finish
     @Test
     void MinMaxVsRandomTurkish(){
         int runs = 5;
@@ -148,7 +147,5 @@ public class CheckerGameTest {
         assertTrue(wonByMinMay>= (runs-1)); //sometimes the random player wins, which is expected although unlikely
                 endResult(wonByMinMay,runs,runsToPass);
     }
-
-     */
 
 }
