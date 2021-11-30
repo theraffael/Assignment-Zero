@@ -1,9 +1,6 @@
 package model;
 
-import logic.HumanPlayer;
-import logic.MinMaxPlayer;
-import logic.RandomPlayer;
-import logic.TurkishGame;
+import logic.*;
 import model.*;
 import org.junit.After;
 import org.junit.Before;
@@ -41,6 +38,11 @@ public class UITest {
 
     @Test
     public void testStartUp(){
+
+    }
+
+    @Test
+    public void testConvertToGame(){
 
     }
 
@@ -123,10 +125,6 @@ public class UITest {
 
     }
 
-    @Test
-    public void testConvertToGame(){
-
-    }
 
     @After
     public void after(){
