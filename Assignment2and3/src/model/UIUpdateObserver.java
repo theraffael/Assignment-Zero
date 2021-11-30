@@ -6,7 +6,7 @@ public class UIUpdateObserver extends Observer{
     public UIUpdateObserver(Game game, UI ui){
         this.game = game;
         this.ui = ui;
-        this.game.attach(this);
+        this.game.addObserver(this);
     }
 
     @Override

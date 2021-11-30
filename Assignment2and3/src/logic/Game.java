@@ -62,9 +62,11 @@ public class Game {
         notifyAllObservers();
     }
 
-    public void attach(Observer observer){
+    public void addObserver(Observer observer){
         observers.add(observer);
     }
+
+    public void removeObserver(Observer observer){ observers.add(observer); }
 
     public void notifyAllObservers(){
         for (Observer observer : observers) {
