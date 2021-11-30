@@ -26,14 +26,6 @@ public class Checker {
     }
 
 
-    public boolean isWhitePlayerChecker() {
-        if(this.playerColor == PlayerColor.WHITE){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
     public PlayerColor playerColor() {
         if (playerColor == PlayerColor.WHITE) {
             return PlayerColor.WHITE;
