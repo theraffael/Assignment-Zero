@@ -19,7 +19,7 @@ public class UI {
     List<String> acceptedGameTypesList = new ArrayList<>(Arrays.asList(acceptedGameTypes));
 
     //Singleton pattern
-    private static UI instance = new UI();
+    private static final UI instance = new UI();
 
     private UI(){}
 
