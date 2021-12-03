@@ -9,6 +9,10 @@ public abstract class AbstractAgent {
 
     abstract Call hitOrStay();
 
+    public void addCardToHand(Card card){
+        this.handCards.add(card);
+    }
+
     protected int largestHandValue(){
         return Collections.max(handValue);
     }
