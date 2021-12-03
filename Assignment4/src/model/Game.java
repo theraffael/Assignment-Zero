@@ -27,6 +27,10 @@ public class Game {
         //UI call Game introduction
         while (continueGame){
             this.beginningRoundCardDraw();
+            if (deck.percentageOfCardsLeft() <= 50) {
+                deck.shuffleDeck();
+                // todo: UI call to let player know that deck was shuffled
+            }
             for(Player player : playerList){
                 Call playerCall = player.hitOrStay();
                 if(playerCall == Call.HIT){
