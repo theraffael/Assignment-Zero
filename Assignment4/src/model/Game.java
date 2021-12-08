@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import model.UI;
 
 public class Game {
     /**
@@ -10,12 +12,12 @@ public class Game {
     boolean continueRound;
     private Dealer dealer;
     private Deck deck;
-    private ArrayList<Player> playerList;
+    private ArrayList<Player> playerList = new ArrayList<Player>();
     private int agentCount;
 
     public Game(){
        this.dealer = new Dealer();
-       playerList.add(new Player(100, "placeHolder"));
+       this.playerList.add(new Player(100, "placeHolder"));
        this.agentCount = playerList.size() + 1;
        this.deck = new Deck();
        deck.shuffleDeck();
@@ -26,12 +28,25 @@ public class Game {
      */
     public void runGame(){
         //UI call Game introduction
+        UI.welcomeMessage();
+
+        Scanner userInput = new Scanner(System.in);
 
         while (continueGame){
+            int playerBet; //todo: make this work for multiple players
 
             if (deck.percentageOfCardsLeft() <= 50) {
                 deck.shuffleDeck();
-                // todo: UI call to let player know that deck was shuffled
+                UI.shuffleMessage();
+            }
+
+            for (Player player : playerList){
+                System.out.println("Your have " + player.getMoneyAmount()+ ", how high is your bet?");
+                player.updateBettingAmount(userInput.nextInt());
+                if (player.getBettingAmount() > player.getMoneyAmount()){
+                    System.out.println("You cannot bet more than you have. You are requested to leave our establishment.");
+                    break;
+                }
             }
 
             int stayCount = 0;
@@ -42,10 +57,25 @@ public class Game {
 
                 //iterate over playerList option for more players
                 for(Player player : playerList){
+                    //todo: move this to UI
+                    System.out.println("Your hand: ");
+                    System.out.println(player.handCards.toString());
+                    System.out.println("Your deck's value is: "+ player.handValue);
+                    System.out.println("Dealer hand: " + dealer.handCards.get(0).toString() + " and [HIDDEN]");
+
                     //ask player if they are hitting or staying
                     Call playerCall = player.hitOrStay();
+
                     if(playerCall == Call.HIT){
                         player.addCardToHand(deck.next());
+                        //todo: move this to UI
+                        System.out.println("You draw the following card: " + player.handCards.get(player.handCards.size()-1).toString());
+
+                        if (player.totalHandValue() > 21){
+                            System.out.println("You are busted. Your hand is valued at "+ player.handValue);
+                            player.deductMoney(player.getBettingAmount());
+                            continueRound = false;
+                        }
                     }
                     else{
                         stayCount++;
@@ -66,6 +96,36 @@ public class Game {
                     continueRound = false;
                 }
             }
+
+            //reveal dealers card
+            System.out.println("dealer's cards: " + dealer.handCards.toString());
+            if((dealer.totalHandValue() > playerList.get(0).totalHandValue()) && continueRound){
+                System.out.println("Dealer won.");
+                playerList.get(0).deductMoney(playerList.get(0).getBettingAmount());
+                continueRound = false;
+            }
+
+            System.out.println("Dealer's hand is valued at: " + dealer.handValue);
+            if ((dealer.totalHandValue() > 21) && continueRound){
+                System.out.println("You won!");
+                playerList.get(0).addMoney(playerList.get(0).getBettingAmount());
+                continueRound = false;
+            }
+
+            if ((playerList.get(0).totalHandValue() == dealer.totalHandValue()) && continueRound){
+                System.out.println("Push");
+                continueRound=false;
+            }
+
+            if((playerList.get(0).totalHandValue() > dealer.totalHandValue()) && continueRound){
+                System.out.println("You won!");
+                playerList.get(0).addMoney(playerList.get(0).getBettingAmount());
+                continueRound = false;
+            }
+
+            //playerDeck.moveAllCardsBackToDeck(playingDeck);
+            //dealer.handCards.moveAllCardsBackToDeck(playingDeck);
+            System.out.println("End of Hand");
         }
     }
 

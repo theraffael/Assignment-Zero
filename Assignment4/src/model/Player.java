@@ -28,11 +28,19 @@ public class Player extends AbstractAgent {
         this.deductMoney(bettingAmount);
     }
 
-    private void deductMoney(int amount){
+    public int getMoneyAmount(){
+        return moneyAmount;
+    }
+
+    public int getBettingAmount(){return bettingAmount;}
+
+    public void updateBettingAmount(int x){ this.bettingAmount += x;}
+
+    public void deductMoney(int amount){
         this.moneyAmount = this.moneyAmount - amount;
     }
 
-    private void addMoney(int amount){
+    public void addMoney(int amount){
         this.moneyAmount = this.moneyAmount + amount;
     }
 }

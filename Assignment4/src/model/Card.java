@@ -16,6 +16,10 @@ public class Card {
         this.suit = originalCard.suit;
     }
 
+
+    public Suit getSuit(){ return this.suit;}
+    public Rank getRank(){ return this.rank;}
+
     public String getString(){
         return rank.name() + " of " + suit.name();
     }

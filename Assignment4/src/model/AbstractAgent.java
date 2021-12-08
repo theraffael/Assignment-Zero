@@ -16,4 +16,12 @@ public abstract class AbstractAgent {
     protected int largestHandValue(){
         return Collections.max(handValue);
     }
+
+    public ArrayList getHandCards(){
+        return handCards;
+    }
+
+    public Integer totalHandValue(){
+        return handValue.stream().mapToInt(Integer::intValue).sum();
+    }
 }
