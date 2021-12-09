@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class AbstractAgent {
-    protected ArrayList<Card> handCards;
-    protected ArrayList<Integer> handValue;
+    protected ArrayList<Card> handCards = new ArrayList<Card>();
+    protected ArrayList<Integer> handValue = new ArrayList<Integer>();
 
     abstract Call hitOrStay();
 
@@ -14,10 +14,13 @@ public abstract class AbstractAgent {
     }
 
     protected int largestHandValue(){
+        if (handValue.size() == 0){
+            return 0;
+        }
         return Collections.max(handValue);
     }
 
-    public ArrayList getHandCards(){
+    public ArrayList<Card> getHandCards(){
         return handCards;
     }
 

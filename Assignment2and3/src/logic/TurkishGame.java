@@ -1,6 +1,11 @@
 package logic;
 
-import model.*;
+import model.Board;
+import model.Move;
+import model.PlayerColor;
+import model.UI;
+import model.Checker;
+import model.BoardType;
 
 import java.util.ArrayList;
 import java.util.List;

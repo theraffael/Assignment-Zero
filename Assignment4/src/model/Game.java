@@ -2,13 +2,14 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import model.UI;
 
 public class Game {
     /**
      * Boolean value if Player wants to continue Game
      */
-    boolean continueGame;
+    boolean continueGame = true;
     boolean continueRound;
     private Dealer dealer;
     private Deck deck;
@@ -28,7 +29,7 @@ public class Game {
      */
     public void runGame(){
         //UI call Game introduction
-        UI.welcomeMessage();
+        System.out.println(UI.welcomeMessage());
 
         Scanner userInput = new Scanner(System.in);
 
@@ -37,14 +38,14 @@ public class Game {
 
             if (deck.percentageOfCardsLeft() <= 50) {
                 deck.shuffleDeck();
-                UI.shuffleMessage();
+                System.out.println(UI.shuffleMessage());
             }
 
             for (Player player : playerList){
                 System.out.println("Your have " + player.getMoneyAmount()+ ", how high is your bet?");
                 player.updateBettingAmount(userInput.nextInt());
                 if (player.getBettingAmount() > player.getMoneyAmount()){
-                    System.out.println("You cannot bet more than you have. You are requested to leave our establishment.");
+                    System.out.println(UI.kickedOutMessage());
                     break;
                 }
             }
@@ -60,8 +61,13 @@ public class Game {
                     //todo: move this to UI
                     System.out.println("Your hand: ");
                     System.out.println(player.handCards.toString());
-                    System.out.println("Your deck's value is: "+ player.handValue);
-                    System.out.println("Dealer hand: " + dealer.handCards.get(0).toString() + " and [HIDDEN]");
+                    System.out.println(UI.playerDeckValueMessage(player.totalHandValue()));
+                    if (dealer.handCards.size() == 0) {
+                        System.out.println("[]");
+                    }
+                    else {
+                        System.out.println("Dealer hand: " + dealer.handCards.get(0).toString() + " and [HIDDEN]");
+                    }
 
                     //ask player if they are hitting or staying
                     Call playerCall = player.hitOrStay();
@@ -105,7 +111,7 @@ public class Game {
                 continueRound = false;
             }
 
-            System.out.println("Dealer's hand is valued at: " + dealer.handValue);
+            System.out.println(UI.dealerDeckValueMessage(dealer.totalHandValue()));
             if ((dealer.totalHandValue() > 21) && continueRound){
                 System.out.println("You won!");
                 playerList.get(0).addMoney(playerList.get(0).getBettingAmount());

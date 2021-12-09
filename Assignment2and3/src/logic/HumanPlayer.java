@@ -1,6 +1,5 @@
 package logic;
 
-import model.Board;
 import model.Move;
 import model.PlayerColor;
 import model.UI;
