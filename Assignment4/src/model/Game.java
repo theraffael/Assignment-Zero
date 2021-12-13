@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.sql.Array;
+import java.util.*;
 
 import model.UI;
 
@@ -16,9 +16,9 @@ public class Game {
     private ArrayList<Player> playerList = new ArrayList<Player>();
     private int agentCount;
 
+
     public Game(){
        this.dealer = new Dealer();
-       this.playerList.add(new Player(100, "placeHolder"));
        this.agentCount = playerList.size() + 1;
        this.deck = new Deck();
        deck.shuffleDeck();
@@ -29,12 +29,14 @@ public class Game {
      */
     public void runGame(){
         //UI call Game introduction
-        System.out.println(UI.welcomeMessage());
+        UI.welcomeMessage();
+        this.getPlayerListFromUserInput();
 
         Scanner userInput = new Scanner(System.in);
 
         while (continueGame){
             int playerBet; //todo: make this work for multiple players
+
 
             if (deck.percentageOfCardsLeft() <= 50) {
                 deck.shuffleDeck();
@@ -42,7 +44,7 @@ public class Game {
             }
 
             for (Player player : playerList){
-                System.out.println("Your have " + player.getMoneyAmount()+ ", how high is your bet?");
+                System.out.println(player.getPlayerName() + " You have " + player.getMoneyAmount()+ ", how high is your bet?");
                 player.updateBettingAmount(userInput.nextInt());
                 if (player.getBettingAmount() > player.getMoneyAmount()){
                     System.out.println(UI.kickedOutMessage());
@@ -135,8 +137,17 @@ public class Game {
         }
     }
 
+    private void getPlayerListFromUserInput(){
+        int amount = UI.playerAmountMessage();
+        for(int i=0;i<amount;i++){
+            String playerName = UI.playerName();
+            int moneyAmount = UI.playerMoneyAmount();
+            playerList.add(new Player(moneyAmount, playerName));
+        }
+    }
+
     private void beginningRoundCardDraw(){
-        for(int i=0;i==1;i++){
+        for(int i=0;i<=1;i++){
             for (Player player : playerList){
                 player.addCardToHand(deck.next());
             }

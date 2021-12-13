@@ -17,8 +17,8 @@ public class Player extends AbstractAgent {
      * Public method, makes call to UI for Input
      */
     @Override
-    Call hitOrStay() {
-        return null;
+    public Call hitOrStay() {
+        return UI.playerHitOrStay(this.playerName);
     }
 
     /**
@@ -28,8 +28,18 @@ public class Player extends AbstractAgent {
         this.deductMoney(bettingAmount);
     }
 
+    public void initBettingAmount(int bettingAmount){
+        if(bettingAmount>0 && bettingAmount<= this.moneyAmount) {
+            this.bettingAmount = bettingAmount;
+        }
+    }
+
     public int getMoneyAmount(){
         return moneyAmount;
+    }
+
+    public String getPlayerName(){
+        return playerName;
     }
 
     public int getBettingAmount(){return bettingAmount;}

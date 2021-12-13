@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UI {
@@ -15,10 +18,38 @@ public class UI {
 
 
 
-    public static String welcomeMessage(){
-        return "Welcome to Blackjack!";
+    public static void welcomeMessage(){
+        System.out.println("Welcome to Blackjack!");
     }
 
+    public static int playerAmountMessage(){
+        System.out.println("Enter Amount of Players");
+        int amount = Integer.parseInt(keyBoard.nextLine());
+        return amount;
+    }
+    public static String playerName(){
+        System.out.println("Enter Name of Player");
+        return keyBoard.nextLine();
+    }
+
+    public static int playerMoneyAmount(){
+        System.out.println("Enter Money Amount");
+        return Integer.parseInt(keyBoard.nextLine());
+    }
+    public static Call playerHitOrStay(String playerName){
+        System.out.println(playerName + " would you like to Hit or Stay");
+        String response = keyBoard.nextLine();
+        String lowerCase = response.toLowerCase(Locale.ROOT);
+        if (lowerCase == "hit"){
+            return Call.HIT;
+        }
+        else if (lowerCase == "stay"){
+            return Call.STAY;
+        }
+        else{
+            return null;
+        }
+    }
     public static String shuffleMessage(){
         return "The playing deck has been shuffled.";
     }
