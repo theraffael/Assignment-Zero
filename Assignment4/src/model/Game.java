@@ -19,7 +19,6 @@ public class Game {
 
     public Game(){
        this.dealer = new Dealer();
-       this.agentCount = playerList.size() + 1;
        this.deck = new Deck();
        deck.shuffleDeck();
     }
@@ -38,6 +37,8 @@ public class Game {
             int playerBet; //todo: make this work for multiple players
 
 
+            this.agentCount = playerList.size() + 1;
+
             if (deck.percentageOfCardsLeft() <= 50) {
                 deck.shuffleDeck();
                 System.out.println(UI.shuffleMessage());
@@ -52,23 +53,26 @@ public class Game {
                 }
             }
 
+            //beginning card draw
+            this.beginningRoundCardDraw();
             int stayCount = 0;
             continueRound = true;
             while (continueRound){
-                //beginning card draw
-                this.beginningRoundCardDraw();
 
                 //iterate over playerList option for more players
                 for(Player player : playerList){
+                    if(player.isStay()){
+                        break;
+                    }
                     //todo: move this to UI
                     System.out.println("Your hand: ");
-                    System.out.println(player.handCards.toString());
+                    UI.outputCards(player.handCardsToString());
                     System.out.println(UI.playerDeckValueMessage(player.totalHandValue()));
                     if (dealer.handCards.size() == 0) {
                         System.out.println("[]");
                     }
                     else {
-                        System.out.println("Dealer hand: " + dealer.handCards.get(0).toString() + " and [HIDDEN]");
+                        System.out.println("Dealer hand: " + dealer.firstHandCardsToString() + " and [HIDDEN]");
                     }
 
                     //ask player if they are hitting or staying
@@ -105,8 +109,10 @@ public class Game {
                 }
             }
 
+            this.endOfRoundCleanup();
+
             //reveal dealers card
-            System.out.println("dealer's cards: " + dealer.handCards.toString());
+            System.out.println("dealer's cards: " + dealer.handCardsToString());
             if((dealer.totalHandValue() > playerList.get(0).totalHandValue()) && continueRound){
                 System.out.println("Dealer won.");
                 playerList.get(0).deductMoney(playerList.get(0).getBettingAmount());
@@ -136,6 +142,19 @@ public class Game {
             System.out.println("End of Hand");
         }
     }
+
+    private void endOfRoundCleanup(){
+        for (Player player : playerList){
+            player.resetCall();
+            player.resetHandCards();
+            player.resetHandValue();
+        }
+        dealer.resetCall();
+        dealer.resetHandCards();
+        dealer.resetHandValue();
+    }
+
+
 
     private void getPlayerListFromUserInput(){
         int amount = UI.playerAmountMessage();

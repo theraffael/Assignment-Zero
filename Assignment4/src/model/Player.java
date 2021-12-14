@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Implements Player functionality
  */
@@ -18,7 +20,9 @@ public class Player extends AbstractAgent {
      */
     @Override
     public Call hitOrStay() {
-        return UI.playerHitOrStay(this.playerName);
+        Call call = UI.playerHitOrStay(this.playerName);
+        this.call = call;
+        return call;
     }
 
     /**
@@ -32,6 +36,14 @@ public class Player extends AbstractAgent {
         if(bettingAmount>0 && bettingAmount<= this.moneyAmount) {
             this.bettingAmount = bettingAmount;
         }
+    }
+
+    public String handCardsToString(){
+        ArrayList<String> cardStrings = new ArrayList<>();
+        for (Card card : handCards){
+            cardStrings.add(card.getString());
+        }
+        return cardStrings.toString();
     }
 
     public int getMoneyAmount(){

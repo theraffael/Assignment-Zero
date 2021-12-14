@@ -6,6 +6,7 @@ public abstract class AbstractAgent {
     protected ArrayList<Card> handCards = new ArrayList<Card>();
     protected ArrayList<Integer> handValue = new ArrayList<Integer>();
     private HashMap<Rank, ArrayList<Integer>> cardValues = new HashMap<>();
+    protected Call call;
 
     abstract Call hitOrStay();
 
@@ -51,6 +52,26 @@ public abstract class AbstractAgent {
                     handValue.set(handValue.indexOf(value), value + rankValueArray.get(0));
                 }
             }
+        }
+    }
+
+    public void resetHandCards(){
+        this.handCards.clear();
+    }
+
+    public void resetHandValue(){
+        this.handValue.clear();
+    }
+
+    public void resetCall(){
+        this.call = null;
+    }
+    public Boolean isStay(){
+        if(this.call == Call.STAY){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 

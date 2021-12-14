@@ -40,15 +40,18 @@ public class UI {
         System.out.println(playerName + " would you like to Hit or Stay");
         String response = keyBoard.nextLine();
         String lowerCase = response.toLowerCase(Locale.ROOT);
-        if (lowerCase == "hit"){
+        if (lowerCase.equals("hit")){
             return Call.HIT;
         }
-        else if (lowerCase == "stay"){
+        else if (lowerCase.equals("stay")){
             return Call.STAY;
         }
         else{
             return null;
         }
+    }
+    public static void outputCards(String handCards){
+        System.out.println(handCards);
     }
     public static String shuffleMessage(){
         return "The playing deck has been shuffled.";
