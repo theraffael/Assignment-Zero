@@ -65,11 +65,11 @@ public class UI {
         return "You cannot bet more than you have. You are requested to leave our establishment.";
     }
 
-    public static String playerDeckValueMessage(int deckValue){
-        return "Your deck's value is: " + deckValue;
+    public static String playerDeckValueMessage(String handValues){
+        return "Your hand value is: " + handValues;
     }
 
-    public static String dealerDeckValueMessage(int deckValue){
+    public static String dealerDeckValueMessage(String deckValue){
         return "dealer's hand value is: " + deckValue;
     }
 }

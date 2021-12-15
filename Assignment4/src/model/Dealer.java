@@ -16,14 +16,6 @@ public class Dealer extends AbstractAgent{
         }
     }
 
-    public String handCardsToString(){
-        ArrayList<String> cardStrings = new ArrayList<>();
-        for (Card card : handCards){
-            cardStrings.add(card.getString());
-        }
-        return cardStrings.toString();
-    }
-
     public String firstHandCardsToString(){
         return handCards.get(0).getString();
     }

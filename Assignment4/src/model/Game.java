@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Array;
 import java.util.*;
-
-import model.UI;
 
 public class Game {
     /**
@@ -11,8 +8,8 @@ public class Game {
      */
     boolean continueGame = true;
     boolean continueRound;
-    private Dealer dealer;
-    private Deck deck;
+    private final Dealer dealer;
+    private final Deck deck;
     private ArrayList<Player> playerList = new ArrayList<Player>();
     private int agentCount;
 
@@ -49,7 +46,11 @@ public class Game {
                 player.updateBettingAmount(userInput.nextInt());
                 if (player.getBettingAmount() > player.getMoneyAmount()){
                     System.out.println(UI.kickedOutMessage());
-                    break;
+                }
+                if (!player.checkIfPlayerHasSufficientFunds()){
+                    System.out.println(player.getPlayerName() + " You have insufficient funds" + player.getMoneyAmount());
+                    System.out.println(UI.kickedOutMessage());
+                    playerList.remove(player);
                 }
             }
 
@@ -67,13 +68,9 @@ public class Game {
                     //todo: move this to UI
                     System.out.println("Your hand: ");
                     UI.outputCards(player.handCardsToString());
-                    System.out.println(UI.playerDeckValueMessage(player.totalHandValue()));
-                    if (dealer.handCards.size() == 0) {
-                        System.out.println("[]");
-                    }
-                    else {
-                        System.out.println("Dealer hand: " + dealer.firstHandCardsToString() + " and [HIDDEN]");
-                    }
+                    System.out.println(UI.playerDeckValueMessage(player.handValue.toString()));
+                    System.out.println("Dealer hand: " + dealer.firstHandCardsToString() + " and [HIDDEN]");
+
 
                     //ask player if they are hitting or staying
                     Call playerCall = player.hitOrStay();
@@ -81,13 +78,8 @@ public class Game {
                     if(playerCall == Call.HIT){
                         player.addCardToHand(deck.next());
                         //todo: move this to UI
-                        System.out.println("You draw the following card: " + player.handCards.get(player.handCards.size()-1).toString());
+                        UI.outputCards(player.handCardsToString());
 
-                        if (player.totalHandValue() > 21){
-                            System.out.println("You are busted. Your hand is valued at "+ player.handValue);
-                            player.deductMoney(player.getBettingAmount());
-                            continueRound = false;
-                        }
                     }
                     else{
                         stayCount++;
@@ -107,39 +99,80 @@ public class Game {
                 if(stayCount == this.agentCount){
                     continueRound = false;
                 }
-            }
 
-            this.endOfRoundCleanup();
+                this.isRoundOver();
+
+            }
 
             //reveal dealers card
-            System.out.println("dealer's cards: " + dealer.handCardsToString());
-            if((dealer.totalHandValue() > playerList.get(0).totalHandValue()) && continueRound){
-                System.out.println("Dealer won.");
-                playerList.get(0).deductMoney(playerList.get(0).getBettingAmount());
-                continueRound = false;
-            }
-
-            System.out.println(UI.dealerDeckValueMessage(dealer.totalHandValue()));
-            if ((dealer.totalHandValue() > 21) && continueRound){
-                System.out.println("You won!");
-                playerList.get(0).addMoney(playerList.get(0).getBettingAmount());
-                continueRound = false;
-            }
-
-            if ((playerList.get(0).totalHandValue() == dealer.totalHandValue()) && continueRound){
-                System.out.println("Push");
-                continueRound=false;
-            }
-
-            if((playerList.get(0).totalHandValue() > dealer.totalHandValue()) && continueRound){
-                System.out.println("You won!");
-                playerList.get(0).addMoney(playerList.get(0).getBettingAmount());
-                continueRound = false;
-            }
+            System.out.println("dealer's cards: ");
+            UI.outputCards(dealer.handCardsToString());
+            this.decideWinningHand();
+            this.endOfRoundCleanup();
 
             //playerDeck.moveAllCardsBackToDeck(playingDeck);
             //dealer.handCards.moveAllCardsBackToDeck(playingDeck);
             System.out.println("End of Hand");
+        }
+    }
+
+    private void isRoundOver(){
+        int bustCounter = 0;
+        for (Player player : playerList){
+            if(player.largestHandValue() > 21){
+                bustCounter++;
+            }
+        }
+        if(bustCounter == playerList.size()){
+            continueRound = false;
+        }
+    }
+
+    private void decideWinningHand(){
+        for (Player player : playerList){
+
+            System.out.println(UI.dealerDeckValueMessage(dealer.handValue.toString()));
+
+
+            //if dealer has over 21 and player doesn't -> player wins
+            if ((dealer.largestHandValue() > 21) && player.largestHandValue() <= 21){
+                System.out.println("You won!");
+                player.addMoney(player.getBettingAmount());
+                continueRound = false;
+            }
+
+            //if dealer has over 21 and player aswell
+            else if (player.largestHandValue() > 21 && dealer.largestHandValue() > 21){
+                System.out.println("Push");
+                continueRound=false;
+            }
+
+            //if player has over 21 and dealer doesn't
+            else if (player.largestHandValue() > 21 && dealer.largestHandValue() <= 21){
+                System.out.println("You are busted. Your hand is valued at "+ player.handValue);
+                player.deductMoney(player.getBettingAmount());
+                continueRound = false;
+            }
+
+            //if dealer has higher hand value and not over 21
+            else if(dealer.largestHandValue() > player.largestHandValue() && dealer.largestHandValue() <= 21){
+                System.out.println("Dealer won.");
+                player.deductMoney(player.getBettingAmount());
+                continueRound = false;
+            }
+
+            //if player hand value is equal to dealers
+            else if (player.largestHandValue() == dealer.largestHandValue()){
+                System.out.println("Push");
+                continueRound=false;
+            }
+
+            //if player hand value is larger than dealer hand value, player wins round
+            if((player.largestHandValue() > dealer.largestHandValue()) && player.largestHandValue() <= 21){
+                System.out.println("You won!");
+                player.addMoney(player.getBettingAmount());
+                continueRound = false;
+            }
         }
     }
 
@@ -148,6 +181,7 @@ public class Game {
             player.resetCall();
             player.resetHandCards();
             player.resetHandValue();
+            player.resetBettingAmount();
         }
         dealer.resetCall();
         dealer.resetHandCards();

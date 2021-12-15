@@ -19,7 +19,25 @@ public abstract class AbstractAgent {
         if (handValue.size() == 0){
             return 0;
         }
-        return Collections.max(handValue);
+        int maxValue = Collections.max(handValue);
+        if (maxValue > 21){
+            int newMaxValue = 0;
+            for (int handValue : this.handValue){
+                if (handValue < 21 && handValue > newMaxValue){
+                    newMaxValue = handValue;
+                }
+            }
+            if (newMaxValue == 0){
+                return maxValue;
+            }
+            else{
+                return newMaxValue;
+            }
+        }
+        else{
+            return maxValue;
+        }
+
     }
 
     public ArrayList<Card> getHandCards(){
@@ -33,10 +51,12 @@ public abstract class AbstractAgent {
         //check if Rank is ACE
         if (card.getRank() == Rank.ACE){
             if(!handValue.isEmpty()){
+                ArrayList<Integer> updatedHandValue = new ArrayList<Integer>();
                 for(int value : handValue){
-                    handValue.set(handValue.indexOf(value),value + rankValueArray.get(0));
-                    handValue.add(value + rankValueArray.get(1));
+                    updatedHandValue.add(value + rankValueArray.get(0));
+                    updatedHandValue.add(value + rankValueArray.get(1));
                 }
+                handValue = updatedHandValue;
             }
             else{
                 handValue.add(rankValueArray.get(0));
@@ -78,6 +98,15 @@ public abstract class AbstractAgent {
     public Integer totalHandValue(){
         return handValue.stream().mapToInt(Integer::intValue).sum();
     }
+
+    public String handCardsToString(){
+        ArrayList<String> cardStrings = new ArrayList<>();
+        for (Card card : handCards){
+            cardStrings.add(card.getString());
+        }
+        return cardStrings.toString();
+    }
+
 
     private void initHandCardsValue(){
         cardValues.put(Rank.ACE, new ArrayList<>(Arrays.asList(1, 11)));

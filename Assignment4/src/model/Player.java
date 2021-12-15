@@ -37,15 +37,18 @@ public class Player extends AbstractAgent {
             this.bettingAmount = bettingAmount;
         }
     }
-
-    public String handCardsToString(){
-        ArrayList<String> cardStrings = new ArrayList<>();
-        for (Card card : handCards){
-            cardStrings.add(card.getString());
+    public Boolean checkIfPlayerHasSufficientFunds(){
+        if(this.moneyAmount<=0){
+            return false;
         }
-        return cardStrings.toString();
+        else{
+            return true;
+        }
     }
 
+    public void resetBettingAmount(){
+        this.bettingAmount =  0;
+    }
     public int getMoneyAmount(){
         return moneyAmount;
     }
