@@ -11,7 +11,7 @@ public class Dealer extends AbstractAgent{
             return Call.HIT;
         }
         else{
-            this.call = Call.HIT;
+            this.call = Call.STAY;
             return Call.STAY;
         }
     }

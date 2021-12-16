@@ -12,6 +12,7 @@ public class Game {
     private final Deck deck;
     private ArrayList<Player> playerList = new ArrayList<Player>();
     private int agentCount;
+    private int stayCount;
 
 
     public Game(){
@@ -31,9 +32,6 @@ public class Game {
         Scanner userInput = new Scanner(System.in);
 
         while (continueGame){
-            int playerBet; //todo: make this work for multiple players
-
-
             this.agentCount = playerList.size() + 1;
 
             if (deck.percentageOfCardsLeft() <= 50) {
@@ -56,14 +54,14 @@ public class Game {
 
             //beginning card draw
             this.beginningRoundCardDraw();
-            int stayCount = 0;
+            stayCount = 0;
             continueRound = true;
             while (continueRound){
 
                 //iterate over playerList option for more players
                 for(Player player : playerList){
                     if(player.isStay()){
-                        break;
+                        continue;
                     }
                     //todo: move this to UI
                     System.out.println("Your hand: ");
@@ -77,31 +75,25 @@ public class Game {
 
                     if(playerCall == Call.HIT){
                         player.addCardToHand(deck.next());
-                        //todo: move this to UI
                         UI.outputCards(player.handCardsToString());
-
                     }
                     else{
                         stayCount++;
                     }
                 }
 
-                //dealer hits if less than 17 points
-                Call dealerCall = dealer.hitOrStay();
-                if(dealerCall == Call.HIT){
-                    dealer.addCardToHand(deck.next());
-                }
-                else{
-                    stayCount++;
-                }
-
-                //if amount of stays are equal to agents on table stop round
-                if(stayCount == this.agentCount){
-                    continueRound = false;
+                if(!dealer.isStay()){
+                    //dealer hits if less than 17 points
+                    Call dealerCall = dealer.hitOrStay();
+                    if(dealerCall == Call.HIT){
+                        dealer.addCardToHand(deck.next());
+                    }
+                    else{
+                        stayCount++;
+                    }
                 }
 
                 this.isRoundOver();
-
             }
 
             //reveal dealers card
@@ -110,9 +102,26 @@ public class Game {
             this.decideWinningHand();
             this.endOfRoundCleanup();
 
-            //playerDeck.moveAllCardsBackToDeck(playingDeck);
-            //dealer.handCards.moveAllCardsBackToDeck(playingDeck);
             System.out.println("End of Hand");
+            this.askPlayersIfWantToContinue();
+        }
+    }
+
+    private void askPlayersIfWantToContinue(){
+        for (Player player : playerList){
+            Boolean bool = UI.wantToContinuePlaying(player.getPlayerName());
+            if(bool){
+                continue;
+            }
+            else{
+                UI.kickedOutMessage();
+                playerList.remove(player);
+            }
+            if(playerList.isEmpty()){
+                UI.noMorePlayersInLobbyMessage();
+                continueGame = false;
+                break;
+            }
         }
     }
 
@@ -124,6 +133,10 @@ public class Game {
             }
         }
         if(bustCounter == playerList.size()){
+            continueRound = false;
+        }
+        //if amount of stays are equal to agents on table stop round
+        if(stayCount == this.agentCount){
             continueRound = false;
         }
     }

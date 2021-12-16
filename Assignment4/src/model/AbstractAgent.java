@@ -86,6 +86,7 @@ public abstract class AbstractAgent {
     public void resetCall(){
         this.call = null;
     }
+
     public Boolean isStay(){
         if(this.call == Call.STAY){
             return true;
@@ -95,10 +96,6 @@ public abstract class AbstractAgent {
         }
     }
 
-    public Integer totalHandValue(){
-        return handValue.stream().mapToInt(Integer::intValue).sum();
-    }
-
     public String handCardsToString(){
         ArrayList<String> cardStrings = new ArrayList<>();
         for (Card card : handCards){
@@ -106,7 +103,6 @@ public abstract class AbstractAgent {
         }
         return cardStrings.toString();
     }
-
 
     private void initHandCardsValue(){
         cardValues.put(Rank.ACE, new ArrayList<>(Arrays.asList(1, 11)));

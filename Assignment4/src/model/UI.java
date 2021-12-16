@@ -1,5 +1,6 @@
 package model;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,6 +33,27 @@ public class UI {
         return keyBoard.nextLine();
     }
 
+    public static Boolean wantToContinuePlaying(String playerName){
+        System.out.println(playerName + " would you like to continue playing? Y/N");
+        Boolean bool = false;
+        while (bool == false){
+            String nextLine = keyBoard.nextLine();
+            if (nextLine.equals("Y") || nextLine.equals("N")){
+                bool = true;
+                if (nextLine.equals("Y")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                System.out.println("Please return Y or N");
+            }
+        }
+        return null;
+    }
+
     public static int playerMoneyAmount(){
         System.out.println("Enter Money Amount");
         return Integer.parseInt(keyBoard.nextLine());
@@ -55,6 +77,10 @@ public class UI {
     }
     public static String shuffleMessage(){
         return "The playing deck has been shuffled.";
+    }
+
+    public static void noMorePlayersInLobbyMessage(){
+        System.out.println("No more players in lobby, game is over");
     }
 
     public static String amountMessage(){
