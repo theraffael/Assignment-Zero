@@ -1,11 +1,7 @@
 package model;
 
-import model.Dealer;
-import model.Player;
-
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DealerTest {
@@ -37,14 +33,19 @@ public class DealerTest {
         Card card3 = new Card(Rank.SEVEN, Suit.HEARTS);
         Card card4 = new Card(Rank.FOUR, Suit.CLUBS);
 
-        assertTrue(dealer.largestHandValue() == 0);
+        assertEquals(0, dealer.largestHandValue());
 
         dealer.addCardToHand(card1);
         dealer.addCardToHand(card2);
         dealer.addCardToHand(card3);
         dealer.addCardToHand(card4);
 
-        assertTrue(dealer.largestHandValue() == 17);
-        assertTrue(dealer.handValue.toString().equals("[17, 27]"));
+        assertEquals(17, dealer.largestHandValue());
+        assertEquals("[17, 27]", dealer.handValue.toString());
+    }
+
+    @Test
+    public void testHitOrStay(){
+
     }
 }

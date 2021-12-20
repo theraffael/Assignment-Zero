@@ -60,6 +60,7 @@ public class Deck implements Iterator {
     public String toStringFancy(){
         return "notTheRealStuff";
     }
+
     //remove card from deck
     public void removeCard(int i){
         this.cards.remove(i);

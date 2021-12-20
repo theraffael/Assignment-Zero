@@ -10,7 +10,7 @@ public class Game {
     boolean continueRound;
     private final Dealer dealer;
     private final Deck deck;
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    private ArrayList<Player> playerList = new ArrayList<>();
     private int agentCount;
     private int stayCount;
 
@@ -141,7 +141,7 @@ public class Game {
         }
     }
 
-    private void decideWinningHand(){
+    private void decideWinningHand() {
         for (Player player : playerList){
 
             System.out.println(UI.dealerDeckValueMessage(dealer.handValue.toString()));
@@ -154,7 +154,7 @@ public class Game {
                 continueRound = false;
             }
 
-            //if dealer has over 21 and player aswell
+            //if dealer has over 21 and player as well
             else if (player.largestHandValue() > 21 && dealer.largestHandValue() > 21){
                 System.out.println("Push");
                 continueRound=false;
