@@ -1,27 +1,117 @@
 package model;
 
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class Card {
     private final Rank rank;
     private final Suit suit;
+    private SuitSymbol suitSymbol;
 
     public Card(Rank rank, Suit suit){
         this.rank = rank;
         this.suit = suit;
+
+        if (suit == Suit.SPADES){
+            this.suitSymbol = SuitSymbol.SPADES;
+        }
+        if (suit == Suit.HEARTS){
+            this.suitSymbol = SuitSymbol.HEARTS;
+        }
+        if (suit == Suit.DIAMONDS){
+            this.suitSymbol = SuitSymbol.DIAMONDS;
+        }
+        if (suit == Suit.CLUBS){
+            this.suitSymbol = SuitSymbol.CLUBS;
+        }
+
     }
 
     public Card(Card originalCard){
         this.rank = originalCard.rank;
         this.suit = originalCard.suit;
+        this.suitSymbol = originalCard.suitSymbol;
     }
 
 
     public Suit getSuit(){ return this.suit;}
     public Rank getRank(){ return this.rank;}
+    public SuitSymbol getSuitSymbol() {
+        return this.suitSymbol;
+    }
+
+    public String cardValue(){
+        if (this.rank == Rank.TWO){
+            return "2";
+        }
+        if (this.rank == Rank.THREE){
+            return  "3";
+        }
+        if (this.rank == Rank.FOUR){
+            return  "4";
+        }
+        if (this.rank == Rank.FIVE){
+            return  "5";
+        }
+        if (this.rank == Rank.SIX){
+            return  "6";
+        }
+        if (this.rank == Rank.SEVEN){
+            return  "7";
+        }
+        if (this.rank == Rank.EIGHT){
+            return  "8";
+        }
+        if (this.rank == Rank.NINE){
+            return  "9";
+        }
+        if (this.rank == Rank.TEN){
+            return  "10";
+        }
+        if (this.rank == Rank.JACK){
+            return  "J";
+        }
+        if (this.rank == Rank.QUEEN){
+            return  "Q";
+        }
+        if (this.rank == Rank.KING){
+            return  "K";
+        }
+        if (this.rank == Rank.ACE){
+            return  "A";
+        }
+        else{
+            return "x";
+        }
+    }
+
 
     public String getString(){
         return rank.name() + " of " + suit.name();
+    }
+
+    public ArrayList getFancyList(){
+        ArrayList<String> CardAsList = new ArrayList<>();
+
+        if (this.rank == Rank.TEN){
+            CardAsList.add("┌─────────┐\t");
+            CardAsList.add("│" +this.cardValue() +"       │\t");
+            CardAsList.add("│         │\t");
+            CardAsList.add("│    " + this.suitSymbol.toString() + "    │\t");
+            CardAsList.add("│         │\t");
+            CardAsList.add("│       "+this.cardValue()+"│\t");
+            CardAsList.add("└─────────┘\t");
+        }
+        else{
+            CardAsList.add("┌─────────┐\t");
+            CardAsList.add("│" + this.cardValue() + "        │\t");
+            CardAsList.add("│         │\t");
+            CardAsList.add("│    " + this.suitSymbol.toString() + "    │\t");
+            CardAsList.add("│         │\t");
+            CardAsList.add("│        "+this.cardValue()+"│\t");
+            CardAsList.add("└─────────┘\t");
+        }
+
+        return CardAsList;
     }
 
     @Override

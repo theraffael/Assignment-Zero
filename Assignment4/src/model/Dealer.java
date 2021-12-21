@@ -19,4 +19,25 @@ public class Dealer extends AbstractAgent{
     public String firstHandCardsToString(){
         return handCards.get(0).getString();
     }
+
+    public String firstHandCardsToStringFancy(){
+        ArrayList<String> hiddenCard = new ArrayList<>();
+        hiddenCard.add("┌─────────┐\t");
+        hiddenCard.add("│░░░░░░░░░│\t");
+        hiddenCard.add("│░░░░░░░░░│\t");
+        hiddenCard.add("│░░░░░░░░░│\t");
+        hiddenCard.add("│░░░░░░░░░│\t");
+        hiddenCard.add("│░░░░░░░░░│\t");
+        hiddenCard.add("└─────────┘\t");
+
+        String firstHand = "";
+        int numberOfIndividualParts = 7;
+        for (int i = 0; i < numberOfIndividualParts; i++ ){
+            firstHand += handCards.get(0).getFancyList().get(i);
+            firstHand += hiddenCard.get(i);
+
+            firstHand +="\n";
+        }
+        return firstHand;
+    }
 }

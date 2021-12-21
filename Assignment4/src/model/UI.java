@@ -20,13 +20,30 @@ public class UI {
 
 
     public static void welcomeMessage(){
-        System.out.println("Welcome to Blackjack!");
+        System.out.println(" __       __            __                                                      __                      _______   __                      __                                    __        __");
+        System.out.println("/  |  _  /  |          /  |                                                    /  |                    /       \\ /  |                    /  |                                  /  |      /  |");
+        System.out.println("$$ | / \\ $$ |  ______  $$ |  _______   ______   _____  ____    ______         _$$ |_     ______        $$$$$$$  |$$ |  ______    _______ $$ |   __      __   ______    _______ $$ |   __ $$ |");
+        System.out.println("$$ |/$  \\$$ | /      \\ $$ | /       | /      \\ /     \\/    \\  /      \\       / $$   |   /      \\       $$ |__$$ |$$ | /      \\  /       |$$ |  /  |    /  | /      \\  /       |$$ |  /  |$$ |");
+        System.out.println("$$ /$$$  $$ |/$$$$$$  |$$ |/$$$$$$$/ /$$$$$$  |$$$$$$ $$$$  |/$$$$$$  |      $$$$$$/   /$$$$$$  |      $$    $$< $$ | $$$$$$  |/$$$$$$$/ $$ |_/$$/     $$/  $$$$$$  |/$$$$$$$/ $$ |_/$$/ $$ |");
+        System.out.println("$$ $$/$$ $$ |$$    $$ |$$ |$$ |      $$ |  $$ |$$ | $$ | $$ |$$    $$ |        $$ | __ $$ |  $$ |      $$$$$$$  |$$ | /    $$ |$$ |      $$   $$<      /  | /    $$ |$$ |      $$   $$<  $$/");
+        System.out.println("$$$$/  $$$$ |$$$$$$$$/ $$ |$$ \\_____ $$ \\__$$ |$$ | $$ | $$ |$$$$$$$$/         $$ |/  |$$ \\__$$ |      $$ |__$$ |$$ |/$$$$$$$ |$$ \\_____ $$$$$$  \\     $$ |/$$$$$$$ |$$ \\_____ $$$$$$  \\  __");
+        System.out.println("$$$/    $$$ |$$       |$$ |$$       |$$    $$/ $$ | $$ | $$ |$$       |        $$  $$/ $$    $$/       $$    $$/ $$ |$$    $$ |$$       |$$ | $$  |    $$ |$$    $$ |$$       |$$ | $$  |/  |");
+        System.out.println("$$/      $$/  $$$$$$$/ $$/  $$$$$$$/  $$$$$$/  $$/  $$/  $$/  $$$$$$$/          $$$$/   $$$$$$/        $$$$$$$/  $$/  $$$$$$$/  $$$$$$$/ $$/   $$/__   $$ | $$$$$$$/  $$$$$$$/ $$/   $$/ $$/ ");
+        System.out.println("                                                                                                                                                 /  \\__$$ |");
+        System.out.println("                                                                                                                                                 $$    $$/");
+        System.out.println("                                                                                                                                                  $$$$$$/      ");
     }
 
     public static int playerAmountMessage(){
         System.out.println("Enter Amount of Players");
-        int amount = Integer.parseInt(keyBoard.nextLine());
-        return amount;
+        while (true) {
+            try{
+                return Integer.parseInt(keyBoard.nextLine());
+            }
+            catch (Exception e){
+                System.out.println("Enter an integer number.");
+            }
+        }
     }
     public static String playerName(){
         System.out.println("Enter Name of Player");
@@ -35,12 +52,12 @@ public class UI {
 
     public static Boolean wantToContinuePlaying(String playerName){
         System.out.println(playerName + " would you like to continue playing? Y/N");
-        Boolean bool = false;
-        while (bool == false){
-            String nextLine = keyBoard.nextLine();
-            if (nextLine.equals("Y") || nextLine.equals("N")){
+        boolean bool = false;
+        while (!bool){
+            String nextLine = keyBoard.nextLine().toLowerCase();
+            if (nextLine.equals("y") || nextLine.equals("n")){
                 bool = true;
-                if (nextLine.equals("Y")){
+                if (nextLine.equals("y") ){
                     return true;
                 }
                 else{
@@ -54,10 +71,30 @@ public class UI {
         return null;
     }
 
-    public static int playerMoneyAmount(){
+    public static int playerMoneyAmount() {
         System.out.println("Enter Money Amount");
-        return Integer.parseInt(keyBoard.nextLine());
+        while (true) {
+            try{
+                return Integer.parseInt(keyBoard.nextLine());
+            }
+            catch (Exception e){
+                System.out.println("Enter a dollar amount.");
+
+            }
+        }
     }
+    public static int playerBettingAmount(Player player){
+        System.out.println(player.getPlayerName() + " You have " + player.getMoneyAmount()+ ", how high is your bet?");
+        while (true) {
+            try{
+                return Integer.parseInt(keyBoard.nextLine());
+            }
+            catch (Exception e){
+                System.out.println("Enter a dollar amount.");
+            }
+        }
+    }
+
     public static Call playerHitOrStay(String playerName){
         System.out.println(playerName + " would you like to Hit or Stay");
         String response = keyBoard.nextLine();
@@ -72,9 +109,11 @@ public class UI {
             return null;
         }
     }
+
     public static void outputCards(String handCards){
         System.out.println(handCards);
     }
+
     public static String shuffleMessage(){
         return "The playing deck has been shuffled.";
     }
@@ -98,5 +137,4 @@ public class UI {
     public static String dealerDeckValueMessage(String deckValue){
         return "dealer's hand value is: " + deckValue;
     }
-
 }

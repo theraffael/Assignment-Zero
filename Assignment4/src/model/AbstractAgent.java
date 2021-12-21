@@ -104,6 +104,18 @@ public abstract class AbstractAgent {
         return cardStrings.toString();
     }
 
+    public String toStringFancy(){
+        int numberOfIndividualParts = 7;
+        String cardsString = "";
+        for (int i = 0; i < numberOfIndividualParts; i++ ){
+            for (Card card : handCards) {
+                cardsString += card.getFancyList().get(i);
+            }
+            cardsString +="\n";
+        }
+        return cardsString;
+    }
+
     private void initHandCardsValue(){
         cardValues.put(Rank.ACE, new ArrayList<>(Arrays.asList(1, 11)));
         cardValues.put(Rank.TWO, new ArrayList<>(Arrays.asList(2)));

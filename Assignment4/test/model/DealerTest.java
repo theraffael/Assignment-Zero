@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DealerTest {
@@ -46,6 +48,27 @@ public class DealerTest {
 
     @Test
     public void testHitOrStay(){
+        mockDealer.addCardToHand(new Card(Rank.TEN,Suit.CLUBS));
+        mockDealer.addCardToHand(new Card(Rank.SIX, Suit.SPADES));
+
+        assertEquals(Call.HIT, mockDealer.hitOrStay());
+
+        mockDealer.addCardToHand(new Card(Rank.ACE, Suit.HEARTS));
+
+        assertEquals(Call.STAY, mockDealer.hitOrStay());
+    }
+
+    @Test
+    public void testFirstHandCardsToString(){
+        mockDealer.addCardToHand(new Card(Rank.SIX, Suit.HEARTS));
+
+        assertEquals(String.class, mockDealer.firstHandCardsToString().getClass());
+        assertEquals("SIX of HEARTS", mockDealer.firstHandCardsToString());
+
+        mockDealer.addCardToHand(new Card(Rank.ACE, Suit.SPADES));
+
+        //first card has to be the same as before
+        assertEquals("SIX of HEARTS", mockDealer.firstHandCardsToString());
 
     }
 }

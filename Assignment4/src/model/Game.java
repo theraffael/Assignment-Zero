@@ -1,6 +1,7 @@
 package model;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
     /**
@@ -40,10 +41,19 @@ public class Game {
             }
 
             for (Player player : playerList){
-                System.out.println(player.getPlayerName() + " You have " + player.getMoneyAmount()+ ", how high is your bet?");
-                player.updateBettingAmount(userInput.nextInt());
+                player.updateBettingAmount(UI.playerBettingAmount(player));
+
+                /*while (true) {
+                    try{
+                        player.updateBettingAmount(userInput.nextInt());
+                    }
+                    catch (Exception e){
+                        System.out.println("Enter an integer number.");
+                            }
+                }*/
                 if (player.getBettingAmount() > player.getMoneyAmount()){
                     System.out.println(UI.kickedOutMessage());
+                    playerList.remove(player);
                 }
                 if (!player.checkIfPlayerHasSufficientFunds()){
                     System.out.println(player.getPlayerName() + " You have insufficient funds" + player.getMoneyAmount());
@@ -63,11 +73,12 @@ public class Game {
                     if(player.isStay()){
                         continue;
                     }
-                    //todo: move this to UI
-                    System.out.println("Your hand: ");
-                    UI.outputCards(player.handCardsToString());
+                    System.out.println(player.getPlayerName()+", your hand: ");
+                    //UI.outputCards(player.handCardsToString());
+                    UI.outputCards(player.toStringFancy());
                     System.out.println(UI.playerDeckValueMessage(player.handValue.toString()));
-                    System.out.println("Dealer hand: " + dealer.firstHandCardsToString() + " and [HIDDEN]");
+                    //System.out.println("Dealer hand: " + dealer.firstHandCardsToString() + " and [HIDDEN]");
+                    System.out.println("Dealer Hand:\n"+ dealer.firstHandCardsToStringFancy());
 
 
                     //ask player if they are hitting or staying
@@ -75,7 +86,9 @@ public class Game {
 
                     if(playerCall == Call.HIT){
                         player.addCardToHand(deck.next());
-                        UI.outputCards(player.handCardsToString());
+                        System.out.println(player.getPlayerName()+", your hand:");
+                        //UI.outputCards(player.handCardsToString());
+                        UI.outputCards(player.toStringFancy());
                     }
                     else{
                         stayCount++;
@@ -98,7 +111,9 @@ public class Game {
 
             //reveal dealers card
             System.out.println("dealer's cards: ");
-            UI.outputCards(dealer.handCardsToString());
+            //UI.outputCards(dealer.handCardsToString());
+            UI.outputCards(dealer.toStringFancy());
+
             this.decideWinningHand();
             this.endOfRoundCleanup();
 

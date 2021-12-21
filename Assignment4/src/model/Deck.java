@@ -58,7 +58,15 @@ public class Deck implements Iterator {
 
     //implement ascii-style cards
     public String toStringFancy(){
-        return "notTheRealStuff";
+        int numberOfIndividualParts = 7;
+        String cardsString = "";
+        for (int i = 0; i < numberOfIndividualParts; i++ ){
+            for (Card aCard : this.cards) {
+            cardsString += aCard.getFancyList().get(i);
+            }
+            cardsString +="\n";
+        }
+        return cardsString;
     }
 
     //remove card from deck

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
@@ -136,6 +138,21 @@ class DeckTest {
         e.moveAllCardsBackToDeck(d);
         assertEquals(1, d.deckSize());
         assertEquals(0, e.deckSize());
+    }
+    @Test
+    public void testGetFancyString(){
+        Deck d = new Deck();
+        while (d.deckSize() > 0){
+            d.removeCard(0);
+        }
+        d.addCard(new Card(Rank.SIX, Suit.CLUBS));
+        d.addCard(new Card(Rank.TEN, Suit.HEARTS));
+        d.addCard(new Card(Rank.ACE, Suit.HEARTS));
+        d.addCard(new Card(Rank.JACK, Suit.HEARTS));
+
+        System.out.println(d);
+        String card = d.toStringFancy();
+        System.out.println(d.toStringFancy());
     }
 
 }
