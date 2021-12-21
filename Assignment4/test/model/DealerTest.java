@@ -71,4 +71,18 @@ public class DealerTest {
         assertEquals("SIX of HEARTS", mockDealer.firstHandCardsToString());
 
     }
+    @Test
+    public void testFirstHandCardsToStringFancy(){
+        mockDealer.addCardToHand(new Card(Rank.SIX, Suit.HEARTS));
+        mockDealer.addCardToHand(new Card(Rank.ACE, Suit.HEARTS));
+        assertEquals(String.class, mockDealer.firstHandCardsToStringFancy().getClass());
+        String target = "┌─────────┐\t┌─────────┐\t\n" +
+                        "│6        │\t│░░░░░░░░░│\t\n" +
+                        "│         │\t│░░░░░░░░░│\t\n" +
+                        "│    ♥    │\t│░░░░░░░░░│\t\n" +
+                        "│         │\t│░░░░░░░░░│\t\n" +
+                        "│        6│\t│░░░░░░░░░│\t\n" +
+                        "└─────────┘\t└─────────┘\t\n";
+        assertEquals(target, mockDealer.firstHandCardsToStringFancy());
+    }
 }
